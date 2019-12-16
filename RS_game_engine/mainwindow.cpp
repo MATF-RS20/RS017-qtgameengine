@@ -77,14 +77,15 @@ void MainWindow::addRectangle()
         return;
     }
 }
-
+QString fileName;
 void MainWindow::loadDefaultBackground()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
-    QPixmap pix(fileName);
-    int height = this->size().height();
-    pix = pix.scaledToHeight(height, Qt::SmoothTransformation);
-    ui->gvMainScene->setBackgroundBrush(pix);
+    fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
+    QPixmap bkgnd(fileName);
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    QPalette palette;
+    palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setPalette(palette);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -92,4 +93,9 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     int width = this->size().width();
     int height = this->size().height();
     ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
+    QPixmap bkgnd(fileName);
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    QPalette palette;
+    palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setPalette(palette);
 }
