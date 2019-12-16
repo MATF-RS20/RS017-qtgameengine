@@ -25,3 +25,5 @@ void GameComponent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 {
     painter->drawRect(0, 0, width, height);
 }
+
+void GameComponent::pbApply(){}
