@@ -9,6 +9,7 @@
 #include <QKeyEvent>
 #include <QList>
 #include "player.h"
+#include "enemy.h"
 #include "rectangle.h"
 #include <QDebug>
 
@@ -25,8 +26,8 @@ public:
     GameBuilder& operator=(const GameBuilder&) = delete;
 
     void addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate);
+    void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void keyPressEvent(QKeyEvent *event) override;
-
 
 private:
     QGraphicsView* parent;
@@ -34,6 +35,8 @@ private:
     QScopedPointer<Player> player;
     Rectangle* rectangle;
     QList<Rectangle*> lstRectangle;
+    Enemy* enemy;
+    QList<Enemy*> lstEnemy;
     QWidget* main;
     QToolBox* componentInfo;
 

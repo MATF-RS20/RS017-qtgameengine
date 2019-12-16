@@ -36,6 +36,7 @@ void MainWindow::addSignalsAndSlots()
 {
     connect(ui->pbRectangle, SIGNAL(clicked()), this, SLOT(addRectangle()));
     connect(ui->pbChooseFromDefault, SIGNAL(clicked()), this, SLOT(loadDefaultBackground()));
+    connect(ui->pbEnemyOne, SIGNAL(clicked()), this, SLOT(addEnemyOne()));
 }
 
 void MainWindow::loadGame()
@@ -78,18 +79,52 @@ void MainWindow::addRectangle()
     }
 }
 
+void MainWindow::addEnemyOne()
+{
+    EnemyDialog* enemyDialog = new EnemyDialog(this);
+    enemyDialog->exec();
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/enemies/", tr("Images (*.png *.jpg *.jpeg)"));
+    qDebug() << lookPath;
+    if(enemyDialog->accepted()){
+        qreal x = enemyDialog->x();
+        qreal y = enemyDialog->y();
+        qreal width = enemyDialog->width();
+        qreal height = enemyDialog->height();
+        qreal range = enemyDialog->range();
+        QList<QLineEdit*> enemyInfo;
+        enemyInfo.append(ui->leEnemyX);
+        enemyInfo.append(ui->leEnemyY);
+        enemyInfo.append(ui->leEnemyWidth);
+        enemyInfo.append(ui->leEnemyHeight);
+        enemyInfo.append(ui->leEnemyRange);
+        gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
+    }
+    else{
+        return;
+    }
+}
+
+QString fileName;
 void MainWindow::loadDefaultBackground()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
-    QPixmap pix(fileName);
-    int height = this->size().height();
-    pix = pix.scaledToHeight(height, Qt::SmoothTransformation);
-    ui->gvMainScene->setBackgroundBrush(pix);
+    fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
+    QPixmap bkgnd(fileName);
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    QPalette palette;
+    palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setPalette(palette);
 }
+
+
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     int width = this->size().width();
     int height = this->size().height();
     ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
+    QPixmap bkgnd(fileName);
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    QPalette palette;
+    palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setPalette(palette);
 }

@@ -17,6 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     componentinfodialog.cpp \
+    enemy.cpp \
+    enemydialog.cpp \
     gamebuilder.cpp \
     gamecomponent.cpp \
     main.cpp \
@@ -27,6 +29,8 @@ SOURCES += \
 
 HEADERS += \
     componentinfodialog.h \
+    enemy.h \
+    enemydialog.h \
     gamebuilder.h \
     gamecomponent.h \
     mainwindow.h \
@@ -36,6 +40,7 @@ HEADERS += \
 
 FORMS += \
     componentinfodialog.ui \
+    enemydialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

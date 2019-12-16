@@ -7,6 +7,7 @@
 #include "gamebuilder.h"
 #include "componentinfodialog.h"
 #include "gameobjectinfo.h"
+#include "enemydialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,7 @@ public:
 private slots:
     void addRectangle();
     void loadDefaultBackground();
+    void addEnemyOne();
 
 
 private:

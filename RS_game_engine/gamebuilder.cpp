@@ -14,11 +14,21 @@ GameBuilder::~GameBuilder()
 {
 }
 
-void GameBuilder::addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate)
+void GameBuilder::addRectangle(qreal x, qreal y, qreal width, qreal height,
+                               QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate)
 {
     rectangle = new Rectangle(x, y, width, height, componentInfo, rectangleInfo, rectangleUpdate);
     addItem(rectangle);
     lstRectangle.append(rectangle);
+}
+
+void GameBuilder::addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range,
+                           QString look,QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate)
+{
+    enemy = new Enemy(x, y, width, height, range, look,
+                      componentInfo, enemyInfo, enemyUpdate);
+    addItem(enemy);
+    lstEnemy.append(enemy);
 }
 
 void GameBuilder::keyPressEvent(QKeyEvent *event)
