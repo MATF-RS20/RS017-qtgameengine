@@ -97,26 +97,20 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {
     QPointF playerPos = player->pos();
     qreal playerWidth = 60, playerHeight = 80;
-    bool canMove = true;
-    bool whereTo[4];
 
     foreach(Rectangle *r, lstRectangle) {
         QPointF rPos = r->pos();
         qreal rWidth = 100, rHeight = 100;
+        bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
+        bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
+        bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
+        bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2;
+        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
+        if(a1 && a2 && a3 && a4){
+            return false;
+        }
 
-        if(playerPos.ry() + delta_y + playerHeight/2 >= rPos.ry() - rHeight/2 && playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() - rWidth/2)
-            canMove = false;
-        else if(playerPos.ry() + delta_y + playerHeight/2 >= rPos.ry() + rHeight/2 && playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() - rWidth/2)
-            canMove = false;
-        else if(playerPos.ry() + delta_y + playerHeight/2 >= rPos.ry() - rHeight/2 && playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() + rWidth/2)
-            canMove = false;
-        else if(playerPos.ry() + delta_y + playerHeight/2 >= rPos.ry() + rHeight/2 && playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() + rWidth/2)
-            canMove = false;
 
-//        if(playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() - rWidth/2)
-//            canMove = false;
-//        if(playerPos.rx() + delta_x + playerWidth/2 >= rPos.rx() + rWidth/2)
-//            canMove = false;
     }
-    return canMove;
+    return true;
 }
