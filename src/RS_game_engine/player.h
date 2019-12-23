@@ -13,7 +13,8 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
-
+    void advance(int step) override;
+    void move(qreal delta_x, qreal delta_y);
 private:
     QPixmap look;
 

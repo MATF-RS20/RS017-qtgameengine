@@ -15,10 +15,12 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
+
 private slots:
     virtual void pbApply();
 
 protected:
+
     qreal x;
     qreal y;
     qreal width;

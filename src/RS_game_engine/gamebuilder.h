@@ -29,7 +29,11 @@ public:
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void keyPressEvent(QKeyEvent *event) override;
 
+private slots:
+    void update();
+
 private:
+    bool playerCanMove(qreal delta_x, qreal delta_y);
     QGraphicsView* parent;
     QScopedPointer<QTimer> gameBuilderTimer;
     QScopedPointer<Player> player;
