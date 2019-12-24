@@ -37,6 +37,7 @@ void MainWindow::addSignalsAndSlots()
     connect(ui->pbRectangle, SIGNAL(clicked()), this, SLOT(addRectangle()));
     connect(ui->pbChooseFromDefault, SIGNAL(clicked()), this, SLOT(loadDefaultBackground()));
     connect(ui->pbEnemyOne, SIGNAL(clicked()), this, SLOT(addEnemyOne()));
+    connect(ui->pbAddPlayer, SIGNAL(clicked()), this, SLOT(addPlayer()));
 }
 
 void MainWindow::loadGame()
@@ -98,6 +99,28 @@ void MainWindow::addEnemyOne()
         enemyInfo.append(ui->leEnemyHeight);
         enemyInfo.append(ui->leEnemyRange);
         gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
+    }
+    else{
+        return;
+    }
+}
+
+void MainWindow::addPlayer()
+{
+    PlayerDialog* playerDialog = new PlayerDialog(this);
+    playerDialog->exec();
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/players/", tr("Images (*.png *.jpg *.jpeg)"));
+    if(playerDialog->accepted()){
+        qreal x = playerDialog->x();
+        qreal y = playerDialog->y();
+        qreal width = playerDialog->width();
+        qreal height = playerDialog->height();
+        QList<QLineEdit*> playerInfo;
+        playerInfo.append(ui->lePlayerX);
+        playerInfo.append(ui->lePlayerY);
+        playerInfo.append(ui->lePlayerWidth);
+        playerInfo.append(ui->lePlayerHeight);
+        gameBuilder->addPlayer(x, y, width, height, lookPath,ui->tbComponentInfo, playerInfo, ui->pbPlayerApply);
     }
     else{
         return;

@@ -25,6 +25,7 @@ SOURCES += \
     mainwindow.cpp \
     mapbuilder.cpp \
     player.cpp \
+    playerdialog.cpp \
     rectangle.cpp
 
 HEADERS += \
@@ -36,12 +37,14 @@ HEADERS += \
     mainwindow.h \
     mapbuilder.h \
     player.h \
+    playerdialog.h \
     rectangle.h
 
 FORMS += \
     componentinfodialog.ui \
     enemydialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    playerdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

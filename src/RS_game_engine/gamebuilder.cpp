@@ -2,15 +2,9 @@
 
 GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
-    ,player(new Player(60,80))
     ,gameBuilderTimer(new QTimer())
 {
-    addItem(&(*player));
 
-    setFocus();
-    connect(&(*gameBuilderTimer), SIGNAL(timeout()), this, SLOT(update()));
-
-    gameBuilderTimer->start(15);
 }
 
 GameBuilder::~GameBuilder()
@@ -34,6 +28,17 @@ void GameBuilder::addEnemy(qreal x, qreal y, qreal width, qreal height, qreal ra
     lstEnemy.append(enemy);
 }
 
+void GameBuilder::addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox *componentInfo, QList<QLineEdit *> playerInfo, QPushButton *playerUpdate)
+{
+    player = new Player(x,y,width, height,look,componentInfo,playerInfo,playerUpdate);
+    addItem(player);
+
+    connect(&(*gameBuilderTimer), SIGNAL(timeout()), this, SLOT(update()));
+
+    gameBuilderTimer->start(15);
+
+}
+
 void GameBuilder::keyPressEvent(QKeyEvent *event)
 {
 
@@ -50,29 +55,29 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         player->setFocus();
         qDebug() << "d pressed";
         qDebug() << "Can move D " << playerCanMove(2, 0);
-        if(playerCanMove(2, 0))
-            player->move(2,0);
+        if(playerCanMove(4, 0))
+            player->move(4,0);
     }
     else if(event->key() == Qt::Key_W){
         player->setFocus();
         qDebug() << "w pressed";
         qDebug() << "Can move W " << playerCanMove(0, -2);
-        if(playerCanMove(0, -2))
-            player->move(0,-2);
+        if(playerCanMove(0, -4))
+            player->move(0,-4);
     }
     else if(event->key() == Qt::Key_A){
         player->setFocus();
         qDebug() << "a pressed";
         qDebug() << "Can move A " << playerCanMove(-2, 0);
-        if(playerCanMove(-2, 0))
-            player->move(-2,0);
+        if(playerCanMove(-4, 0))
+            player->move(-4,0);
     }
     else if(event->key() == Qt::Key_S){
         player->setFocus();
         qDebug() << "s pressed";
         qDebug() << "Can move S " << playerCanMove(0, 2);
-        if(playerCanMove(0, 2))
-            player->move(0,2);
+        if(playerCanMove(0, 4))
+            player->move(0,4);
     }
 
 }
@@ -101,6 +106,7 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
     foreach(Rectangle *r, lstRectangle) {
         QPointF rPos = r->pos();
         qreal rWidth = 100, rHeight = 100;
+
         bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
         bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
         bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
@@ -109,8 +115,6 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         if(a1 && a2 && a3 && a4){
             return false;
         }
-
-
     }
     return true;
 }

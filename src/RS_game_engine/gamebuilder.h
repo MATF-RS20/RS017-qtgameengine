@@ -27,6 +27,7 @@ public:
 
     void addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate);
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
+    void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
     void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
@@ -36,13 +37,14 @@ private:
     bool playerCanMove(qreal delta_x, qreal delta_y);
     QGraphicsView* parent;
     QScopedPointer<QTimer> gameBuilderTimer;
-    QScopedPointer<Player> player;
+    Player* player;
     Rectangle* rectangle;
     QList<Rectangle*> lstRectangle;
     Enemy* enemy;
     QList<Enemy*> lstEnemy;
     QWidget* main;
     QToolBox* componentInfo;
+
 
 };
 
