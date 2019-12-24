@@ -17,6 +17,19 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
+    bool getFocused() const;
+    void setFocused(bool value);
+
+    long getId() const;
+    void setId(long value);
+
+    qreal getRange() const;
+    void setRange(const qreal &value);
+
+    QPixmap getLook() const;
+    void setLook(const QPixmap &value);
+    int type() const override;
+
 private slots:
     void pbApply() override;
 

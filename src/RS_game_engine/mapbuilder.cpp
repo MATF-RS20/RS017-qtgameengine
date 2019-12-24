@@ -36,3 +36,53 @@ void MapBuilder::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 void MapBuilder::pbApply()
 {}
 
+qreal MapBuilder::getHeight() const
+{
+    return height;
+}
+
+void MapBuilder::setHeight(const qreal &value)
+{
+    height = value;
+}
+
+qreal MapBuilder::getWidth() const
+{
+    return width;
+}
+
+void MapBuilder::setWidth(const qreal &value)
+{
+    width = value;
+}
+
+qreal MapBuilder::getY() const
+{
+    return y;
+}
+
+void MapBuilder::setY(const qreal &value)
+{
+    y = value;
+}
+
+qreal MapBuilder::getX() const
+{
+    return x;
+}
+
+void MapBuilder::setX(const qreal &value)
+{
+    x = value;
+}
+
+long MapBuilder::getId() const
+{
+    return id;
+}
+
+void MapBuilder::setId(long value)
+{
+    id = value;
+}
+

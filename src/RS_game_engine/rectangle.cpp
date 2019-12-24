@@ -37,21 +37,6 @@ void Rectangle::mousePressEvent(QGraphicsSceneMouseEvent *event)
     componentInfo->setItemText(0,"Rectangle " + id);
 }
 
-QString Rectangle::getID()
-{
-    return "Rectangle " + QString::number(this->id);
-}
-
-qreal Rectangle::getWidth()
-{
-    return this->width;
-}
-
-qreal Rectangle::getHeight()
-{
-    return this->height;
-}
-
 void Rectangle::pbApply()
 {
     QString id = QString::number(this->id);
@@ -63,3 +48,6 @@ void Rectangle::pbApply()
     }
 }
 
+int Rectangle::type() const{
+    return 1;
+}

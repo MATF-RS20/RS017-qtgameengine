@@ -30,6 +30,8 @@ public:
     void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
     void keyPressEvent(QKeyEvent *event) override;
 
+    QGraphicsView *getParent() const;
+
 private slots:
     void update();
 

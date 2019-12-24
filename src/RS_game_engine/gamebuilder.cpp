@@ -114,3 +114,8 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
     }
     return true;
 }
+
+QGraphicsView *GameBuilder::getParent() const
+{
+    return parent;
+}

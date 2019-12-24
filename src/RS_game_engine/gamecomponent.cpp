@@ -27,3 +27,43 @@ void GameComponent::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 }
 
 void GameComponent::pbApply(){}
+
+qreal GameComponent::getHeight() const
+{
+    return height;
+}
+
+void GameComponent::setHeight(const qreal &value)
+{
+    height = value;
+}
+
+qreal GameComponent::getWidth() const
+{
+    return width;
+}
+
+void GameComponent::setWidth(const qreal &value)
+{
+    width = value;
+}
+
+qreal GameComponent::getY() const
+{
+    return y;
+}
+
+void GameComponent::setY(const qreal &value)
+{
+    y = value;
+}
+
+qreal GameComponent::getX() const
+{
+    return x;
+}
+
+void GameComponent::setX(const qreal &value)
+{
+    x = value;
+}

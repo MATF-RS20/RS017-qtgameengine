@@ -17,6 +17,21 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
+    long getId() const;
+    void setId(long value);
+
+    qreal getX() const;
+    void setX(const qreal &value);
+
+    qreal getY() const;
+    void setY(const qreal &value);
+
+    qreal getWidth() const;
+    void setWidth(const qreal &value);
+
+    qreal getHeight() const;
+    void setHeight(const qreal &value);
+
 private slots:
     virtual void pbApply();
 

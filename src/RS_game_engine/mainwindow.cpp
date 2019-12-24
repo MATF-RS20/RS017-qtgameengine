@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QRectF>
 #include <QScrollBar>
-
+#include "sceneloader.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -126,7 +126,7 @@ void MainWindow::addPlayer()
     }
 }
 
-QString fileName;
+static QString fileName;
 void MainWindow::loadDefaultBackground()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
@@ -136,7 +136,6 @@ void MainWindow::loadDefaultBackground()
     palette.setBrush(QPalette::Base, bkgnd);
     ui->gvMainScene->setPalette(palette);
 }
-
 
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -149,4 +148,59 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QPalette palette;
     palette.setBrush(QPalette::Base, bkgnd);
     ui->gvMainScene->setPalette(palette);
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    SceneLoader* s = new SceneLoader();
+    s->setBackgroundName(fileName);
+    s->sceneSave(&(*gameBuilder));
+}
+
+void MainWindow::on_actionLoad_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Choose File"),"../../");
+           SceneLoader* s = new SceneLoader();
+           gameBuilder->clear();
+           QJsonArray list = s->sceneLoad(fileName);
+           for(auto it : list){
+               if(it.toObject()["name"].toString().compare("Background")==0){
+                   QString path =it.toObject()["path"].toString();
+                   QPixmap bkgnd(path);
+                   bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+                   QPalette palette;
+                   palette.setBrush(QPalette::Base, bkgnd);
+                   ui->gvMainScene->setPalette(palette);
+
+               }
+              if(it.toObject()["name"].toString().compare("Rectangle")==0){
+                  qreal x = it.toObject()["x"].toDouble();
+                  qreal y =it.toObject()["y"].toDouble();
+                  qreal width = it.toObject()["width"].toDouble();
+                  qreal height = it.toObject()["height"].toDouble();
+                  QList<QLineEdit*> rectangleInfo;
+                  rectangleInfo.append(ui->leRectangleX);
+                  rectangleInfo.append(ui->leRectangleY);
+                  rectangleInfo.append(ui->leRectangleWidth);
+                  rectangleInfo.append(ui->leRectangleHeight);
+                  gameBuilder->addRectangle(x, y, width, height, ui->tbComponentInfo, rectangleInfo, ui->pbRectangleApply);
+
+              }else if(it.toObject()["name"].toString().compare("Enemy")==0){
+                  qreal x = it.toObject()["x"].toDouble();
+                  qreal y =it.toObject()["y"].toDouble();
+                  qreal width = it.toObject()["width"].toDouble();
+                  qreal height = it.toObject()["height"].toDouble();
+                  qreal range = it.toObject()["range"].toDouble();
+                  QString lookPath = it.toObject()["look"].toString();
+                  QList<QLineEdit*> enemyInfo;
+                  enemyInfo.append(ui->leEnemyX);
+                  enemyInfo.append(ui->leEnemyY);
+                  enemyInfo.append(ui->leEnemyWidth);
+                  enemyInfo.append(ui->leEnemyHeight);
+                  enemyInfo.append(ui->leEnemyRange);
+                  gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
+
+              }
+
+           }
 }

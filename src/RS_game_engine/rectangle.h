@@ -16,11 +16,7 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-
-    QString getID();
-    qreal getWidth();
-    qreal getHeight();
-
+    int type() const override;
 private slots:
     void pbApply() override;
 

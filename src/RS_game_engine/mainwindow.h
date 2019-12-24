@@ -35,6 +35,10 @@ private slots:
     void addPlayer();
 
 
+    void on_actionSave_triggered();
+
+    void on_actionLoad_triggered();
+
 private:
     Ui::MainWindow *ui;
     QScopedPointer<GameBuilder> gameBuilder;

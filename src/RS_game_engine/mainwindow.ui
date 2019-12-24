@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1165</width>
+    <width>1300</width>
     <height>726</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>540</height>
+         <height>562</height>
         </rect>
        </property>
        <attribute name="label">
@@ -58,7 +58,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>540</height>
+         <height>562</height>
         </rect>
        </property>
        <attribute name="label">
@@ -84,7 +84,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>540</height>
+         <height>562</height>
         </rect>
        </property>
        <attribute name="label">
@@ -105,6 +105,14 @@
        </widget>
       </widget>
       <widget class="QWidget" name="page_6">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>562</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Player</string>
        </attribute>
@@ -127,7 +135,7 @@
     <item>
      <widget class="QGraphicsView" name="gvMainScene">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -140,7 +148,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>550</width>
         <height>650</height>
        </size>
       </property>
@@ -151,6 +159,12 @@
     </item>
     <item>
      <widget class="QToolBox" name="tbComponentInfo">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="maximumSize">
        <size>
         <width>250</width>
@@ -158,7 +172,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_4">
        <property name="geometry">
@@ -166,7 +180,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>571</height>
+         <height>593</height>
         </rect>
        </property>
        <attribute name="label">
@@ -323,7 +337,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>571</height>
+         <height>593</height>
         </rect>
        </property>
        <attribute name="label">
@@ -458,10 +472,18 @@
        </widget>
       </widget>
       <widget class="QWidget" name="page_7">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>593</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Player</string>
        </attribute>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -587,12 +609,29 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1165</width>
+     <width>1300</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

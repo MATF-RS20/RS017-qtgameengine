@@ -26,7 +26,8 @@ SOURCES += \
     mapbuilder.cpp \
     player.cpp \
     playerdialog.cpp \
-    rectangle.cpp
+    rectangle.cpp \
+    sceneloader.cpp
 
 HEADERS += \
     componentinfodialog.h \
@@ -38,7 +39,8 @@ HEADERS += \
     mapbuilder.h \
     player.h \
     playerdialog.h \
-    rectangle.h
+    rectangle.h \
+    sceneloader.h
 
 FORMS += \
     componentinfodialog.ui \

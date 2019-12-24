@@ -51,3 +51,46 @@ void Enemy::pbApply()
         update();
     }
 }
+
+QPixmap Enemy::getLook() const
+{
+    return look;
+}
+
+void Enemy::setLook(const QPixmap &value)
+{
+    look = value;
+}
+
+qreal Enemy::getRange() const
+{
+    return range;
+}
+
+void Enemy::setRange(const qreal &value)
+{
+    range = value;
+}
+
+long Enemy::getId() const
+{
+    return id;
+}
+
+void Enemy::setId(long value)
+{
+    id = value;
+}
+
+bool Enemy::getFocused() const
+{
+    return focused;
+}
+
+void Enemy::setFocused(bool value)
+{
+    focused = value;
+}
+int Enemy::type() const{
+    return 2;
+}
