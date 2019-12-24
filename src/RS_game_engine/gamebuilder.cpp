@@ -53,29 +53,25 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_D){
         player->setFocus();
-        qDebug() << "d pressed";
-        qDebug() << "Can move D " << playerCanMove(2, 0);
-        if(playerCanMove(4, 0))
+        if(playerCanMove(4, 0)){
+            player->setCurrentLook(true);
             player->move(4,0);
+        }
     }
     else if(event->key() == Qt::Key_W){
         player->setFocus();
-        qDebug() << "w pressed";
-        qDebug() << "Can move W " << playerCanMove(0, -2);
         if(playerCanMove(0, -4))
             player->move(0,-4);
     }
     else if(event->key() == Qt::Key_A){
         player->setFocus();
-        qDebug() << "a pressed";
-        qDebug() << "Can move A " << playerCanMove(-2, 0);
-        if(playerCanMove(-4, 0))
+        if(playerCanMove(-4, 0)){
+            player->setCurrentLook(false);
             player->move(-4,0);
+        }
     }
     else if(event->key() == Qt::Key_S){
         player->setFocus();
-        qDebug() << "s pressed";
-        qDebug() << "Can move S " << playerCanMove(0, 2);
         if(playerCanMove(0, 4))
             player->move(0,4);
     }
@@ -101,11 +97,11 @@ void GameBuilder::update()
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {
     QPointF playerPos = player->pos();
-    qreal playerWidth = 60, playerHeight = 80;
+    qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
 
     foreach(Rectangle *r, lstRectangle) {
         QPointF rPos = r->pos();
-        qreal rWidth = 100, rHeight = 100;
+        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
 
         bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
         bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;

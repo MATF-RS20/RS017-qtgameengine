@@ -85,7 +85,6 @@ void MainWindow::addEnemyOne()
     EnemyDialog* enemyDialog = new EnemyDialog(this);
     enemyDialog->exec();
     QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/enemies/", tr("Images (*.png *.jpg *.jpeg)"));
-    qDebug() << lookPath;
     if(enemyDialog->accepted()){
         qreal x = enemyDialog->x();
         qreal y = enemyDialog->y();

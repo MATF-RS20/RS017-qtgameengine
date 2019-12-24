@@ -21,15 +21,18 @@ public:
     void move(qreal delta_x, qreal delta_y);
     qreal getHeight();
     qreal getWidth();
+    void setCurrentLook(bool right);
 
 private slots:
     void pbApply() override;
 
 private:
-    QPixmap look;
+    QPixmap lookRight;
+    QPixmap lookLeft;
     QToolBox* componentInfo;
     QList<QLineEdit*> playerInfo;
     QPushButton* playerUpdate;
+    bool isRight;
 
 };
 

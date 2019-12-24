@@ -42,6 +42,16 @@ QString Rectangle::getID()
     return "Rectangle " + QString::number(this->id);
 }
 
+qreal Rectangle::getWidth()
+{
+    return this->width;
+}
+
+qreal Rectangle::getHeight()
+{
+    return this->height;
+}
+
 void Rectangle::pbApply()
 {
     QString id = QString::number(this->id);

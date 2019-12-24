@@ -18,6 +18,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
     QString getID();
+    qreal getWidth();
+    qreal getHeight();
 
 private slots:
     void pbApply() override;

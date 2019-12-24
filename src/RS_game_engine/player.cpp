@@ -4,20 +4,22 @@
 Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
                QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate)
     : GameComponent(x, y, width, height)
-    ,look(look)
+    ,lookRight(look)
     ,componentInfo(componentInfo)
     ,playerInfo(playerInfo)
     ,playerUpdate(playerUpdate)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
-
+    int indexOfR = look.lastIndexOf('R');
+    int indexOfDot = look.length() - look.lastIndexOf('.');
+    QString lookL = look.left(indexOfR) + "Left" + look.right(indexOfDot);
+    lookLeft = QPixmap(lookL);
     connect(playerUpdate, SIGNAL(clicked()), this, SLOT(pbApply()));
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-
-    painter->drawPixmap(0, 0, width, height, look);
+    painter->drawPixmap(0, 0, width, height, this->isRight ? lookRight : lookLeft);
 }
 
 void Player::advance(int step)
@@ -43,6 +45,12 @@ qreal Player::getWidth()
 {
     return this->width;
 }
+
+void Player::setCurrentLook(bool right)
+{
+    this->isRight = right;
+}
+
 
 void Player::pbApply()
 {
