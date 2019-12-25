@@ -54,36 +54,25 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_D){
         player->setFocus();
         player->movementArray.setBit(3,true);
-        if(playerCanMove(4, 0)){
-            player->setCurrentLook(true);
-            player->move(4,0);
-        }
+        player->setCurrentLook(true);
     }
     if(event->key() == Qt::Key_W){
         player->setFocus();
         player->movementArray.setBit(0,true);
-        if(playerCanMove(0, -4)){
-            player->move(0,-4);
-        }
     }
     if(event->key() == Qt::Key_A){
         player->setFocus();
         player->movementArray.setBit(1,true);
-            if(playerCanMove(-4, 0)){
-            player->setCurrentLook(false);
-            player->move(-4,0);
-        }
+        player->setCurrentLook(false);
+
     }
     if(event->key() == Qt::Key_S){
-
         player->setFocus();
         player->movementArray.setBit(2,true);
-        if(playerCanMove(0, 4)){
-            player->move(0,4);
-        }
     }
 
-//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
+
+    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
 }
 
@@ -98,6 +87,34 @@ void GameBuilder::update()
         if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
 
         }
+    }
+    //W-0 A-1 S-2 D-3
+    if(playerCanMove(-4, -4) && player->movementArray[0] && player->movementArray[1]){
+        player->move(-4,-4);
+    }
+    else if(playerCanMove(4, -4) && player->movementArray[0] && player->movementArray[3]){
+        player->move(4,-4);
+    }
+    else if(playerCanMove(-4, 4) && player->movementArray[2] && player->movementArray[1]){
+        player->move(-4,4);
+    }
+    else if(playerCanMove(4, 4) && player->movementArray[2] && player->movementArray[3]){
+        player->move(4,4);
+    }
+    else if(playerCanMove(0, -4) && player->movementArray[0]){
+        player->move(0,-4);
+    }
+
+    else if(playerCanMove(-4, 0) && player->movementArray[1]){
+        player->move(-4,0);
+    }
+
+    else if(playerCanMove(0, 4) && player->movementArray[2]){
+        player->move(0,4);
+    }
+
+    else if(playerCanMove(4, 0) && player->movementArray[3]){
+        player->move(4,0);
     }
 
     //    player->advance(10);
@@ -118,6 +135,8 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
         player->movementArray.setBit(2,false);
     }
 
+    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
+
 }
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
@@ -129,10 +148,10 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         QPointF rPos = r->pos();
         qreal rWidth = r->getWidth(), rHeight = r->getHeight();
 
-        bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
-        bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
-        bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
-        bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2;
+        bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2 -4;
+        bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2 -4;
+        bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2 +4;
+        bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2 +4;
 //        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
         if(a1 && a2 && a3 && a4){
             return false;
