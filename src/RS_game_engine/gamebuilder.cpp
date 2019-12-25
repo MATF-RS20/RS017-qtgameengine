@@ -53,28 +53,37 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_D){
         player->setFocus();
+        player->movementArray.setBit(3,true);
         if(playerCanMove(4, 0)){
             player->setCurrentLook(true);
             player->move(4,0);
         }
     }
-    else if(event->key() == Qt::Key_W){
+    if(event->key() == Qt::Key_W){
         player->setFocus();
-        if(playerCanMove(0, -4))
+        player->movementArray.setBit(0,true);
+        if(playerCanMove(0, -4)){
             player->move(0,-4);
+        }
     }
-    else if(event->key() == Qt::Key_A){
+    if(event->key() == Qt::Key_A){
         player->setFocus();
-        if(playerCanMove(-4, 0)){
+        player->movementArray.setBit(1,true);
+            if(playerCanMove(-4, 0)){
             player->setCurrentLook(false);
             player->move(-4,0);
         }
     }
-    else if(event->key() == Qt::Key_S){
+    if(event->key() == Qt::Key_S){
+
         player->setFocus();
-        if(playerCanMove(0, 4))
+        player->movementArray.setBit(2,true);
+        if(playerCanMove(0, 4)){
             player->move(0,4);
+        }
     }
+
+//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
 }
 
@@ -94,6 +103,23 @@ void GameBuilder::update()
     //    player->advance(10);
 }
 
+void GameBuilder::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_D){
+        player->movementArray.setBit(3,false);
+    }
+    if(event->key() == Qt::Key_W){
+        player->movementArray.setBit(0,false);
+    }
+    if(event->key() == Qt::Key_A){
+        player->movementArray.setBit(1,false);
+    }
+    if(event->key() == Qt::Key_S){
+        player->movementArray.setBit(2,false);
+    }
+
+}
+
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {
     QPointF playerPos = player->pos();
@@ -107,7 +133,7 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
         bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
         bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2;
-        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
+//        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
         if(a1 && a2 && a3 && a4){
             return false;
         }

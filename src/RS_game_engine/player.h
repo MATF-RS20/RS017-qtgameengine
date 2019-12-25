@@ -6,6 +6,7 @@
 #include <QToolBox>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QBitArray>
 
 
 class Player : public GameComponent
@@ -22,7 +23,7 @@ public:
     qreal getHeight();
     qreal getWidth();
     void setCurrentLook(bool right);
-
+    QBitArray movementArray;
 private slots:
     void pbApply() override;
 

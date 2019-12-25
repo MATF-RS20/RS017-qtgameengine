@@ -8,6 +8,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,componentInfo(componentInfo)
     ,playerInfo(playerInfo)
     ,playerUpdate(playerUpdate)
+    ,movementArray(4)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     int indexOfR = look.lastIndexOf('R');
@@ -29,8 +30,21 @@ void Player::advance(int step)
 
 void Player::move(qreal delta_x, qreal delta_y)
 {
-    x += delta_x;
-    y += delta_y;
+    if(movementArray[0]){
+            y-=4;
+        }
+
+        if(movementArray[1]){
+            x-=4;
+        }
+
+        if(movementArray[2]){
+            y+=4;
+        }
+
+        if(movementArray[3]){
+            x+=4;
+        }
     this->setPos(x, y);
 
     update();

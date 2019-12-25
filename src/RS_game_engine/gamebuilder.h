@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "rectangle.h"
 #include <QDebug>
+#include <QBitArray>
 
 class GameBuilder : public QGraphicsScene
 {
@@ -29,7 +30,7 @@ public:
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
     void keyPressEvent(QKeyEvent *event) override;
-
+    void keyReleaseEvent(QKeyEvent *event) override;
     QGraphicsView *getParent() const;
 
 private slots:
