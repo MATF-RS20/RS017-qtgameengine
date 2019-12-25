@@ -1,4 +1,4 @@
-    #ifndef ENEMYDIALOG_H
+#ifndef ENEMYDIALOG_H
 #define ENEMYDIALOG_H
 
 #include <QDialog>

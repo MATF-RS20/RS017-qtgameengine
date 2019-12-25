@@ -85,4 +85,3 @@ void MapBuilder::setId(long value)
 {
     id = value;
 }
-

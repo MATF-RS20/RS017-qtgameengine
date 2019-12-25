@@ -9,7 +9,15 @@
 #include "gameobjectinfo.h"
 #include "enemydialog.h"
 #include "playerdialog.h"
-
+#include <QWheelEvent>
+#include "ui_mainwindow.h"
+#include <QDebug>
+#include <QInputDialog>
+#include <QFileDialog>
+#include <QRectF>
+#include <QScrollBar>
+#include "sceneloader.h"
+#include "gamestart.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -27,22 +35,21 @@ public:
     void closeApp();
     void addSignalsAndSlots();
 
-
 private slots:
     void addRectangle();
     void loadDefaultBackground();
     void addEnemyOne();
     void addPlayer();
-
-
     void on_actionSave_triggered();
 
     void on_actionLoad_triggered();
 
+    void on_actionClear_triggered();
+
+    void on_startBt_clicked();
 private:
     Ui::MainWindow *ui;
     QScopedPointer<GameBuilder> gameBuilder;
     void resizeEvent(QResizeEvent* event);
-
 };
 #endif // MAINWINDOW_H

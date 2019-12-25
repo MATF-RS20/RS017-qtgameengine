@@ -8,7 +8,17 @@ GameComponent::GameComponent(qreal x, qreal y, qreal width, qreal height)
 {
     setPos(x, y);
 }
-
+GameComponent::GameComponent(GameComponent &a):
+    x(a.getX()),
+    y(a.getY()),
+    width(a.getWidth()),
+    height(a.getHeight())
+{
+    setPos(x,y);
+}
+GameComponent::~GameComponent(){
+    delete this;
+}
 QRectF GameComponent::boundingRect() const
 {
     return QRectF(0, 0, width, height);

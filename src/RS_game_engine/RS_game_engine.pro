@@ -21,6 +21,7 @@ SOURCES += \
     enemydialog.cpp \
     gamebuilder.cpp \
     gamecomponent.cpp \
+    gamestart.cpp \
     main.cpp \
     mainwindow.cpp \
     mapbuilder.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     enemydialog.h \
     gamebuilder.h \
     gamecomponent.h \
+    gamestart.h \
     mainwindow.h \
     mapbuilder.h \
     player.h \
@@ -45,6 +47,7 @@ HEADERS += \
 FORMS += \
     componentinfodialog.ui \
     enemydialog.ui \
+    gamestart.ui \
     mainwindow.ui \
     playerdialog.ui
 
@@ -52,3 +55,5 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

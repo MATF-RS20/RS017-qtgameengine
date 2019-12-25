@@ -1,6 +1,30 @@
 [
     {
         "name": "Background",
-        "path": "/home/mateja/Desktop/RS017-qtgameengine/src/RS_game_engine/backgrounds/bg1.jpg"
+        "path": "/home/mateja/Desktop/RS017-qtgameengine/src/RS_game_engine/backgrounds/bg3.png"
+    },
+    {
+        "height": 50,
+        "id": 1681692777,
+        "name": "Rectangle",
+        "width": 1000,
+        "x": 0,
+        "y": 662
+    },
+    {
+        "height": 100,
+        "id": 846930886,
+        "name": "Rectangle",
+        "width": 100,
+        "x": 573,
+        "y": 213
+    },
+    {
+        "height": 100,
+        "id": 1804289383,
+        "name": "Rectangle",
+        "width": 100,
+        "x": 331,
+        "y": 198
     }
 ]

@@ -11,7 +11,7 @@ class MapBuilder : public QGraphicsObject
     Q_OBJECT
 public:
     MapBuilder(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo);
-    ~MapBuilder();
+    ~MapBuilder() override;
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;

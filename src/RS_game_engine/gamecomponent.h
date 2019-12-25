@@ -10,11 +10,11 @@ class GameComponent : public QGraphicsObject
     Q_OBJECT
 public:
     GameComponent(qreal x, qreal y, qreal width, qreal height);
-
+    GameComponent(GameComponent &a);
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-
+    ~GameComponent() override;
 
     qreal getX() const;
     void setX(const qreal &value);

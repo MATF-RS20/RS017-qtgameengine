@@ -1,11 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QDebug>
-#include <QInputDialog>
-#include <QFileDialog>
-#include <QRectF>
-#include <QScrollBar>
-#include "sceneloader.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,13 +8,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     int width = this->size().width();
     int height = this->size().height();
+    qDebug()<<ui->gvMainScene->size();
     ui->gvMainScene->setRenderHint(QPainter::Antialiasing);
     ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
     ui->gvMainScene->setSceneRect(0,0,4000,height * 0.95);
     ui->gvMainScene->fitInView(0, 0, 4000, height * 0.95 , Qt::KeepAspectRatioByExpanding);
     gameBuilder.reset(new GameBuilder(ui->gvMainScene));
     ui->gvMainScene->setScene(&(*gameBuilder));
-
+    ui->startBt->setIcon(QIcon("../RS_game_engine/icons/start.png"));
+    ui->startBt->setFixedSize(QSize(20,20));
     ui->gvMainScene->verticalScrollBar()->setValue(ui->gvMainScene->verticalScrollBar()->maximum());
     ui->gvMainScene->horizontalScrollBar()->setValue(ui->gvMainScene->horizontalScrollBar()->minimum());
 
@@ -31,7 +27,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 void MainWindow::addSignalsAndSlots()
 {
     connect(ui->pbRectangle, SIGNAL(clicked()), this, SLOT(addRectangle()));
@@ -130,13 +125,16 @@ static QString fileName;
 void MainWindow::loadDefaultBackground()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/backgrounds/", tr("Images (*.png *.jpg)"));
-    QPixmap bkgnd(fileName);
+    QPixmap bkgnd;
+    bkgnd.load(fileName);
     bkgnd = bkgnd.scaled(ui->gvMainScene->size());
     QPalette palette;
     palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setAutoFillBackground(true);
     ui->gvMainScene->setPalette(palette);
-}
 
+
+}
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
@@ -159,13 +157,14 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionLoad_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Choose File"),"../../");
+    QString fileLoad = QFileDialog::getOpenFileName(this, QObject::tr("Choose File"),"../../");
            SceneLoader* s = new SceneLoader();
            gameBuilder->clear();
-           QJsonArray list = s->sceneLoad(fileName);
+           QJsonArray list = s->sceneLoad(fileLoad);
            for(auto it : list){
                if(it.toObject()["name"].toString().compare("Background")==0){
                    QString path =it.toObject()["path"].toString();
+                   fileName = path;
                    QPixmap bkgnd(path);
                    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
                    QPalette palette;
@@ -204,3 +203,27 @@ void MainWindow::on_actionLoad_triggered()
 
            }
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+    fileName = "";
+    QPixmap bkgnd(fileName);
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    QPalette palette;
+    palette.setBrush(QPalette::Base, bkgnd);
+    ui->gvMainScene->setPalette(palette);
+    for(auto item: ui->gvMainScene->items()){
+        delete item;
+    }
+}
+
+void MainWindow::on_startBt_clicked()
+{
+    GameStart* main_game = new GameStart();
+    main_game->setScene(ui->gvMainScene);
+    main_game->setFName(fileName);
+    main_game->start();
+    main_game->show();
+    this->hide();
+}
+

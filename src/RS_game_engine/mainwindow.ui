@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1300</width>
-    <height>726</height>
+    <width>1084</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>562</height>
+         <height>526</height>
         </rect>
        </property>
        <attribute name="label">
@@ -58,7 +58,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>562</height>
+         <height>526</height>
         </rect>
        </property>
        <attribute name="label">
@@ -84,7 +84,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>562</height>
+         <height>526</height>
         </rect>
        </property>
        <attribute name="label">
@@ -110,7 +110,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>562</height>
+         <height>526</height>
         </rect>
        </property>
        <attribute name="label">
@@ -133,28 +133,58 @@
      </widget>
     </item>
     <item>
-     <widget class="QGraphicsView" name="gvMainScene">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="enabled">
+       <bool>true</bool>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>650</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>550</width>
-        <height>650</height>
-       </size>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
+      <widget class="QGraphicsView" name="gvMainScene">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>19</y>
+         <width>554</width>
+         <height>600</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="startBt">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>icons/play-button-arrow.png</normaloff>
+         <normalon>icons/play-button-arrow.png</normalon>icons/play-button-arrow.png</iconset>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </item>
     <item>
@@ -180,7 +210,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>593</height>
+         <height>557</height>
         </rect>
        </property>
        <attribute name="label">
@@ -337,7 +367,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>593</height>
+         <height>557</height>
         </rect>
        </property>
        <attribute name="label">
@@ -477,7 +507,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>593</height>
+         <height>557</height>
         </rect>
        </property>
        <attribute name="label">
@@ -609,7 +639,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1300</width>
+     <width>1084</width>
      <height>22</height>
     </rect>
    </property>
@@ -619,6 +649,7 @@
     </property>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
+    <addaction name="actionClear"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -630,6 +661,11 @@
   <action name="actionLoad">
    <property name="text">
     <string>Load</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>

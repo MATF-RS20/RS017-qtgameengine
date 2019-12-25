@@ -10,9 +10,11 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -32,6 +34,7 @@ class Ui_MainWindow
 public:
     QAction *actionSave;
     QAction *actionLoad;
+    QAction *actionClear;
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
     QToolBox *tbConfigure;
@@ -43,7 +46,9 @@ public:
     QPushButton *pbEnemyOne;
     QWidget *page_6;
     QPushButton *pbAddPlayer;
+    QGroupBox *groupBox;
     QGraphicsView *gvMainScene;
+    QPushButton *startBt;
     QToolBox *tbComponentInfo;
     QWidget *page_4;
     QWidget *layoutWidget;
@@ -110,11 +115,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1300, 726);
+        MainWindow->resize(1084, 690);
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QString::fromUtf8("actionSave"));
         actionLoad = new QAction(MainWindow);
         actionLoad->setObjectName(QString::fromUtf8("actionLoad"));
+        actionClear = new QAction(MainWindow);
+        actionClear->setObjectName(QString::fromUtf8("actionClear"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);
@@ -124,28 +131,28 @@ public:
         tbConfigure->setMaximumSize(QSize(250, 16777215));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        page->setGeometry(QRect(0, 0, 250, 562));
+        page->setGeometry(QRect(0, 0, 250, 526));
         pbChooseFromDefault = new QPushButton(page);
         pbChooseFromDefault->setObjectName(QString::fromUtf8("pbChooseFromDefault"));
         pbChooseFromDefault->setGeometry(QRect(0, 0, 201, 25));
         tbConfigure->addItem(page, QString::fromUtf8("Background"));
         page_3 = new QWidget();
         page_3->setObjectName(QString::fromUtf8("page_3"));
-        page_3->setGeometry(QRect(0, 0, 250, 562));
+        page_3->setGeometry(QRect(0, 0, 250, 526));
         pbRectangle = new QPushButton(page_3);
         pbRectangle->setObjectName(QString::fromUtf8("pbRectangle"));
         pbRectangle->setGeometry(QRect(0, 10, 89, 25));
         tbConfigure->addItem(page_3, QString::fromUtf8("Add Components"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 250, 562));
+        page_2->setGeometry(QRect(0, 0, 250, 526));
         pbEnemyOne = new QPushButton(page_2);
         pbEnemyOne->setObjectName(QString::fromUtf8("pbEnemyOne"));
         pbEnemyOne->setGeometry(QRect(10, 10, 89, 25));
         tbConfigure->addItem(page_2, QString::fromUtf8("Add Enemy"));
         page_6 = new QWidget();
         page_6->setObjectName(QString::fromUtf8("page_6"));
-        page_6->setGeometry(QRect(0, 0, 250, 562));
+        page_6->setGeometry(QRect(0, 0, 250, 526));
         pbAddPlayer = new QPushButton(page_6);
         pbAddPlayer->setObjectName(QString::fromUtf8("pbAddPlayer"));
         pbAddPlayer->setGeometry(QRect(10, 10, 89, 25));
@@ -153,18 +160,31 @@ public:
 
         horizontalLayout->addWidget(tbConfigure);
 
-        gvMainScene = new QGraphicsView(centralwidget);
+        groupBox = new QGroupBox(centralwidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setEnabled(true);
+        gvMainScene = new QGraphicsView(groupBox);
         gvMainScene->setObjectName(QString::fromUtf8("gvMainScene"));
-        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        gvMainScene->setEnabled(true);
+        gvMainScene->setGeometry(QRect(0, 19, 554, 600));
+        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(gvMainScene->sizePolicy().hasHeightForWidth());
         gvMainScene->setSizePolicy(sizePolicy);
-        gvMainScene->setMinimumSize(QSize(0, 650));
-        gvMainScene->setMaximumSize(QSize(550, 650));
         gvMainScene->setAutoFillBackground(false);
+        startBt = new QPushButton(groupBox);
+        startBt->setObjectName(QString::fromUtf8("startBt"));
+        startBt->setGeometry(QRect(0, 0, 21, 21));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Ubuntu"));
+        startBt->setFont(font);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("icons/play-button-arrow.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("icons/play-button-arrow.png"), QSize(), QIcon::Normal, QIcon::On);
+        startBt->setIcon(icon);
 
-        horizontalLayout->addWidget(gvMainScene);
+        horizontalLayout->addWidget(groupBox);
 
         tbComponentInfo = new QToolBox(centralwidget);
         tbComponentInfo->setObjectName(QString::fromUtf8("tbComponentInfo"));
@@ -176,7 +196,7 @@ public:
         tbComponentInfo->setMaximumSize(QSize(250, 16777215));
         page_4 = new QWidget();
         page_4->setObjectName(QString::fromUtf8("page_4"));
-        page_4->setGeometry(QRect(0, 0, 250, 593));
+        page_4->setGeometry(QRect(0, 0, 250, 557));
         layoutWidget = new QWidget(page_4);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(20, 10, 199, 163));
@@ -273,7 +293,7 @@ public:
         tbComponentInfo->addItem(page_4, QString::fromUtf8("Obstacles"));
         page_5 = new QWidget();
         page_5->setObjectName(QString::fromUtf8("page_5"));
-        page_5->setGeometry(QRect(0, 0, 250, 593));
+        page_5->setGeometry(QRect(0, 0, 250, 557));
         layoutWidget1 = new QWidget(page_5);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(10, 10, 202, 194));
@@ -375,7 +395,7 @@ public:
         tbComponentInfo->addItem(page_5, QString::fromUtf8("Enemy"));
         page_7 = new QWidget();
         page_7->setObjectName(QString::fromUtf8("page_7"));
-        page_7->setGeometry(QRect(0, 0, 250, 593));
+        page_7->setGeometry(QRect(0, 0, 250, 557));
         layoutWidget2 = new QWidget(page_7);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
         layoutWidget2->setGeometry(QRect(10, 20, 202, 161));
@@ -467,7 +487,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1300, 22));
+        menubar->setGeometry(QRect(0, 0, 1084, 22));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
@@ -475,10 +495,12 @@ public:
         menubar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
         menuFile->addAction(actionLoad);
+        menuFile->addAction(actionClear);
 
         retranslateUi(MainWindow);
 
         tbConfigure->setCurrentIndex(3);
+        startBt->setDefault(false);
         tbComponentInfo->setCurrentIndex(0);
 
 
@@ -490,6 +512,7 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         actionLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
+        actionClear->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         pbChooseFromDefault->setText(QCoreApplication::translate("MainWindow", "Choose formDefault", nullptr));
         tbConfigure->setItemText(tbConfigure->indexOf(page), QCoreApplication::translate("MainWindow", "Background", nullptr));
         pbRectangle->setText(QCoreApplication::translate("MainWindow", "Rectangle", nullptr));
@@ -498,6 +521,7 @@ public:
         tbConfigure->setItemText(tbConfigure->indexOf(page_2), QCoreApplication::translate("MainWindow", "Add Enemy", nullptr));
         pbAddPlayer->setText(QCoreApplication::translate("MainWindow", "Add Player", nullptr));
         tbConfigure->setItemText(tbConfigure->indexOf(page_6), QCoreApplication::translate("MainWindow", "Player", nullptr));
+        startBt->setText(QString());
         label->setText(QCoreApplication::translate("MainWindow", "X:", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Y:", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "width:", nullptr));

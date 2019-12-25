@@ -57,6 +57,7 @@ SOURCES       = ../RS_game_engine/componentinfodialog.cpp \
 		../RS_game_engine/enemydialog.cpp \
 		../RS_game_engine/gamebuilder.cpp \
 		../RS_game_engine/gamecomponent.cpp \
+		../RS_game_engine/gamestart.cpp \
 		../RS_game_engine/main.cpp \
 		../RS_game_engine/mainwindow.cpp \
 		../RS_game_engine/mapbuilder.cpp \
@@ -68,6 +69,7 @@ SOURCES       = ../RS_game_engine/componentinfodialog.cpp \
 		moc_enemydialog.cpp \
 		moc_gamebuilder.cpp \
 		moc_gamecomponent.cpp \
+		moc_gamestart.cpp \
 		moc_mainwindow.cpp \
 		moc_mapbuilder.cpp \
 		moc_player.cpp \
@@ -77,6 +79,7 @@ OBJECTS       = componentinfodialog.o \
 		enemydialog.o \
 		gamebuilder.o \
 		gamecomponent.o \
+		gamestart.o \
 		main.o \
 		mainwindow.o \
 		mapbuilder.o \
@@ -89,6 +92,7 @@ OBJECTS       = componentinfodialog.o \
 		moc_enemydialog.o \
 		moc_gamebuilder.o \
 		moc_gamecomponent.o \
+		moc_gamestart.o \
 		moc_mainwindow.o \
 		moc_mapbuilder.o \
 		moc_player.o \
@@ -294,6 +298,7 @@ DIST          = ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/spec_pre.prf
 		../RS_game_engine/enemydialog.h \
 		../RS_game_engine/gamebuilder.h \
 		../RS_game_engine/gamecomponent.h \
+		../RS_game_engine/gamestart.h \
 		../RS_game_engine/mainwindow.h \
 		../RS_game_engine/mapbuilder.h \
 		../RS_game_engine/player.h \
@@ -304,6 +309,7 @@ DIST          = ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/spec_pre.prf
 		../RS_game_engine/enemydialog.cpp \
 		../RS_game_engine/gamebuilder.cpp \
 		../RS_game_engine/gamecomponent.cpp \
+		../RS_game_engine/gamestart.cpp \
 		../RS_game_engine/main.cpp \
 		../RS_game_engine/mainwindow.cpp \
 		../RS_game_engine/mapbuilder.cpp \
@@ -319,7 +325,7 @@ TARGET        = RS_game_engine
 first: all
 ####### Build rules
 
-RS_game_engine: ui_componentinfodialog.h ui_enemydialog.h ui_mainwindow.h ui_playerdialog.h $(OBJECTS)  
+RS_game_engine: ui_componentinfodialog.h ui_enemydialog.h ui_gamestart.h ui_mainwindow.h ui_playerdialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../RS_game_engine/RS_game_engine.pro ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/spec_pre.prf \
@@ -732,9 +738,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.h ../RS_game_engine/enemy.h ../RS_game_engine/enemydialog.h ../RS_game_engine/gamebuilder.h ../RS_game_engine/gamecomponent.h ../RS_game_engine/mainwindow.h ../RS_game_engine/mapbuilder.h ../RS_game_engine/player.h ../RS_game_engine/playerdialog.h ../RS_game_engine/rectangle.h ../RS_game_engine/sceneloader.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.cpp ../RS_game_engine/enemy.cpp ../RS_game_engine/enemydialog.cpp ../RS_game_engine/gamebuilder.cpp ../RS_game_engine/gamecomponent.cpp ../RS_game_engine/main.cpp ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mapbuilder.cpp ../RS_game_engine/player.cpp ../RS_game_engine/playerdialog.cpp ../RS_game_engine/rectangle.cpp ../RS_game_engine/sceneloader.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.ui ../RS_game_engine/enemydialog.ui ../RS_game_engine/mainwindow.ui ../RS_game_engine/playerdialog.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.h ../RS_game_engine/enemy.h ../RS_game_engine/enemydialog.h ../RS_game_engine/gamebuilder.h ../RS_game_engine/gamecomponent.h ../RS_game_engine/gamestart.h ../RS_game_engine/mainwindow.h ../RS_game_engine/mapbuilder.h ../RS_game_engine/player.h ../RS_game_engine/playerdialog.h ../RS_game_engine/rectangle.h ../RS_game_engine/sceneloader.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.cpp ../RS_game_engine/enemy.cpp ../RS_game_engine/enemydialog.cpp ../RS_game_engine/gamebuilder.cpp ../RS_game_engine/gamecomponent.cpp ../RS_game_engine/gamestart.cpp ../RS_game_engine/main.cpp ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mapbuilder.cpp ../RS_game_engine/player.cpp ../RS_game_engine/playerdialog.cpp ../RS_game_engine/rectangle.cpp ../RS_game_engine/sceneloader.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../RS_game_engine/componentinfodialog.ui ../RS_game_engine/enemydialog.ui ../RS_game_engine/gamestart.ui ../RS_game_engine/mainwindow.ui ../RS_game_engine/playerdialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -766,9 +772,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt5.13.1/5.13.1/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_componentinfodialog.cpp moc_enemy.cpp moc_enemydialog.cpp moc_gamebuilder.cpp moc_gamecomponent.cpp moc_mainwindow.cpp moc_mapbuilder.cpp moc_player.cpp moc_playerdialog.cpp
+compiler_moc_header_make_all: moc_componentinfodialog.cpp moc_enemy.cpp moc_enemydialog.cpp moc_gamebuilder.cpp moc_gamecomponent.cpp moc_gamestart.cpp moc_mainwindow.cpp moc_mapbuilder.cpp moc_player.cpp moc_playerdialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_componentinfodialog.cpp moc_enemy.cpp moc_enemydialog.cpp moc_gamebuilder.cpp moc_gamecomponent.cpp moc_mainwindow.cpp moc_mapbuilder.cpp moc_player.cpp moc_playerdialog.cpp
+	-$(DEL_FILE) moc_componentinfodialog.cpp moc_enemy.cpp moc_enemydialog.cpp moc_gamebuilder.cpp moc_gamecomponent.cpp moc_gamestart.cpp moc_mainwindow.cpp moc_mapbuilder.cpp moc_player.cpp moc_playerdialog.cpp
 moc_componentinfodialog.cpp: ../RS_game_engine/componentinfodialog.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QDialog \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdialog.h \
@@ -1364,6 +1370,117 @@ moc_gamecomponent.cpp: ../RS_game_engine/gamecomponent.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/bin/moc
 	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/moc $(DEFINES) --include /home/mateja/Desktop/RS017-qtgameengine/src/build-RS_game_engine-Desktop_Qt_5_13_1_GCC_64bit-Debug/moc_predefs.h -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/mkspecs/linux-g++ -I/home/mateja/Desktop/RS017-qtgameengine/src/RS_game_engine -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtWidgets -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtGui -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../RS_game_engine/gamecomponent.h -o moc_gamecomponent.cpp
 
+moc_gamestart.cpp: ../RS_game_engine/gamestart.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qconfig.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtcore-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlogging.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qflags.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmutex.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qnumeric.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qversiontagging.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtgui-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qnamespace.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobject.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstring.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qchar.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbytearray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qrefcount.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qarraydata.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringliteral.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringview.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qalgorithms.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qiterator.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qpair.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvector.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qpoint.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringlist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qregexp.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreevent.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmetatype.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobject_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmargins.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qrect.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsize.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpalette.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qcolor.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qrgb.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qrgba64.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qbrush.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qmatrix.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpolygon.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qregion.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdatastream.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qiodevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qline.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtransform.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpainterpath.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qimage.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpixelformat.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpixmap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qshareddata.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfont.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfontinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qcursor.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qkeysequence.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qevent.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qset.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qurl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qurlquery.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qvector2d.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QGraphicsScene \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpen.h \
+		moc_predefs.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/bin/moc
+	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/moc $(DEFINES) --include /home/mateja/Desktop/RS017-qtgameengine/src/build-RS_game_engine-Desktop_Qt_5_13_1_GCC_64bit-Debug/moc_predefs.h -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/mkspecs/linux-g++ -I/home/mateja/Desktop/RS017-qtgameengine/src/RS_game_engine -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtWidgets -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtGui -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../RS_game_engine/gamestart.h -o moc_gamestart.cpp
+
 moc_mainwindow.cpp: ../RS_game_engine/mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMainWindow \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1534,6 +1651,57 @@ moc_mainwindow.cpp: ../RS_game_engine/mainwindow.h \
 		../RS_game_engine/gameobjectinfo.h \
 		../RS_game_engine/enemydialog.h \
 		../RS_game_engine/playerdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QWheelEvent \
+		ui_mainwindow.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QIcon \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QAction \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qaction.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFrame \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenu \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenuBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QRectF \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QScrollBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qscrollbar.h \
+		../RS_game_engine/sceneloader.h \
+		../RS_game_engine/mainwindow.h \
+		../RS_game_engine/gamestart.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonDocument \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsondocument.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonArray \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonarray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonObject \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonobject.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QBuffer \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbuffer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QDir \
 		moc_predefs.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/bin/moc
 	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/moc $(DEFINES) --include /home/mateja/Desktop/RS017-qtgameengine/src/build-RS_game_engine-Desktop_Qt_5_13_1_GCC_64bit-Debug/moc_predefs.h -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/mkspecs/linux-g++ -I/home/mateja/Desktop/RS017-qtgameengine/src/RS_game_engine -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtWidgets -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtGui -I/home/mateja/Qt5.13.1/5.13.1/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../RS_game_engine/mainwindow.h -o moc_mainwindow.cpp
@@ -1896,9 +2064,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_componentinfodialog.h ui_enemydialog.h ui_mainwindow.h ui_playerdialog.h
+compiler_uic_make_all: ui_componentinfodialog.h ui_enemydialog.h ui_gamestart.h ui_mainwindow.h ui_playerdialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_componentinfodialog.h ui_enemydialog.h ui_mainwindow.h ui_playerdialog.h
+	-$(DEL_FILE) ui_componentinfodialog.h ui_enemydialog.h ui_gamestart.h ui_mainwindow.h ui_playerdialog.h
 ui_componentinfodialog.h: ../RS_game_engine/componentinfodialog.ui \
 		../../../../Qt5.13.1/5.13.1/gcc_64/bin/uic
 	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/uic ../RS_game_engine/componentinfodialog.ui -o ui_componentinfodialog.h
@@ -1906,6 +2074,10 @@ ui_componentinfodialog.h: ../RS_game_engine/componentinfodialog.ui \
 ui_enemydialog.h: ../RS_game_engine/enemydialog.ui \
 		../../../../Qt5.13.1/5.13.1/gcc_64/bin/uic
 	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/uic ../RS_game_engine/enemydialog.ui -o ui_enemydialog.h
+
+ui_gamestart.h: ../RS_game_engine/gamestart.ui \
+		../../../../Qt5.13.1/5.13.1/gcc_64/bin/uic
+	/home/mateja/Qt5.13.1/5.13.1/gcc_64/bin/uic ../RS_game_engine/gamestart.ui -o ui_gamestart.h
 
 ui_mainwindow.h: ../RS_game_engine/mainwindow.ui \
 		../../../../Qt5.13.1/5.13.1/gcc_64/bin/uic
@@ -2568,6 +2740,124 @@ gamecomponent.o: ../RS_game_engine/gamecomponent.cpp ../RS_game_engine/gamecompo
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QObject
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamecomponent.o ../RS_game_engine/gamecomponent.cpp
 
+gamestart.o: ../RS_game_engine/gamestart.cpp ../RS_game_engine/gamestart.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qglobal.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qconfig.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtcore-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlogging.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qflags.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmutex.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qnumeric.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qversiontagging.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtgui-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qnamespace.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobject.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstring.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qchar.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbytearray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qrefcount.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qarraydata.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringliteral.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringview.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qalgorithms.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qiterator.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qpair.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvector.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qpoint.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringlist.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qregexp.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreevent.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmetatype.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qobject_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmargins.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qrect.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsize.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpalette.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qcolor.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qrgb.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qrgba64.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qbrush.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qmatrix.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpolygon.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qregion.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdatastream.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qiodevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qline.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtransform.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpainterpath.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qimage.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpixelformat.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpixmap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qshareddata.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfont.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qfontinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qcursor.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qkeysequence.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qevent.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qset.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qurl.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qurlquery.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qvector2d.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QGraphicsScene \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qpen.h \
+		ui_gamestart.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamestart.o ../RS_game_engine/gamestart.cpp
+
 main.o: ../RS_game_engine/main.cpp ../RS_game_engine/mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMainWindow \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -2738,13 +3028,56 @@ main.o: ../RS_game_engine/main.cpp ../RS_game_engine/mainwindow.h \
 		../RS_game_engine/gameobjectinfo.h \
 		../RS_game_engine/enemydialog.h \
 		../RS_game_engine/playerdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QWheelEvent \
+		ui_mainwindow.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QIcon \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QAction \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qaction.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qeventloop.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFrame \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenu \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenuBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QRectF \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QScrollBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qscrollbar.h \
+		../RS_game_engine/sceneloader.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonDocument \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsondocument.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonArray \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonarray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonObject \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonobject.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QBuffer \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbuffer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QDir \
+		../RS_game_engine/gamestart.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../RS_game_engine/main.cpp
 
 mainwindow.o: ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mainwindow.h \
@@ -2917,8 +3250,13 @@ mainwindow.o: ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mainwindow.h \
 		../RS_game_engine/gameobjectinfo.h \
 		../RS_game_engine/enemydialog.h \
 		../RS_game_engine/playerdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QWheelEvent \
 		ui_mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QIcon \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QAction \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qaction.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
@@ -2926,6 +3264,7 @@ mainwindow.o: ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFrame \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QHBoxLayout \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayout.h \
@@ -2933,14 +3272,11 @@ mainwindow.o: ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QLabel \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenu \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenuBar \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenubar.h \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qaction.h \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QStatusBar \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qstatusbar.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QInputDialog \
@@ -2951,7 +3287,19 @@ mainwindow.o: ../RS_game_engine/mainwindow.cpp ../RS_game_engine/mainwindow.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfileinfo.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QRectF \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QScrollBar \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qscrollbar.h
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qscrollbar.h \
+		../RS_game_engine/sceneloader.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonDocument \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsondocument.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonArray \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonarray.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonObject \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonobject.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QBuffer \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbuffer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QDir \
+		../RS_game_engine/gamestart.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../RS_game_engine/mainwindow.cpp
 
 mapbuilder.o: ../RS_game_engine/mapbuilder.cpp ../RS_game_engine/mapbuilder.h \
@@ -3633,6 +3981,45 @@ sceneloader.o: ../RS_game_engine/sceneloader.cpp ../RS_game_engine/sceneloader.h
 		../RS_game_engine/gameobjectinfo.h \
 		../RS_game_engine/enemydialog.h \
 		../RS_game_engine/playerdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QWheelEvent \
+		ui_mainwindow.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/QIcon \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QAction \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qaction.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFrame \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenu \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QMenuBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QRectF \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/QScrollBar \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtWidgets/qscrollbar.h \
+		../RS_game_engine/gamestart.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonDocument \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsondocument.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonvalue.h \
@@ -3641,7 +4028,8 @@ sceneloader.o: ../RS_game_engine/sceneloader.cpp ../RS_game_engine/sceneloader.h
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QJsonObject \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qjsonobject.h \
 		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QBuffer \
-		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbuffer.h
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/qbuffer.h \
+		../../../../Qt5.13.1/5.13.1/gcc_64/include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sceneloader.o ../RS_game_engine/sceneloader.cpp
 
 moc_componentinfodialog.o: moc_componentinfodialog.cpp 
@@ -3658,6 +4046,9 @@ moc_gamebuilder.o: moc_gamebuilder.cpp
 
 moc_gamecomponent.o: moc_gamecomponent.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamecomponent.o moc_gamecomponent.cpp
+
+moc_gamestart.o: moc_gamestart.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamestart.o moc_gamestart.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
