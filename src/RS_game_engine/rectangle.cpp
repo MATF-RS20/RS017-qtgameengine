@@ -27,7 +27,8 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         this->focused = false;
     }
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(texture));
+//    painter->setBrush(QBrush(texture));
+    painter->setBrush(Qt::red);
     painter->drawRect(0, 0, width, height);
 }
 

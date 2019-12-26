@@ -20,6 +20,8 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    playerInfo.at(0)->setPlaceholderText(QString::number(this->pos().rx()));
+    playerInfo.at(1)->setPlaceholderText(QString::number(this->pos().ry()));
     painter->drawPixmap(0, 0, width, height, this->isRight ? lookRight : lookLeft);
 }
 
@@ -31,20 +33,20 @@ void Player::advance(int step)
 void Player::move(qreal delta_x, qreal delta_y)
 {
     if(movementArray[0]){
-            y-=4;
-        }
+        y-=4;
+    }
 
-        if(movementArray[1]){
-            x-=4;
-        }
+    if(movementArray[1]){
+        x-=4;
+    }
 
-        if(movementArray[2]){
-            y+=4;
-        }
+    if(movementArray[2]){
+        y+=4;
+    }
 
-        if(movementArray[3]){
-            x+=4;
-        }
+    if(movementArray[3]){
+        x+=4;
+    }
     this->setPos(x, y);
 
     update();
