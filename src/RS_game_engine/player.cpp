@@ -25,10 +25,6 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawPixmap(0, 0, width, height, this->isRight ? lookRight : lookLeft);
 }
 
-void Player::advance(int step)
-{
-
-}
 
 void Player::move(qreal delta_x, qreal delta_y)
 {

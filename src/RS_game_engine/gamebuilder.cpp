@@ -72,7 +72,7 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     }
 
 
-    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
+//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
 }
 
@@ -83,25 +83,27 @@ void GameBuilder::update()
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
     foreach (QGraphicsItem* item, collidingObjects){
 
-        qDebug() << dynamic_cast<QObject*>(item)->metaObject()->className();
+//        qDebug() << dynamic_cast<QObject*>(item)->metaObject()->className();
         if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
 
         }
     }
     //W-0 A-1 S-2 D-3
-    if(playerCanMoveUp(0,-4) && player->movementArray[0]){
+//    qDebug() << player->movementArray;
+//    qDebug() << playerCanMove(0,-4);
+    if(playerCanMove(0,-4) && player->movementArray[0]){
         player->move(0,-4);
     }
 
-    else if(playerCanMoveLeft(-4,0) && player->movementArray[1]){
+    else if(playerCanMove(-4,0) && player->movementArray[1]){
         player->move(-4,0);
     }
 
-    else if(playerCanMoveDown(0,4) && player->movementArray[2]){
+    else if(playerCanMove(0,4) && player->movementArray[2]){
         player->move(0,4);
     }
 
-    else if(playerCanMoveRight(4,0) && player->movementArray[3]){
+    else if(playerCanMove(4,0) && player->movementArray[3]){
         player->move(4,0);
     }
 }
@@ -121,96 +123,28 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
         player->movementArray.setBit(2,false);
     }
 
-    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
+//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
 }
 
-bool GameBuilder::playerCanMoveUp(qreal delta_x, qreal delta_y)
+bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {
     QPointF playerPos = player->pos();
     qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
-    qDebug() << playerPos.ry();
     foreach(Rectangle *r, lstRectangle) {
         QPointF rPos = r->pos();
         qreal rWidth = r->getWidth(), rHeight = r->getHeight();
 
-        bool left = playerPos.rx() + playerWidth < rPos.rx();
-        bool right = playerPos.rx() > rPos.rx() + rWidth;
-        bool up = playerPos.ry() + playerHeight - delta_y < rPos.ry();
-        bool down = playerPos.ry() + delta_y > rPos.ry() + rHeight;
-
-
-        if(left || right)
-            return true;
-        else if(up || down)
-             return true;
+        bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
+        bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
+        bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
+        bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2;
+        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
+        if(a1 && a2 && a3 && a4){
+            return false;
+        }
     }
-    return false;
-}
-
-bool GameBuilder::playerCanMoveDown(qreal delta_x, qreal delta_y)
-{
-    QPointF playerPos = player->pos();
-    qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
-
-    foreach(Rectangle *r, lstRectangle) {
-        QPointF rPos = r->pos();
-        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
-
-        bool left = playerPos.rx() + playerWidth< rPos.rx();
-        bool right = playerPos.rx() > rPos.rx() + rWidth;
-        bool down = playerPos.ry() > rPos.ry() + rHeight + 4;
-        bool up = playerPos.ry() + delta_y + playerHeight < rPos.ry();
-
-
-        if(left || right)
-            return true;
-        else if(up || down)
-             return true;
-    }
-    return false;
-}
-
-bool GameBuilder::playerCanMoveLeft(qreal delta_x, qreal delta_y)
-{
-    QPointF playerPos = player->pos();
-    qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
-
-    foreach(Rectangle *r, lstRectangle) {
-        QPointF rPos = r->pos();
-        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
-
-        bool up = playerPos.ry() + playerHeight < rPos.ry();
-        bool down = playerPos.ry() > rPos.ry() + rHeight;
-        bool left = playerPos.rx() + playerWidth - delta_x < rPos.rx();
-        bool right = playerPos.rx() + delta_x > rPos.rx() + rWidth;
-
-        if(up || down || left || right)
-            return true;
-
-    }
-    return false;
-}
-
-bool GameBuilder::playerCanMoveRight(qreal delta_x, qreal delta_y)
-{
-    QPointF playerPos = player->pos();
-    qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
-
-    foreach(Rectangle *r, lstRectangle) {
-        QPointF rPos = r->pos();
-        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
-
-        bool up = playerPos.ry() + playerHeight < rPos.ry();
-        bool down = playerPos.ry() > rPos.ry() + rHeight;
-        bool left = playerPos.rx() + playerWidth + delta_x < rPos.rx();
-        bool right = playerPos.rx() > rPos.rx() + rWidth;
-
-        if(up || down || left || right)
-            return true;
-
-    }
-    return false;
+    return true;
 }
 
 QGraphicsView *GameBuilder::getParent() const

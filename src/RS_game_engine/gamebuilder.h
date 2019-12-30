@@ -37,10 +37,7 @@ private slots:
     void update();
 
 private:
-    bool playerCanMoveUp(qreal delta_x, qreal delta_y);
-    bool playerCanMoveDown(qreal delta_x, qreal delta_y);
-    bool playerCanMoveLeft(qreal delta_x, qreal delta_y);
-    bool playerCanMoveRight(qreal delta_x, qreal delta_y);
+    bool playerCanMove(qreal delta_x, qreal delta_y);
     QGraphicsView* parent;
     QScopedPointer<QTimer> gameBuilderTimer;
     Player* player;
