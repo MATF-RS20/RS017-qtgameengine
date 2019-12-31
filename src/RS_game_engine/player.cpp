@@ -11,11 +11,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,movementArray(4)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
-    int indexOfR = look.lastIndexOf('R');
-    int indexOfDot = look.length() - look.lastIndexOf('.');
-    QString lookL = look.left(indexOfR) + "Left" + look.right(indexOfDot);
-    lookLeft = QPixmap(lookL);
-    connect(playerUpdate, SIGNAL(clicked()), this, SLOT(pbApply()));
+    lookLeft = lookRight.transformed(QTransform().scale(-1,1));
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
