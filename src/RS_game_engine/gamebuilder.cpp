@@ -88,6 +88,11 @@ void GameBuilder::update()
 
         }
     }
+    foreach(Enemy* e, lstEnemy){
+        qDebug() << e->getRange();
+        if(e->getRange() > 0)
+            e->move();
+    }
     //W-0 A-1 S-2 D-3
 //    qDebug() << player->movementArray;
 //    qDebug() << playerCanMove(0,-4);
@@ -135,12 +140,15 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         QPointF rPos = r->pos();
         qreal rWidth = r->getWidth(), rHeight = r->getHeight();
 
-        bool a1 = playerPos.ry() + delta_y + playerHeight/2 > rPos.ry() - rHeight/2;
-        bool a2 = playerPos.rx() + delta_x + playerWidth/2 > rPos.rx() - rWidth/2;
-        bool a3 = playerPos.ry() + delta_y - playerHeight/2 < rPos.ry() + rHeight/2;
-        bool a4 = playerPos.rx() + delta_x - playerWidth/2 < rPos.rx() + rWidth/2;
+        bool a1 = playerPos.ry() + delta_y > rPos.ry() - rHeight;
+        bool a2 = playerPos.rx() + delta_x + playerWidth > rPos.rx();
+        bool a3 = playerPos.ry() + delta_y - playerHeight < rPos.ry();
+        bool a4 = playerPos.rx() + delta_x < rPos.rx() + rWidth;
         qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
         if(a1 && a2 && a3 && a4){
+            qDebug() << playerPos.rx() << " " << delta_x << " " << (playerWidth/2);
+            qDebug() << playerPos.ry() << " " << delta_y << " " << (playerWidth/2);
+            qDebug() << rPos.rx() << " " << (rWidth/2);
             return false;
         }
     }

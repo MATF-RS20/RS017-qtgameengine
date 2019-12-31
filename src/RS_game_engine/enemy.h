@@ -30,6 +30,8 @@ public:
     void setLook(const QPixmap &value);
     int type() const override;
 
+    void move();
+
 private slots:
     void pbApply() override;
 
@@ -37,7 +39,12 @@ private:
     bool focused;
     long id;
     QPixmap look;
+    QPixmap lookRight;
+    QPixmap lookLeft;
     qreal range;
+    qreal maxLeft;
+    qreal maxRight;
+    qreal speed = 1;
     QToolBox* componentInfo;
     QList<QLineEdit*> enemyInfo;
     QPushButton* enemyUpdate;

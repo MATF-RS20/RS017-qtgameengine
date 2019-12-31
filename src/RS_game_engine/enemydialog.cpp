@@ -20,7 +20,7 @@ void EnemyDialog::on_epbApply_clicked()
     this->y_coord = (qreal)ui->eY->text().toFloat();
     this->m_width = (qreal)ui->eWidth->text().toFloat();
     this->m_height = (qreal)ui->eHeight->text().toFloat();
-    this->m_height = (qreal)ui->eRange->text().toFloat();
+    this->m_range = (qreal)ui->eRange->text().toFloat();
     this->m_accepted = true;
     accept();
 }

@@ -202,7 +202,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_4">
        <property name="geometry">
@@ -378,8 +378,8 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>202</width>
-          <height>194</height>
+          <width>226</width>
+          <height>227</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -483,8 +483,8 @@
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>100</width>
-               <height>18</height>
+               <width>97</width>
+               <height>15</height>
               </size>
              </property>
             </spacer>
