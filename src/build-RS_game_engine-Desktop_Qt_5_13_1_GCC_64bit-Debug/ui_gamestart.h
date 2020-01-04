@@ -33,6 +33,7 @@ public:
         graphicsView = new QGraphicsView(GameStart);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setBaseSize(QSize(1600, 1000));
+        graphicsView->setInteractive(true);
 
         verticalLayout->addWidget(graphicsView);
 

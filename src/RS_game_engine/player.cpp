@@ -24,23 +24,10 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 void Player::move(qreal delta_x, qreal delta_y)
 {
-    if(movementArray[0]){
-        y-=4;
-    }
-
-    if(movementArray[1]){
-        x-=4;
-    }
-
-    if(movementArray[2]){
-        y+=4;
-    }
-
-    if(movementArray[3]){
-        x+=4;
-    }
+    x+=delta_x;
+    y+=delta_y;
     this->setPos(x, y);
-
+    qDebug()<<this->pos();
     update();
 }
 
@@ -58,7 +45,6 @@ void Player::setCurrentLook(bool right)
 {
     this->isRight = right;
 }
-
 
 void Player::pbApply()
 {

@@ -29,15 +29,22 @@ public:
     void addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate);
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
+    bool playerCanMove(qreal delta_x, qreal delta_y);
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
     QGraphicsView *getParent() const;
+
+    Player *getPlayer() const;
+    void setPlayer(Player *value);
+
+    QList<Enemy *> getLstEnemy() const;
+    void setLstEnemy(const QList<Enemy *> &value);
 
 private slots:
     void update();
 
 private:
-    bool playerCanMove(qreal delta_x, qreal delta_y);
+
     QGraphicsView* parent;
     QScopedPointer<QTimer> gameBuilderTimer;
     Player* player;

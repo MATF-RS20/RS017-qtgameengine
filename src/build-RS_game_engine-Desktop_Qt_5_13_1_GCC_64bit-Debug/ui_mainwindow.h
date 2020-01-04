@@ -296,7 +296,7 @@ public:
         page_5->setGeometry(QRect(0, 0, 250, 557));
         layoutWidget1 = new QWidget(page_5);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 10, 202, 194));
+        layoutWidget1->setGeometry(QRect(10, 10, 226, 227));
         verticalLayout_3 = new QVBoxLayout(layoutWidget1);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -380,7 +380,7 @@ public:
 
         horizontalLayout_12 = new QHBoxLayout();
         horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
-        horizontalSpacer_2 = new QSpacerItem(100, 18, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(97, 15, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayout_12->addItem(horizontalSpacer_2);
 
@@ -501,7 +501,7 @@ public:
 
         tbConfigure->setCurrentIndex(3);
         startBt->setDefault(false);
-        tbComponentInfo->setCurrentIndex(0);
+        tbComponentInfo->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

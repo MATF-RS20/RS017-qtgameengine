@@ -23,6 +23,9 @@ public:
     qreal getWidth();
     void setCurrentLook(bool right);
     QBitArray movementArray;
+
+
+
 private slots:
     void pbApply() override;
 

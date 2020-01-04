@@ -19,6 +19,15 @@ GameComponent::GameComponent(GameComponent &a):
 GameComponent::~GameComponent(){
     delete this;
 }
+
+void GameComponent::gravity(bool wantGravity)
+{
+    if(wantGravity == true){
+        y+=5;
+        this->setPos(x,y);
+        update();
+    }
+}
 QRectF GameComponent::boundingRect() const
 {
     return QRectF(0, 0, width, height);

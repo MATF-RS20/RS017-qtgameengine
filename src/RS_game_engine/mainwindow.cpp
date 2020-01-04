@@ -138,6 +138,7 @@ void MainWindow::loadDefaultBackground()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
+    Q_UNUSED(event)
     int width = this->size().width();
     int height = this->size().height();
     ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
@@ -220,10 +221,13 @@ void MainWindow::on_actionClear_triggered()
 void MainWindow::on_startBt_clicked()
 {
     GameStart* main_game = new GameStart();
+    main_game->setGameON(&(*gameBuilder));
     main_game->setScene(ui->gvMainScene);
     main_game->setFName(fileName);
     main_game->start();
     main_game->show();
-    this->hide();
+    //this->hide();
 }
+
+
 

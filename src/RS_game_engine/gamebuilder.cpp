@@ -2,7 +2,7 @@
 
 GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
-    ,gameBuilderTimer(new QTimer())
+    ,gameBuilderTimer(new QTimer()),player(nullptr)
 {
 
 }
@@ -153,6 +153,26 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         }
     }
     return true;
+}
+
+QList<Enemy *> GameBuilder::getLstEnemy() const
+{
+    return lstEnemy;
+}
+
+void GameBuilder::setLstEnemy(const QList<Enemy *> &value)
+{
+    lstEnemy = value;
+}
+
+Player *GameBuilder::getPlayer() const
+{
+    return player;
+}
+
+void GameBuilder::setPlayer(Player *value)
+{
+    player = value;
 }
 
 QGraphicsView *GameBuilder::getParent() const
