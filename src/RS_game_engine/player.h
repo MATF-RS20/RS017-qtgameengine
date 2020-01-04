@@ -23,7 +23,8 @@ public:
     qreal getWidth();
     void setCurrentLook(bool right);
     QBitArray movementArray;
-
+    void setMoveUpDownEnabled(bool checked);
+    void setGravityEnabled(bool checked);
 
 
 private slots:
@@ -36,6 +37,7 @@ private:
     QList<QLineEdit*> playerInfo;
     QPushButton* playerUpdate;
     bool isRight;
+    bool gravityEnabled, moveUpDownEnabled, jumpEnabled;
 
 };
 

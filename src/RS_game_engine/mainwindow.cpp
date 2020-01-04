@@ -56,7 +56,7 @@ void MainWindow::addRectangle()
 
     ComponentInfoDialog* dialog = new ComponentInfoDialog(this);
     dialog->exec();
-
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
     if(dialog->accepted()){
         qreal x = dialog->x();
         qreal y = dialog->y();
@@ -67,14 +67,13 @@ void MainWindow::addRectangle()
         rectangleInfo.append(ui->leRectangleY);
         rectangleInfo.append(ui->leRectangleWidth);
         rectangleInfo.append(ui->leRectangleHeight);
-        gameBuilder->addRectangle(x, y, width, height, ui->tbComponentInfo, rectangleInfo, ui->pbRectangleApply);
+        gameBuilder->addRectangle(x, y, width, height, ui->tbComponentInfo, rectangleInfo, ui->pbRectangleApply, lookPath);
 
     }
     else{
         return;
     }
 }
-
 void MainWindow::addEnemyOne()
 {
     EnemyDialog* enemyDialog = new EnemyDialog(this);
@@ -160,49 +159,51 @@ void MainWindow::on_actionLoad_triggered()
 {
     QString fileLoad = QFileDialog::getOpenFileName(this, QObject::tr("Choose File"),"../../");
            SceneLoader* s = new SceneLoader();
-           gameBuilder->clear();
-           QJsonArray list = s->sceneLoad(fileLoad);
-           for(auto it : list){
-               if(it.toObject()["name"].toString().compare("Background")==0){
-                   QString path =it.toObject()["path"].toString();
-                   fileName = path;
-                   QPixmap bkgnd(path);
-                   bkgnd = bkgnd.scaled(ui->gvMainScene->size());
-                   QPalette palette;
-                   palette.setBrush(QPalette::Base, bkgnd);
-                   ui->gvMainScene->setPalette(palette);
-
-               }
-              if(it.toObject()["name"].toString().compare("Rectangle")==0){
-                  qreal x = it.toObject()["x"].toDouble();
-                  qreal y =it.toObject()["y"].toDouble();
-                  qreal width = it.toObject()["width"].toDouble();
-                  qreal height = it.toObject()["height"].toDouble();
-                  QList<QLineEdit*> rectangleInfo;
-                  rectangleInfo.append(ui->leRectangleX);
-                  rectangleInfo.append(ui->leRectangleY);
-                  rectangleInfo.append(ui->leRectangleWidth);
-                  rectangleInfo.append(ui->leRectangleHeight);
-                  gameBuilder->addRectangle(x, y, width, height, ui->tbComponentInfo, rectangleInfo, ui->pbRectangleApply);
-
-              }else if(it.toObject()["name"].toString().compare("Enemy")==0){
-                  qreal x = it.toObject()["x"].toDouble();
-                  qreal y =it.toObject()["y"].toDouble();
-                  qreal width = it.toObject()["width"].toDouble();
-                  qreal height = it.toObject()["height"].toDouble();
-                  qreal range = it.toObject()["range"].toDouble();
-                  QString lookPath = it.toObject()["look"].toString();
-                  QList<QLineEdit*> enemyInfo;
-                  enemyInfo.append(ui->leEnemyX);
-                  enemyInfo.append(ui->leEnemyY);
-                  enemyInfo.append(ui->leEnemyWidth);
-                  enemyInfo.append(ui->leEnemyHeight);
-                  enemyInfo.append(ui->leEnemyRange);
-                  gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
-
-              }
+       gameBuilder->clear();
+       QJsonArray list = s->sceneLoad(fileLoad);
+       for(auto it : list){
+           if(it.toObject()["name"].toString().compare("Background")==0){
+               QString path =it.toObject()["path"].toString();
+               fileName = path;
+               QPixmap bkgnd(path);
+               bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+               QPalette palette;
+               palette.setBrush(QPalette::Base, bkgnd);
+               ui->gvMainScene->setPalette(palette);
 
            }
+          if(it.toObject()["name"].toString().compare("Rectangle")==0){
+              qreal x = it.toObject()["x"].toDouble();
+              qreal y =it.toObject()["y"].toDouble();
+              qreal width = it.toObject()["width"].toDouble();
+              qreal height = it.toObject()["height"].toDouble();
+              //TODO lookPath hardcoded
+              QString lookPath = it.toObject()["look"].toString();
+              QList<QLineEdit*> rectangleInfo;
+              rectangleInfo.append(ui->leRectangleX);
+              rectangleInfo.append(ui->leRectangleY);
+              rectangleInfo.append(ui->leRectangleWidth);
+              rectangleInfo.append(ui->leRectangleHeight);
+              gameBuilder->addRectangle(x, y, width, height, ui->tbComponentInfo, rectangleInfo, ui->pbRectangleApply, lookPath);
+
+          }else if(it.toObject()["name"].toString().compare("Enemy")==0){
+              qreal x = it.toObject()["x"].toDouble();
+              qreal y =it.toObject()["y"].toDouble();
+              qreal width = it.toObject()["width"].toDouble();
+              qreal height = it.toObject()["height"].toDouble();
+              qreal range = it.toObject()["range"].toDouble();
+              QString lookPath = it.toObject()["look"].toString();
+              QList<QLineEdit*> enemyInfo;
+              enemyInfo.append(ui->leEnemyX);
+              enemyInfo.append(ui->leEnemyY);
+              enemyInfo.append(ui->leEnemyWidth);
+              enemyInfo.append(ui->leEnemyHeight);
+              enemyInfo.append(ui->leEnemyRange);
+              gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
+
+          }
+
+       }
 }
 
 void MainWindow::on_actionClear_triggered()
@@ -231,3 +232,28 @@ void MainWindow::on_startBt_clicked()
 
 
 
+
+void MainWindow::on_cbCollision_clicked(bool checked)
+{
+    gameBuilder->setCollisionEnabled(checked);
+}
+
+void MainWindow::on_cbGravity_clicked(bool checked)
+{
+    gameBuilder->setGravityPlayer(checked);
+}
+
+void MainWindow::on_cbMoveUpDown_clicked(bool checked)
+{
+    gameBuilder->setMoveUpDownPlayer(checked);
+}
+
+void MainWindow::on_cbJump_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_cbSpeedBoost_clicked(bool checked)
+{
+
+}

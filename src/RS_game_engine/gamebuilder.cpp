@@ -3,6 +3,7 @@
 GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
     ,gameBuilderTimer(new QTimer()),player(nullptr)
+    ,collisionEnabled(true)
 {
 
 }
@@ -12,9 +13,9 @@ GameBuilder::~GameBuilder()
 }
 
 void GameBuilder::addRectangle(qreal x, qreal y, qreal width, qreal height,
-                               QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate)
+                               QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate, QString lookPath)
 {
-    rectangle = new Rectangle(x, y, width, height, componentInfo, rectangleInfo, rectangleUpdate);
+    rectangle = new Rectangle(x, y, width, height, componentInfo, rectangleInfo, rectangleUpdate, lookPath);
     addItem(rectangle);
     lstRectangle.append(rectangle);
 }
@@ -81,11 +82,13 @@ void GameBuilder::update()
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
-    foreach (QGraphicsItem* item, collidingObjects){
+    if(!collisionEnabled){
+        foreach (QGraphicsItem* item, collidingObjects){
 
-//        qDebug() << dynamic_cast<QObject*>(item)->metaObject()->className();
-        if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
+        //        qDebug() << dynamic_cast<QObject*>(item)->metaObject()->className();
+            if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
 
+            }
         }
     }
     foreach(Enemy* e, lstEnemy){
@@ -134,6 +137,9 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {
+    if(!collisionEnabled){
+        return true;
+    }
     QPointF playerPos = player->pos();
     qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
     foreach(Rectangle *r, lstRectangle) {
@@ -178,4 +184,19 @@ void GameBuilder::setPlayer(Player *value)
 QGraphicsView *GameBuilder::getParent() const
 {
     return parent;
+}
+
+void GameBuilder::setMoveUpDownPlayer(bool checked)
+{
+    player->setMoveUpDownEnabled(checked);
+}
+
+void GameBuilder::setGravityPlayer(bool checked)
+{
+    player->setGravityEnabled(checked);
+}
+
+void GameBuilder::setCollisionEnabled(bool checked)
+{
+    this->collisionEnabled = checked;
 }

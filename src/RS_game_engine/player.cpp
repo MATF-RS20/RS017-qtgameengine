@@ -9,6 +9,9 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,playerInfo(playerInfo)
     ,playerUpdate(playerUpdate)
     ,movementArray(4)
+    ,jumpEnabled(true)
+    ,gravityEnabled(true)
+    ,moveUpDownEnabled(true)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -24,12 +27,42 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 void Player::move(qreal delta_x, qreal delta_y)
 {
-    x+=delta_x;
-    y+=delta_y;
+    if(movementArray[0] && moveUpDownEnabled){
+        y-=4;
+    }
+
+    if(movementArray[1]){
+        x-=4;
+    }
+
+    if(movementArray[2] && moveUpDownEnabled){
+        y+=4;
+    }
+
+    if(movementArray[3]){
+        x+=4;
+    }
     this->setPos(x, y);
-    qDebug()<<this->pos();
+
     update();
+
+//    x+=delta_x;
+//    y+=delta_y;
+//    this->setPos(x, y);
+//    qDebug()<<this->pos();
+//    update();
 }
+
+void Player::setMoveUpDownEnabled(bool checked)
+{
+    this->moveUpDownEnabled = checked;
+}
+
+void Player::setGravityEnabled(bool checked)
+{
+    this->gravityEnabled = checked;
+}
+
 
 qreal Player::getHeight()
 {

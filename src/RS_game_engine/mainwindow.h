@@ -49,6 +49,16 @@ private slots:
     void on_actionClear_triggered();
 
     void on_startBt_clicked();
+    void on_cbCollision_clicked(bool checked);
+
+    void on_cbGravity_clicked(bool checked);
+
+    void on_cbMoveUpDown_clicked(bool checked);
+
+    void on_cbJump_clicked(bool checked);
+
+    void on_cbSpeedBoost_clicked(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QScopedPointer<GameBuilder> gameBuilder;

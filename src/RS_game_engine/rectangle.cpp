@@ -3,9 +3,9 @@
 #include <QPushButton>
 
 Rectangle::Rectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo,
-                     QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate)
+                     QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate, QString lookPath)
     : MapBuilder(x, y, width, height, componentInfo)
-    , texture("../RS_game_engine/images/brick.png")
+    , texture(lookPath)
     , focused(false)
     ,rectangleInfo(rectangleInfo)
     ,rectangleUpdate(rectangleUpdate)
@@ -27,9 +27,10 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         this->focused = false;
     }
     painter->setPen(Qt::NoPen);
-//    painter->setBrush(QBrush(texture));
+    painter->setBrush(QBrush(texture));
     painter->setBrush(Qt::red);
-    painter->drawRect(0, 0, width, height);
+//    painter->drawRect(0, 0, width, height);
+    painter->drawPixmap(0, 0, width, height, texture);
 }
 
 void Rectangle::mousePressEvent(QGraphicsSceneMouseEvent *event)
