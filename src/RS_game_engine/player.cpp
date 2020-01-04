@@ -1,6 +1,8 @@
 #include "player.h"
 #include <QDebug>
 
+#define BOOST (10)
+
 Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
                QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate)
     : GameComponent(x, y, width, height)
@@ -8,7 +10,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,componentInfo(componentInfo)
     ,playerInfo(playerInfo)
     ,playerUpdate(playerUpdate)
-    ,movementArray(4)
+    ,movementArray(5)
     ,jumpEnabled(true)
     ,gravityEnabled(true)
     ,moveUpDownEnabled(true)
@@ -28,22 +30,34 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 void Player::move(qreal delta_x, qreal delta_y)
 {
     if(movementArray[0] && moveUpDownEnabled){
-        y-=4;
+        if(movementArray[4])
+            y -= BOOST;
+        else
+            y -= 4;
     }
 
     if(movementArray[1]){
-        x-=4;
+        if(movementArray[4])
+            x -= BOOST;
+        else
+            x -= 4;
     }
 
     if(movementArray[2] && moveUpDownEnabled){
-        y+=4;
+        if(movementArray[4])
+            y += BOOST;
+        else
+            y += 4;
     }
 
     if(movementArray[3]){
-        x+=4;
+        if(movementArray[4])
+            x += BOOST;
+        else
+            x += 4;
     }
-    this->setPos(x, y);
 
+    this->setPos(x, y);
     update();
 
 //    x+=delta_x;

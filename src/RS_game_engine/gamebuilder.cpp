@@ -52,11 +52,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    if(event->key() == Qt::Key_D){
-        player->setFocus();
-        player->movementArray.setBit(3,true);
-        player->setCurrentLook(true);
-    }
     if(event->key() == Qt::Key_W){
         player->setFocus();
         player->movementArray.setBit(0,true);
@@ -65,13 +60,42 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         player->setFocus();
         player->movementArray.setBit(1,true);
         player->setCurrentLook(false);
-
     }
     if(event->key() == Qt::Key_S){
         player->setFocus();
         player->movementArray.setBit(2,true);
     }
+    if(event->key() == Qt::Key_D){
+        player->setFocus();
+        player->movementArray.setBit(3,true);
+        player->setCurrentLook(true);
+    }
+    if(event->key() == Qt::Key_F){
+        player->setFocus();
+        player->movementArray.setBit(4,true);
+    }
 
+//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
+
+}
+
+void GameBuilder::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_W){
+        player->movementArray.setBit(0,false);
+    }
+    if(event->key() == Qt::Key_A){
+        player->movementArray.setBit(1,false);
+    }
+    if(event->key() == Qt::Key_S){
+        player->movementArray.setBit(2,false);
+    }
+    if(event->key() == Qt::Key_D){
+        player->movementArray.setBit(3,false);
+    }
+    if(event->key() == Qt::Key_F){
+        player->movementArray.setBit(4,false);
+    }
 
 //    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
@@ -114,25 +138,6 @@ void GameBuilder::update()
     else if(playerCanMove(4,0) && player->movementArray[3]){
         player->move(4,0);
     }
-}
-
-void GameBuilder::keyReleaseEvent(QKeyEvent *event)
-{
-    if(event->key() == Qt::Key_D){
-        player->movementArray.setBit(3,false);
-    }
-    if(event->key() == Qt::Key_W){
-        player->movementArray.setBit(0,false);
-    }
-    if(event->key() == Qt::Key_A){
-        player->movementArray.setBit(1,false);
-    }
-    if(event->key() == Qt::Key_S){
-        player->movementArray.setBit(2,false);
-    }
-
-//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
-
 }
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)

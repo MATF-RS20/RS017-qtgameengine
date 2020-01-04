@@ -21,7 +21,7 @@ class GameBuilder : public QGraphicsScene
 public:
     GameBuilder(QGraphicsView* parent);
 
-    ~GameBuilder();
+    ~GameBuilder() override;
 
     GameBuilder(const GameBuilder&) = delete;
     GameBuilder& operator=(const GameBuilder&) = delete;
