@@ -142,7 +142,7 @@ void GameBuilder::update()
     }
     qDebug() << player->getY() + player->getHeight();
     //Hardcoded constant 25
-    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply)
+    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,1))
         player->gravityApply(1);
 }
 
@@ -158,15 +158,12 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         QPointF rPos = r->pos();
         qreal rWidth = r->getWidth(), rHeight = r->getHeight();
 
-        bool a1 = playerPos.ry() + delta_y > rPos.ry() - rHeight;
-        bool a2 = playerPos.rx() + delta_x + playerWidth > rPos.rx();
-        bool a3 = playerPos.ry() + delta_y - playerHeight < rPos.ry();
-        bool a4 = playerPos.rx() + delta_x < rPos.rx() + rWidth;
-        qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
-        if(a1 && a2 && a3 && a4){
-//            qDebug() << playerPos.rx() << " " << delta_x << " " << (playerWidth/2);
-//            qDebug() << playerPos.ry() << " " << delta_y << " " << (playerWidth/2);
-//            qDebug() << rPos.rx() << " " << (rWidth/2);
+        bool left = playerPos.rx() + delta_x + playerWidth > rPos.rx();
+        bool up = playerPos.ry() + delta_y + playerHeight > rPos.ry();
+        bool right = playerPos.rx() + delta_x < rPos.rx() + rWidth;
+        bool down = playerPos.ry() + delta_y < rPos.ry() + rHeight;
+        if(left && up && right && down){
+
             return false;
         }
     }
