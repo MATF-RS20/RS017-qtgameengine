@@ -5,6 +5,7 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,gameBuilderTimer(new QTimer()),player(nullptr)
     ,collisionEnabled(true)
     ,playerGravityApply(true)
+    ,jumpEnabled(true)
 {
 
 }
@@ -147,7 +148,7 @@ void GameBuilder::update()
         player->move(4,0);
     }
     //Hardcoded constant 25
-    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply)
+    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,4))
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
