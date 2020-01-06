@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QBitArray>
+#include <QtMath>
 
 
 class Player : public GameComponent
@@ -25,9 +26,12 @@ public:
     QBitArray movementArray;
     void setMoveUpDownEnabled(bool checked);
     void setGravityEnabled(bool checked);
-    void gravityApply(qreal value);
+    void gravityApply();
     void setBoostEnabled(bool checked);
     void setCurrentSpeed(qreal speed);
+    void jumpAnimation();
+    qreal getJump();
+    void setPositionBeforeJump(qreal position);
 
 
 private slots:
@@ -42,7 +46,11 @@ private:
     bool isRight;
     bool gravityEnabled, moveUpDownEnabled, jumpEnabled,boostEnabled;
     qreal boost;
+    qreal gravityIntensity;
     qreal speed;
+    qreal jump, currentJumpPosition;
+    QList<qreal> jumpArray;
+    qreal positionBeforeJump;
 
 };
 

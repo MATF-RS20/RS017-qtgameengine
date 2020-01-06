@@ -111,6 +111,10 @@ void MainWindow::addPlayer()
         playerInfo.append(ui->lePlayerY);
         playerInfo.append(ui->lePlayerWidth);
         playerInfo.append(ui->lePlayerHeight);
+        playerInfo.append(ui->leJumpValue);
+        playerInfo.append(ui->leBoostValue);
+        playerInfo.append(ui->leSpeedValue);
+        playerInfo.append(ui->leGravityValue);
         gameBuilder->addPlayer(x, y, width, height, lookPath,ui->tbComponentInfo, playerInfo, ui->pbPlayerApply);
     }
     else{
@@ -249,7 +253,7 @@ void MainWindow::on_cbMoveUpDown_clicked(bool checked)
 
 void MainWindow::on_cbJump_clicked(bool checked)
 {
-
+    gameBuilder->setJumpEnabled(checked);
 }
 
 void MainWindow::on_cbSpeedBoost_clicked(bool checked)

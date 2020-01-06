@@ -14,9 +14,17 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,moveUpDownEnabled(true)
     ,boost(10)
     ,boostEnabled(true)
+    ,speed(4)
+    ,gravityIntensity(1)
+    ,jump(100)
+    ,currentJumpPosition(0)
 {
+    for(qreal i = 0; i < M_PI_2 ;i+=0.07){
+        jumpArray.append(sin(i)*jump);
+    }
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
+    connect(playerUpdate, SIGNAL(clicked()), this, SLOT(pbApply()));
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -34,32 +42,56 @@ void Player::move(qreal delta_x, qreal delta_y)
         if(movementArray[4] && boostEnabled)
             y -= boost;
         else
-            y -= 4;
+            y -= speed;
     }
 
     if(movementArray[1]){
         if(movementArray[4] && boostEnabled)
             x -= boost;
         else
-            x -= 4;
+            x -= speed;
     }
 
     if(movementArray[2] && moveUpDownEnabled){
         if(movementArray[4] && boostEnabled)
             y += boost;
         else
-            y += 4;
+            y += speed;
     }
 
     if(movementArray[3]){
         if(movementArray[4] && boostEnabled)
             x += boost;
         else
-            x += 4;
+            x += speed;
     }
 
     this->setPos(x, y);
     update();
+}
+
+void Player::jumpAnimation()
+{
+    if(currentJumpPosition < 23){
+        y = positionBeforeJump - jumpArray.at(currentJumpPosition);
+        currentJumpPosition++;
+    }
+    else{
+        currentJumpPosition = 0;
+    }
+
+    this->setPos(x, y);
+    update();
+}
+
+qreal Player::getJump()
+{
+    return this->jump;
+}
+
+void Player::setPositionBeforeJump(qreal position)
+{
+    positionBeforeJump = position;
 }
 
 void Player::setMoveUpDownEnabled(bool checked)
@@ -72,9 +104,9 @@ void Player::setGravityEnabled(bool checked)
     this->gravityEnabled = checked;
 }
 
-void Player::gravityApply(qreal value)
+void Player::gravityApply()
 {
-    y += value;
+    y += gravityIntensity;
     this->setPos(x, y);
     update();
 }
@@ -112,5 +144,13 @@ void Player::pbApply()
     this->setPos((qreal)playerInfo.at(0)->text().toFloat(), (qreal)playerInfo.at(1)->text().toFloat());
     this->width = (qreal)playerInfo.at(2)->text().toFloat();
     this->height = (qreal)playerInfo.at(3)->text().toFloat();
+    this->jump = (qreal)playerInfo.at(4)->text().toFloat();
+    jumpArray.clear();
+    for(qreal i = 0; i < M_PI_2 ;i+=0.07){
+        jumpArray.append(sin(i)*jump);
+    }
+    this->boost = (qreal)playerInfo.at(5)->text().toFloat();
+    this->speed = (qreal)playerInfo.at(6)->text().toFloat();
+    this->gravityIntensity = (qreal)playerInfo.at(7)->text().toFloat();
     update();
 }

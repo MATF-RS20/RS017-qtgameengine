@@ -52,7 +52,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
-    qDebug() << parent->height();
 
     if(event->key() == Qt::Key_W){
         player->setFocus();
@@ -75,6 +74,13 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_F){
         player->setFocus();
         player->movementArray.setBit(4,true);
+    }
+    if(event->key() == Qt::Key_Space && jumpEnabled){
+        if(jumpPlayer){
+            return;
+        }
+        jumpPlayer = true;
+        player->setPositionBeforeJump(player->pos().ry());
     }
 
 //    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
@@ -140,10 +146,19 @@ void GameBuilder::update()
     else if(playerCanMove(4,0) && player->movementArray[3]){
         player->move(4,0);
     }
-    qDebug() << player->getY() + player->getHeight();
     //Hardcoded constant 25
-    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,1))
-        player->gravityApply(1);
+    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply)
+        player->gravityApply();
+
+    if(jumpPlayer && jumpAmout < 24){
+
+        player->jumpAnimation();
+        jumpAmout += 1;
+    }
+    else{
+        jumpPlayer = false;
+        jumpAmout = 0;
+    }
 }
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
@@ -214,4 +229,9 @@ void GameBuilder::setCollisionEnabled(bool checked)
 void GameBuilder::setBoostEnabled(bool checked)
 {
     player->setBoostEnabled(checked);
+}
+
+void GameBuilder::setJumpEnabled(bool checked)
+{
+    this->jumpEnabled = checked;
 }
