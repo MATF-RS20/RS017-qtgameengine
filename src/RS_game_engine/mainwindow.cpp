@@ -255,5 +255,5 @@ void MainWindow::on_cbJump_clicked(bool checked)
 
 void MainWindow::on_cbSpeedBoost_clicked(bool checked)
 {
-
+    gameBuilder->setBoostEnabled(checked);
 }

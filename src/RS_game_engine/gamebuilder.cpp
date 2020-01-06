@@ -4,6 +4,7 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
     ,gameBuilderTimer(new QTimer()),player(nullptr)
     ,collisionEnabled(true)
+    ,playerGravityApply(true)
 {
 
 }
@@ -51,6 +52,7 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
+    qDebug() << parent->height();
 
     if(event->key() == Qt::Key_W){
         player->setFocus();
@@ -116,7 +118,7 @@ void GameBuilder::update()
         }
     }
     foreach(Enemy* e, lstEnemy){
-        qDebug() << e->getRange();
+//        qDebug() << e->getRange();
         if(e->getRange() > 0)
             e->move();
     }
@@ -138,6 +140,10 @@ void GameBuilder::update()
     else if(playerCanMove(4,0) && player->movementArray[3]){
         player->move(4,0);
     }
+    qDebug() << player->getY() + player->getHeight();
+    //Hardcoded constant 25
+    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply)
+        player->gravityApply(1);
 }
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
@@ -145,6 +151,7 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
     if(!collisionEnabled){
         return true;
     }
+
     QPointF playerPos = player->pos();
     qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
     foreach(Rectangle *r, lstRectangle) {
@@ -157,9 +164,9 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         bool a4 = playerPos.rx() + delta_x < rPos.rx() + rWidth;
         qDebug() << a1 << " " << a2 << " " << a3 << " " << a4;
         if(a1 && a2 && a3 && a4){
-            qDebug() << playerPos.rx() << " " << delta_x << " " << (playerWidth/2);
-            qDebug() << playerPos.ry() << " " << delta_y << " " << (playerWidth/2);
-            qDebug() << rPos.rx() << " " << (rWidth/2);
+//            qDebug() << playerPos.rx() << " " << delta_x << " " << (playerWidth/2);
+//            qDebug() << playerPos.ry() << " " << delta_y << " " << (playerWidth/2);
+//            qDebug() << rPos.rx() << " " << (rWidth/2);
             return false;
         }
     }
@@ -198,10 +205,16 @@ void GameBuilder::setMoveUpDownPlayer(bool checked)
 
 void GameBuilder::setGravityPlayer(bool checked)
 {
+    this->playerGravityApply = checked;
     player->setGravityEnabled(checked);
 }
 
 void GameBuilder::setCollisionEnabled(bool checked)
 {
     this->collisionEnabled = checked;
+}
+
+void GameBuilder::setBoostEnabled(bool checked)
+{
+    player->setBoostEnabled(checked);
 }

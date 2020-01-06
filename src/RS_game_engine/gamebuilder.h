@@ -36,6 +36,7 @@ public:
     void setMoveUpDownPlayer(bool checked);
     void setGravityPlayer(bool checked);
     void setCollisionEnabled(bool checked);
+    void setBoostEnabled(bool checked);
 
     Player *getPlayer() const;
     void setPlayer(Player *value);
@@ -58,6 +59,7 @@ private:
     QWidget* main;
     QToolBox* componentInfo;
     bool collisionEnabled;
+    bool playerGravityApply;
 };
 
 #endif // GAMEBUILDER_H

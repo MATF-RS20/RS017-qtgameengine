@@ -25,6 +25,9 @@ public:
     QBitArray movementArray;
     void setMoveUpDownEnabled(bool checked);
     void setGravityEnabled(bool checked);
+    void gravityApply(qreal value);
+    void setBoostEnabled(bool checked);
+    void setCurrentSpeed(qreal speed);
 
 
 private slots:
@@ -37,7 +40,9 @@ private:
     QList<QLineEdit*> playerInfo;
     QPushButton* playerUpdate;
     bool isRight;
-    bool gravityEnabled, moveUpDownEnabled, jumpEnabled;
+    bool gravityEnabled, moveUpDownEnabled, jumpEnabled,boostEnabled;
+    qreal boost;
+    qreal speed;
 
 };
 
