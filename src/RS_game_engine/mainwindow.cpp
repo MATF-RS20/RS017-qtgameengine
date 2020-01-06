@@ -7,11 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //int width = this->size().width();
-    int height = this->size().height();
+    int height = ui->gvMainScene->size().height();
     ui->gvMainScene->setRenderHint(QPainter::Antialiasing);
     ui->gvMainScene->setAlignment(Qt::AlignTop|Qt::AlignLeft);
-    ui->gvMainScene->setSceneRect(0,0,4000,height * 0.95);
-    ui->gvMainScene->fitInView(0, 0, 4000, height * 0.95 , Qt::KeepAspectRatioByExpanding);
+    ui->gvMainScene->setSceneRect(0,0,4000,height);
+    ui->gvMainScene->fitInView(0, 0, 4000, height, Qt::KeepAspectRatioByExpanding);
     gameBuilder =new GameBuilder(ui->gvMainScene);
     ui->gvMainScene->setScene(&(*gameBuilder));
     ui->startBt->setIcon(QIcon("../RS_game_engine/icons/start.png"));
@@ -132,6 +132,8 @@ void MainWindow::loadDefaultBackground()
     QPalette palette;
     palette.setBrush(QPalette::Base, bkgnd);
     ui->gvMainScene->setAutoFillBackground(true);
+    ui->gvMainScene->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    ui->gvMainScene->setRenderHints( QPainter::HighQualityAntialiasing);
     ui->gvMainScene->setPalette(palette);
 
 
@@ -139,15 +141,13 @@ void MainWindow::loadDefaultBackground()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    Q_UNUSED(event)
-//    int width = this->size().width();
-//    int height = this->size().height();
-//    //ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
+
     QPixmap bkgnd(fileName);
-    bkgnd = bkgnd.scaled(ui->gvMainScene->size());
+    bkgnd = bkgnd.scaled(ui->gvMainScene->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Base, bkgnd);
     ui->gvMainScene->setPalette(palette);
+    QMainWindow::resizeEvent(event);
 }
 
 void MainWindow::on_actionSave_triggered()

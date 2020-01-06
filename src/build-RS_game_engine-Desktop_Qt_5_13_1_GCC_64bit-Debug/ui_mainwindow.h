@@ -98,8 +98,8 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QPushButton *pbEnemyApply;
     QWidget *page_7;
-    QFormLayout *formLayout_3;
-    QVBoxLayout *verticalLayout_4;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_13;
     QLabel *label_10;
     QLineEdit *lePlayerX;
@@ -112,9 +112,9 @@ public:
     QHBoxLayout *horizontalLayout_16;
     QLabel *label_13;
     QLineEdit *lePlayerHeight;
-    QHBoxLayout *horizontalLayout_17;
-    QSpacerItem *horizontalSpacer_3;
-    QPushButton *pbPlayerApply;
+    QHBoxLayout *horizontalLayout_21;
+    QLabel *label_17;
+    QLineEdit *leSpeedValue;
     QCheckBox *cbCollision;
     QHBoxLayout *horizontalLayout_18;
     QCheckBox *cbGravity;
@@ -129,6 +129,9 @@ public:
     QCheckBox *cbSpeedBoost;
     QLabel *label_16;
     QLineEdit *leBoostValue;
+    QHBoxLayout *horizontalLayout_17;
+    QSpacerItem *horizontalSpacer_3;
+    QPushButton *pbPlayerApply;
     QMenuBar *menubar;
     QMenu *menuFile;
 
@@ -447,73 +450,169 @@ public:
         page_7 = new QWidget();
         page_7->setObjectName(QString::fromUtf8("page_7"));
         page_7->setGeometry(QRect(0, 0, 250, 467));
-        formLayout_3 = new QFormLayout(page_7);
-        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        widget = new QWidget(page_7);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 10, 230, 351));
+        verticalLayout_3 = new QVBoxLayout(widget);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_13 = new QHBoxLayout();
         horizontalLayout_13->setObjectName(QString::fromUtf8("horizontalLayout_13"));
-        label_10 = new QLabel(page_7);
+        label_10 = new QLabel(widget);
         label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setMinimumSize(QSize(44, 0));
 
         horizontalLayout_13->addWidget(label_10);
 
-        lePlayerX = new QLineEdit(page_7);
+        lePlayerX = new QLineEdit(widget);
         lePlayerX->setObjectName(QString::fromUtf8("lePlayerX"));
 
         horizontalLayout_13->addWidget(lePlayerX);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_13);
+        verticalLayout_3->addLayout(horizontalLayout_13);
 
         horizontalLayout_14 = new QHBoxLayout();
         horizontalLayout_14->setObjectName(QString::fromUtf8("horizontalLayout_14"));
-        label_11 = new QLabel(page_7);
+        label_11 = new QLabel(widget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setMinimumSize(QSize(44, 0));
 
         horizontalLayout_14->addWidget(label_11);
 
-        lePlayerY = new QLineEdit(page_7);
+        lePlayerY = new QLineEdit(widget);
         lePlayerY->setObjectName(QString::fromUtf8("lePlayerY"));
 
         horizontalLayout_14->addWidget(lePlayerY);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_14);
+        verticalLayout_3->addLayout(horizontalLayout_14);
 
         horizontalLayout_15 = new QHBoxLayout();
         horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
-        label_12 = new QLabel(page_7);
+        label_12 = new QLabel(widget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setMinimumSize(QSize(44, 0));
 
         horizontalLayout_15->addWidget(label_12);
 
-        lePlayerWidth = new QLineEdit(page_7);
+        lePlayerWidth = new QLineEdit(widget);
         lePlayerWidth->setObjectName(QString::fromUtf8("lePlayerWidth"));
 
         horizontalLayout_15->addWidget(lePlayerWidth);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_15);
+        verticalLayout_3->addLayout(horizontalLayout_15);
 
         horizontalLayout_16 = new QHBoxLayout();
         horizontalLayout_16->setObjectName(QString::fromUtf8("horizontalLayout_16"));
-        label_13 = new QLabel(page_7);
+        label_13 = new QLabel(widget);
         label_13->setObjectName(QString::fromUtf8("label_13"));
         label_13->setMinimumSize(QSize(44, 0));
 
         horizontalLayout_16->addWidget(label_13);
 
-        lePlayerHeight = new QLineEdit(page_7);
+        lePlayerHeight = new QLineEdit(widget);
         lePlayerHeight->setObjectName(QString::fromUtf8("lePlayerHeight"));
 
         horizontalLayout_16->addWidget(lePlayerHeight);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_16);
+        verticalLayout_3->addLayout(horizontalLayout_16);
+
+        horizontalLayout_21 = new QHBoxLayout();
+        horizontalLayout_21->setObjectName(QString::fromUtf8("horizontalLayout_21"));
+        label_17 = new QLabel(widget);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setMinimumSize(QSize(44, 0));
+
+        horizontalLayout_21->addWidget(label_17);
+
+        leSpeedValue = new QLineEdit(widget);
+        leSpeedValue->setObjectName(QString::fromUtf8("leSpeedValue"));
+
+        horizontalLayout_21->addWidget(leSpeedValue);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_21);
+
+        cbCollision = new QCheckBox(widget);
+        cbCollision->setObjectName(QString::fromUtf8("cbCollision"));
+        cbCollision->setChecked(true);
+
+        verticalLayout_3->addWidget(cbCollision);
+
+        horizontalLayout_18 = new QHBoxLayout();
+        horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
+        cbGravity = new QCheckBox(widget);
+        cbGravity->setObjectName(QString::fromUtf8("cbGravity"));
+        cbGravity->setChecked(true);
+
+        horizontalLayout_18->addWidget(cbGravity);
+
+        label_14 = new QLabel(widget);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+
+        horizontalLayout_18->addWidget(label_14);
+
+        leGravityValue = new QLineEdit(widget);
+        leGravityValue->setObjectName(QString::fromUtf8("leGravityValue"));
+        leGravityValue->setMaximumSize(QSize(100, 16777215));
+
+        horizontalLayout_18->addWidget(leGravityValue);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_18);
+
+        cbMoveUpDown = new QCheckBox(widget);
+        cbMoveUpDown->setObjectName(QString::fromUtf8("cbMoveUpDown"));
+        cbMoveUpDown->setChecked(true);
+
+        verticalLayout_3->addWidget(cbMoveUpDown);
+
+        horizontalLayout_19 = new QHBoxLayout();
+        horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
+        cbJump = new QCheckBox(widget);
+        cbJump->setObjectName(QString::fromUtf8("cbJump"));
+        cbJump->setChecked(true);
+
+        horizontalLayout_19->addWidget(cbJump);
+
+        label_15 = new QLabel(widget);
+        label_15->setObjectName(QString::fromUtf8("label_15"));
+
+        horizontalLayout_19->addWidget(label_15);
+
+        leJumpValue = new QLineEdit(widget);
+        leJumpValue->setObjectName(QString::fromUtf8("leJumpValue"));
+        leJumpValue->setMaximumSize(QSize(100, 16777215));
+
+        horizontalLayout_19->addWidget(leJumpValue);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_19);
+
+        horizontalLayout_20 = new QHBoxLayout();
+        horizontalLayout_20->setObjectName(QString::fromUtf8("horizontalLayout_20"));
+        cbSpeedBoost = new QCheckBox(widget);
+        cbSpeedBoost->setObjectName(QString::fromUtf8("cbSpeedBoost"));
+        cbSpeedBoost->setChecked(true);
+
+        horizontalLayout_20->addWidget(cbSpeedBoost);
+
+        label_16 = new QLabel(widget);
+        label_16->setObjectName(QString::fromUtf8("label_16"));
+
+        horizontalLayout_20->addWidget(label_16);
+
+        leBoostValue = new QLineEdit(widget);
+        leBoostValue->setObjectName(QString::fromUtf8("leBoostValue"));
+        leBoostValue->setMaximumSize(QSize(100, 16777215));
+
+        horizontalLayout_20->addWidget(leBoostValue);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_20);
 
         horizontalLayout_17 = new QHBoxLayout();
         horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
@@ -521,94 +620,13 @@ public:
 
         horizontalLayout_17->addItem(horizontalSpacer_3);
 
-        pbPlayerApply = new QPushButton(page_7);
+        pbPlayerApply = new QPushButton(widget);
         pbPlayerApply->setObjectName(QString::fromUtf8("pbPlayerApply"));
 
         horizontalLayout_17->addWidget(pbPlayerApply);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_17);
-
-        cbCollision = new QCheckBox(page_7);
-        cbCollision->setObjectName(QString::fromUtf8("cbCollision"));
-        cbCollision->setChecked(true);
-
-        verticalLayout_4->addWidget(cbCollision);
-
-        horizontalLayout_18 = new QHBoxLayout();
-        horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
-        cbGravity = new QCheckBox(page_7);
-        cbGravity->setObjectName(QString::fromUtf8("cbGravity"));
-        cbGravity->setChecked(true);
-
-        horizontalLayout_18->addWidget(cbGravity);
-
-        label_14 = new QLabel(page_7);
-        label_14->setObjectName(QString::fromUtf8("label_14"));
-
-        horizontalLayout_18->addWidget(label_14);
-
-        leGravityValue = new QLineEdit(page_7);
-        leGravityValue->setObjectName(QString::fromUtf8("leGravityValue"));
-        leGravityValue->setMaximumSize(QSize(100, 16777215));
-
-        horizontalLayout_18->addWidget(leGravityValue);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_18);
-
-        cbMoveUpDown = new QCheckBox(page_7);
-        cbMoveUpDown->setObjectName(QString::fromUtf8("cbMoveUpDown"));
-        cbMoveUpDown->setChecked(true);
-
-        verticalLayout_4->addWidget(cbMoveUpDown);
-
-        horizontalLayout_19 = new QHBoxLayout();
-        horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
-        cbJump = new QCheckBox(page_7);
-        cbJump->setObjectName(QString::fromUtf8("cbJump"));
-        cbJump->setChecked(true);
-
-        horizontalLayout_19->addWidget(cbJump);
-
-        label_15 = new QLabel(page_7);
-        label_15->setObjectName(QString::fromUtf8("label_15"));
-
-        horizontalLayout_19->addWidget(label_15);
-
-        leJumpValue = new QLineEdit(page_7);
-        leJumpValue->setObjectName(QString::fromUtf8("leJumpValue"));
-        leJumpValue->setMaximumSize(QSize(100, 16777215));
-
-        horizontalLayout_19->addWidget(leJumpValue);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_19);
-
-        horizontalLayout_20 = new QHBoxLayout();
-        horizontalLayout_20->setObjectName(QString::fromUtf8("horizontalLayout_20"));
-        cbSpeedBoost = new QCheckBox(page_7);
-        cbSpeedBoost->setObjectName(QString::fromUtf8("cbSpeedBoost"));
-        cbSpeedBoost->setChecked(true);
-
-        horizontalLayout_20->addWidget(cbSpeedBoost);
-
-        label_16 = new QLabel(page_7);
-        label_16->setObjectName(QString::fromUtf8("label_16"));
-
-        horizontalLayout_20->addWidget(label_16);
-
-        leBoostValue = new QLineEdit(page_7);
-        leBoostValue->setObjectName(QString::fromUtf8("leBoostValue"));
-        leBoostValue->setMaximumSize(QSize(100, 16777215));
-
-        horizontalLayout_20->addWidget(leBoostValue);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_20);
-
-
-        formLayout_3->setLayout(0, QFormLayout::LabelRole, verticalLayout_4);
+        verticalLayout_3->addLayout(horizontalLayout_17);
 
         tbComponentInfo->addItem(page_7, QString::fromUtf8("Player"));
 
@@ -631,7 +649,7 @@ public:
 
         tbConfigure->setCurrentIndex(3);
         startBt->setDefault(false);
-        tbComponentInfo->setCurrentIndex(0);
+        tbComponentInfo->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -669,7 +687,7 @@ public:
         label_11->setText(QCoreApplication::translate("MainWindow", "Y:", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Width:", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "Height:", nullptr));
-        pbPlayerApply->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        label_17->setText(QCoreApplication::translate("MainWindow", "Speed:", nullptr));
         cbCollision->setText(QCoreApplication::translate("MainWindow", "collision", nullptr));
         cbGravity->setText(QCoreApplication::translate("MainWindow", "gravity", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "value:", nullptr));
@@ -678,6 +696,7 @@ public:
         label_15->setText(QCoreApplication::translate("MainWindow", "value:", nullptr));
         cbSpeedBoost->setText(QCoreApplication::translate("MainWindow", "boost", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "value:", nullptr));
+        pbPlayerApply->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
         tbComponentInfo->setItemText(tbComponentInfo->indexOf(page_7), QCoreApplication::translate("MainWindow", "Player", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi

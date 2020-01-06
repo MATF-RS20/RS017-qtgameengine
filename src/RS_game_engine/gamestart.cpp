@@ -47,6 +47,7 @@ void GameStart::start(){
       if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
 
       }
+
       QGraphicsItem* i = item;
       new_scene->addItem(i);
   }
