@@ -43,7 +43,6 @@ public:
 
     QList<Enemy *> getLstEnemy() const;
     void setLstEnemy(const QList<Enemy *> &value);
-
 private slots:
     void update();
 

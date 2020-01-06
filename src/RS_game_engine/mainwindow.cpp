@@ -6,20 +6,18 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int width = this->size().width();
+    //int width = this->size().width();
     int height = this->size().height();
-    qDebug()<<ui->gvMainScene->size();
     ui->gvMainScene->setRenderHint(QPainter::Antialiasing);
-    ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
+    ui->gvMainScene->setAlignment(Qt::AlignTop|Qt::AlignLeft);
     ui->gvMainScene->setSceneRect(0,0,4000,height * 0.95);
     ui->gvMainScene->fitInView(0, 0, 4000, height * 0.95 , Qt::KeepAspectRatioByExpanding);
-    gameBuilder.reset(new GameBuilder(ui->gvMainScene));
+    gameBuilder =new GameBuilder(ui->gvMainScene);
     ui->gvMainScene->setScene(&(*gameBuilder));
     ui->startBt->setIcon(QIcon("../RS_game_engine/icons/start.png"));
     ui->startBt->setFixedSize(QSize(20,20));
     ui->gvMainScene->verticalScrollBar()->setValue(ui->gvMainScene->verticalScrollBar()->maximum());
     ui->gvMainScene->horizontalScrollBar()->setValue(ui->gvMainScene->horizontalScrollBar()->minimum());
-
     addSignalsAndSlots();
 }
 
@@ -138,9 +136,9 @@ void MainWindow::loadDefaultBackground()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
-    int width = this->size().width();
-    int height = this->size().height();
-    ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
+//    int width = this->size().width();
+//    int height = this->size().height();
+//    //ui->gvMainScene->setFixedSize(width* 0.7, height*0.95);
     QPixmap bkgnd(fileName);
     bkgnd = bkgnd.scaled(ui->gvMainScene->size());
     QPalette palette;
@@ -222,7 +220,8 @@ void MainWindow::on_actionClear_triggered()
 void MainWindow::on_startBt_clicked()
 {
     GameStart* main_game = new GameStart();
-    main_game->setGameON(&(*gameBuilder));
+    GameBuilder* nov = gameBuilder;
+    main_game->setGameON(nov);
     main_game->setScene(ui->gvMainScene);
     main_game->setFName(fileName);
     main_game->start();

@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include <QPainter>
 #include <QObject>
+#include <QGraphicsSceneDragDropEvent>
 
 class GameComponent : public QGraphicsObject
 {
@@ -34,7 +35,7 @@ private slots:
     virtual void pbApply();
 
 protected:
-
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     qreal x;
     qreal y;
     qreal width;

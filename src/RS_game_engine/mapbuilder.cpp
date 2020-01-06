@@ -2,13 +2,15 @@
 #include <QDebug>
 
 MapBuilder::MapBuilder(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo)
-    :x(x)
+    :id(random())
+    ,x(x)
     ,y(y)
     ,width(width)
     ,height(height)
+
     ,componentInfo(componentInfo)
-    ,id(random())
 {
+    setAcceptDrops(true);
     setPos(x, y);
     qDebug() << "Pozvao sam se ";
 }
@@ -29,8 +31,10 @@ QPainterPath MapBuilder::shape() const
 
 void MapBuilder::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
     componentInfo->setItemText(0, "Rectangle");
-    painter->drawRect(0, 0, width, height);
+    painter->drawRect(0, 0, static_cast<int>(width), static_cast<int>(height));
 }
 
 void MapBuilder::pbApply()
@@ -84,4 +88,10 @@ long MapBuilder::getId() const
 void MapBuilder::setId(long value)
 {
     id = value;
+}
+void MapBuilder::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->setPos(event->scenePos());
+    this->setX(event->scenePos().rx());
+    this->setY(event->scenePos().ry());
 }

@@ -6,6 +6,7 @@ GameComponent::GameComponent(qreal x, qreal y, qreal width, qreal height)
     ,width(width)
     ,height(height)
 {
+    setAcceptDrops(true);
     setPos(x, y);
 }
 GameComponent::GameComponent(GameComponent &a):
@@ -85,4 +86,10 @@ qreal GameComponent::getX() const
 void GameComponent::setX(const qreal &value)
 {
     x = value;
+}
+void GameComponent::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->setPos(event->scenePos());
+    this->setX(event->scenePos().rx());
+    this->setY(event->scenePos().ry());
 }

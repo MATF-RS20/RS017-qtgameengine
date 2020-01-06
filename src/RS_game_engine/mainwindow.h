@@ -61,7 +61,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QScopedPointer<GameBuilder> gameBuilder;
+    GameBuilder* gameBuilder;
     void resizeEvent(QResizeEvent* event);
 };
 #endif // MAINWINDOW_H

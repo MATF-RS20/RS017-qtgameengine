@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include <QPainter>
 #include <QObject>
+#include <QGraphicsSceneDragDropEvent>
 #include <QToolBox>
 
 class MapBuilder : public QGraphicsObject
@@ -37,6 +38,7 @@ private slots:
     virtual void pbApply();
 
 protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     long id;
     qreal x;
     qreal y;

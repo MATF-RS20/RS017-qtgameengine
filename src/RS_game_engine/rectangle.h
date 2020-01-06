@@ -19,7 +19,6 @@ public:
     int type() const override;
 private slots:
     void pbApply() override;
-
 private:
     QPixmap texture;
     bool focused;

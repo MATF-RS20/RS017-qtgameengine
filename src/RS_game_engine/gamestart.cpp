@@ -36,21 +36,16 @@ void GameStart::start(){
   {
       qreal oldX;
       qreal oldY;
-      //dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"
-//      if(strcmp("GameComponent",dynamic_cast<QObject*>(item)->metaObject()->className())){
-//          oldX = v->getX();
-//          oldY = v->getY();
-//          v->setPos(oldX/scaleX,oldY*scaleY);
 
+//      if(GameComponent* r = qgraphicsitem_cast<GameComponent*>(item)){
+//          oldX = r->getX();
+//          oldY = r->getY();
+//          r->setX(oldX*scaleX);
+//          r->setY(oldY*scaleY);
+//          r->setPos(oldX*scaleX,oldY*scaleY);
 //      }
-      qDebug()<<dynamic_cast<QObject*>(item)->metaObject()->className();
       if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
-          oldX = r->getX();
-          oldY = r->getY();
-          r->setX(oldX*scaleX);
-          r->setY(oldY*scaleY);
-          r->setPos(oldX*scaleX,oldY*scaleY);
-          qDebug() << r->pos() << " " << oldX*scaleX << " " << scaleY;
+
       }
       QGraphicsItem* i = item;
       new_scene->addItem(i);
