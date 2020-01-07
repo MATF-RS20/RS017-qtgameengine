@@ -99,23 +99,24 @@ void GameStart::update()
             e->move();
     }
     //W-0 A-1 S-2 D-3
+    qreal speed = 4;
+    if(player->movementArray[4])
+        speed *= 2;
 
-    if(gameON->playerCanMove(0,-4) && player->movementArray[0]){
-        player->move(0,-4);
-//        player->move(0,4);
+    if(gameON->playerCanMove(0,-speed) && player->movementArray[0]){
+        player->move(0,-speed);
     }
 
-    else if(gameON->playerCanMove(-4,0) && player->movementArray[1]){
-        player->move(-4,0);
+    else if(gameON->playerCanMove(-speed,0) && player->movementArray[1]){
+        player->move(-speed,0);
     }
 
-    else if(gameON->playerCanMove(0,4) && player->movementArray[2]){
-        player->move(0,4);
-
+    else if(gameON->playerCanMove(0,speed) && player->movementArray[2]){
+        player->move(0,speed);
     }
 
-    else if(gameON->playerCanMove(4,0) && player->movementArray[3]){
-        player->move(4,0);
+    else if(gameON->playerCanMove(speed,0) && player->movementArray[3]){
+        player->move(speed,0);
     }
     if(player->pos().ry()+player->getHeight() < this->ui->graphicsView->size().height())
         player->gravity(true);

@@ -38,33 +38,19 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 void Player::move(qreal delta_x, qreal delta_y)
 {
 
-    if(movementArray[0] && moveUpDownEnabled){
-        if(movementArray[4] && boostEnabled)
-            y -= boost;
-        else
-            y -= speed;
+    //deo gde gledamo koje je dugme stisnuto radimo vec u gambilderu
+    //pa ovde samo proveravamo da li ima boost i moveupanddown
+    //bitno je koristiti prosledjeno delta_x i delta_y da bi kolizija radila u suprotnom ima bagova
+    if(movementArray[4] && boostEnabled){
+        x += 2*delta_x;
+        if(moveUpDownEnabled)
+            y += 2*delta_y;
+    } else {
+        x += delta_x;
+        if(moveUpDownEnabled)
+            y += delta_y;
     }
 
-    if(movementArray[1]){
-        if(movementArray[4] && boostEnabled)
-            x -= boost;
-        else
-            x -= speed;
-    }
-
-    if(movementArray[2] && moveUpDownEnabled){
-        if(movementArray[4] && boostEnabled)
-            y += boost;
-        else
-            y += speed;
-    }
-
-    if(movementArray[3]){
-        if(movementArray[4] && boostEnabled)
-            x += boost;
-        else
-            x += speed;
-    }
 
     this->setPos(x, y);
     update();

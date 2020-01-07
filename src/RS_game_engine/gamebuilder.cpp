@@ -163,21 +163,27 @@ void GameBuilder::update()
     //W-0 A-1 S-2 D-3
 //    qDebug() << player->movementArray;
 //    qDebug() << playerCanMove(0,-4);
-    if(playerCanMove(0,-4) && player->movementArray[0]){
-        player->move(0,-4);
+    //W-0 A-1 S-2 D-3
+    qreal speed = 4;
+    if(player->movementArray[4])
+        speed *= 2;
+
+    if(playerCanMove(0,-speed) && player->movementArray[0]){
+        player->move(0,-speed);
     }
 
-    else if(playerCanMove(-4,0) && player->movementArray[1]){
-        player->move(-4,0);
+    else if(playerCanMove(-speed,0) && player->movementArray[1]){
+        player->move(-speed,0);
     }
 
-    else if(playerCanMove(0,4) && player->movementArray[2]){
-        player->move(0,4);
+    else if(playerCanMove(0,speed) && player->movementArray[2]){
+        player->move(0,speed);
     }
 
-    else if(playerCanMove(4,0) && player->movementArray[3]){
-        player->move(4,0);
+    else if(playerCanMove(speed,0) && player->movementArray[3]){
+        player->move(speed,0);
     }
+
     //Hardcoded constant 25
     if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,4))
         player->gravityApply();
