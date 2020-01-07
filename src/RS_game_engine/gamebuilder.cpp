@@ -82,9 +82,7 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
-    if(this->getPlayer() == nullptr){
-        return;
-    }
+
     if(event->key() == Qt::Key_W){
         player->setFocus();
         player->movementArray.setBit(0,true);
@@ -174,17 +172,18 @@ void GameBuilder::update()
         player->move(0,-speed);
     }
 
-    else if(playerCanMove(-speed,0) && player->movementArray[1]){
+    if(playerCanMove(-speed,0) && player->movementArray[1]){
         player->move(-speed,0);
     }
 
-    else if(playerCanMove(0,speed) && player->movementArray[2]){
+    if(playerCanMove(0,speed) && player->movementArray[2]){
         player->move(0,speed);
     }
 
-    else if(playerCanMove(speed,0) && player->movementArray[3]){
+    if(playerCanMove(speed,0) && player->movementArray[3]){
         player->move(speed,0);
     }
+
 
     //Hardcoded constant 25
     if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,4))

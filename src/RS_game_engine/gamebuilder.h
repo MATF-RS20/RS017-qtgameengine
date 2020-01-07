@@ -47,12 +47,18 @@ public:
 
     QTimer *getGameBuilderTimer() const;
 
+    //privremeno public dok ne napravimo u gamestart
+    QGraphicsView* parent;
+    bool playerGravityApply;
+    bool jumpPlayer;
+    qreal jumpAmout;
+
 private slots:
     void update();
 
 private:
 
-    QGraphicsView* parent;
+
     QTimer* gameBuilderTimer;
     Player* player;
     Rectangle* rectangle;
@@ -62,9 +68,7 @@ private:
     QWidget* main;
     QToolBox* componentInfo;
     bool collisionEnabled;
-    bool playerGravityApply;
-    bool jumpPlayer;
-    qreal jumpAmout;
+
     bool jumpEnabled;
 };
 
