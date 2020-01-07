@@ -49,7 +49,7 @@ void GameStart::start(){
                 r->setY(newY);
                 r->setPos(newX,newY);
                 new_scene->addItem(r);
-           }else if(item->type() == 2){
+           }else if(item->type() == 2 || item->type() == 4){
                 GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
                 oldX = r->getX();
                 oldY = r->getY();
@@ -96,7 +96,7 @@ void GameStart::closeEvent(QCloseEvent *event)
                 r->setY(newY);
                 r->setPos(newX,newY);
                 scene->scene()->addItem(r);
-           }else if(item->type() == 2){
+           }else if(item->type() == 2 || item->type() ==4){
                 GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
                 oldX = r->getX();
                 oldY = r->getY();
@@ -137,7 +137,7 @@ void GameStart::resizeEvent(QResizeEvent* event){
                 r->setY(newY);
                 r->setPos(newX,newY);
                 new_scene->addItem(r);
-           }else if(item->type() == 2){
+           }else if(item->type() == 2 || item->type() ==4){
                 GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
                 oldX = r->getX();
                 oldY = r->getY();

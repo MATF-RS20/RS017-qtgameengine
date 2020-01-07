@@ -22,13 +22,12 @@ public:
 
     long getId() const;
     void setId(long value);
-
+    int type() const override;
     qreal getRange() const;
     void setRange(const qreal &value);
 
     QPixmap getLook() const;
     void setLook(const QPixmap &value);
-    int type() const override;
 
     void move();
 

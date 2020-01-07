@@ -18,7 +18,7 @@ public:
            QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-
+    int type() const override;
     void move(qreal delta_x, qreal delta_y);
     qreal getHeight();
     qreal getWidth();
