@@ -24,57 +24,142 @@ void GameStart::setScene(QGraphicsView *value)
     scene = value;
 }
 void GameStart::start(){
-  this->setFixedSize(1600,1000);
-  QRectF exactRect(0, 0, 1600, 1000);
-  qreal scaleX;
-  scaleX = 1600.0/554.0;
-  qreal scaleY;
-  scaleY = 1000.0/600.0;
-  ui->graphicsView->setSceneRect(exactRect);
-  QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
-  for(QGraphicsItem* item:scene->scene()->items())
-  {
-      qreal oldX;
-      qreal oldY;
 
-//      if(GameComponent* r = qgraphicsitem_cast<GameComponent*>(item)){
-//          oldX = r->getX();
-//          oldY = r->getY();
-//          r->setX(oldX*scaleX);
-//          r->setY(oldY*scaleY);
-//          r->setPos(oldX*scaleX,oldY*scaleY);
-//      }
-      if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
-
+        QRectF exactRect(0, 0, this->size().width(), this->size().height());
+        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->graphicsView->setSceneRect(exactRect);
+        QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
+        for(auto item:scene->scene()->items())
+        {
+            qreal oldX;
+            qreal oldY;
+            QPoint ref(0,this->scene->height() - this->scene->horizontalScrollBar()->size().height());
+            QPoint new_ref(0,this->size().height());
+            if( item->type() == 1 || item->type()==3){
+                MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                qDebug() << newX << newY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                new_scene->addItem(r);
+           }else if(item->type() == 2){
+                GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                new_scene->addItem(r);
+            }
       }
-
-      QGraphicsItem* i = item;
-      new_scene->addItem(i);
-  }
-  if(gameON->getPlayer() != nullptr){
-    connect(&(*timer), SIGNAL(timeout()),this, SLOT(update()));
-  }
-  timer->start(15);
-  QPixmap bkgnd;
-  bkgnd.load(getFName());
-  bkgnd = bkgnd.scaled(QSize(1600,1000));
-  QPalette palette;
-  palette.setBrush(QPalette::Base, bkgnd);
-   ui->graphicsView->setScene(&(*new_scene));
-   ui->graphicsView->setPalette(palette);
-   ui->graphicsView->horizontalScrollBar()->hide();
-   ui->graphicsView->verticalScrollBar()->hide();
+      if(gameON->getPlayer() != nullptr){
+        connect(&(*timer), SIGNAL(timeout()),this, SLOT(update()));
+      }
+      timer->start(15);
+      QPixmap bkgnd;
+      bkgnd.load(getFName());
+      bkgnd = bkgnd.scaled(this->size());
+      QPalette palette;
+      palette.setBrush(QPalette::Base, bkgnd);
+       ui->graphicsView->setScene(&(*new_scene));
+       ui->graphicsView->setPalette(palette);
 
 }
 void GameStart::closeEvent(QCloseEvent *event)
 {
-    for(QGraphicsItem* item:ui->graphicsView->scene()->items())
-    {
-        scene->scene()->addItem(item);
-    }
-    event->accept();
+    QPoint new_ref(0,this->scene->height() - this->scene->horizontalScrollBar()->size().height());
+        QPoint ref(0,this->size().height());
+        for(QGraphicsItem* item:ui->graphicsView->scene()->items())
+        {
+            qreal oldX;
+            qreal oldY;
+            if( item->type() == 1 || item->type() ==3){
+                MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                scene->scene()->addItem(r);
+           }else if(item->type() == 2){
+                GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                scene->scene()->addItem(r);
+            }
+        }
+        timer->stop();
+        event->accept();
 }
+void GameStart::resizeEvent(QResizeEvent* event){
+        QPoint ref(0,800);
+        QPoint new_ref(0,event->size().height());
+        QRectF exactRect(0, 0, this->size().width(), this->size().height());
+        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->graphicsView->setSceneRect(exactRect);
+        QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
+        for(auto item:ui->graphicsView->scene()->items())
+        {
+            qreal oldX;
+            qreal oldY;
+            if( item->type() == 1 || item->type()==3){
+                MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                new_scene->addItem(r);
+           }else if(item->type() == 2){
+                GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
+                oldX = r->getX();
+                oldY = r->getY();
+                qreal refX = oldX - ref.rx();
+                qreal refY =ref.ry() - oldY;
+                qreal newX  = refX+new_ref.rx();
+                qreal newY = new_ref.ry() - refY;
+                r->setX(newX);
+                r->setY(newY);
+                r->setPos(newX,newY);
+                new_scene->addItem(r);
+            }
+      }
+        QPixmap bkgnd;
+        bkgnd.load(getFName());
+        bkgnd = bkgnd.scaled(ui->graphicsView->size());
+        QPalette palette;
+        palette.setBrush(QPalette::Base, bkgnd);
+         ui->graphicsView->setScene(&(*new_scene));
+         ui->graphicsView->setPalette(palette);
 
+}
 QString GameStart::getFName() const
 {
     return fName;

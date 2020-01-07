@@ -12,7 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
-#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -20,21 +20,29 @@ QT_BEGIN_NAMESPACE
 class Ui_GameStart
 {
 public:
-    QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
 
     void setupUi(QWidget *GameStart)
     {
         if (GameStart->objectName().isEmpty())
             GameStart->setObjectName(QString::fromUtf8("GameStart"));
-        GameStart->resize(1600, 100);
-        verticalLayout = new QVBoxLayout(GameStart);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        GameStart->resize(1200, 800);
+        gridLayout = new QGridLayout(GameStart);
+        gridLayout->setSpacing(0);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
         graphicsView = new QGraphicsView(GameStart);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setBaseSize(QSize(1600, 1000));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy);
+        graphicsView->setBaseSize(QSize(0, 0));
+        graphicsView->setLineWidth(0);
 
-        verticalLayout->addWidget(graphicsView);
+        gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
 
 
         retranslateUi(GameStart);

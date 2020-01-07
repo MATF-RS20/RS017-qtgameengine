@@ -35,6 +35,7 @@ public:
 private slots:
     void update();
 private:
+    void resizeEvent(QResizeEvent* event);
     Ui::GameStart *ui;
     QGraphicsView* scene;
     GameBuilder* gameON;
