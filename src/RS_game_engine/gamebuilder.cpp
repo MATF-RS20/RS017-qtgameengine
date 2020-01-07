@@ -2,26 +2,11 @@
 
 GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
-    ,gameBuilderTimer(new QTimer()),player(nullptr)
+    ,gameBuilderTimer(new QTimer())
+    ,player(nullptr)
     ,collisionEnabled(true)
     ,playerGravityApply(true)
     ,jumpEnabled(true)
-{
-
-}
-
-GameBuilder::GameBuilder(GameBuilder* other):
-    parent(other->getParent())
-  ,gameBuilderTimer(other->gameBuilderTimer)
-  ,collisionEnabled(other->collisionEnabled)
-  ,playerGravityApply(other->playerGravityApply)
-  ,jumpEnabled(other->jumpEnabled)
-  ,player(other->player)
-  ,lstEnemy(other->lstEnemy)
-  ,main(other->main)
-  ,componentInfo(other->componentInfo)
-  ,jumpAmout(other->jumpAmout)
-  ,jumpPlayer(other->jumpPlayer)
 {
 
 }
@@ -167,6 +152,9 @@ void GameBuilder::update()
     }
 
     if(playerCanMove(-speed,0) && player->movementArray[1]){
+        if(player->getX()  < parent->horizontalScrollBar()->value())
+            parent->horizontalScrollBar()->setValue(player->getX());
+
         player->move(-speed,0);
     }
 
@@ -175,6 +163,8 @@ void GameBuilder::update()
     }
 
     if(playerCanMove(speed,0) && player->movementArray[3]){
+        if(player->getX() + player->getWidth() > parent->horizontalScrollBar()->value() + parent->width())
+            parent->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-parent->width());
         player->move(speed,0);
     }
 
