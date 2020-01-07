@@ -41,15 +41,19 @@ void Player::move(qreal delta_x, qreal delta_y)
     //deo gde gledamo koje je dugme stisnuto radimo vec u gambilderu
     //pa ovde samo proveravamo da li ima boost i moveupanddown
     //bitno je koristiti prosledjeno delta_x i delta_y da bi kolizija radila u suprotnom ima bagova
-    if(movementArray[4] && boostEnabled){
-        x += 2*delta_x;
-        if(moveUpDownEnabled)
-            y += 2*delta_y;
-    } else {
-        x += delta_x;
-        if(moveUpDownEnabled)
-            y += delta_y;
-    }
+//    if(movementArray[4] && boostEnabled){
+//        x += 2*delta_x;
+//        if(moveUpDownEnabled)
+//            y += 2*delta_y;
+//    } else {
+//        x += delta_x;
+//        if(moveUpDownEnabled)
+//            y += delta_y;
+//    }
+
+    x += delta_x;
+    if(moveUpDownEnabled)
+        y+=delta_y;
 
 
     this->setPos(x, y);
