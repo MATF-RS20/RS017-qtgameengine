@@ -9,6 +9,7 @@
 #include "gameobjectinfo.h"
 #include "enemydialog.h"
 #include "playerdialog.h"
+#include "positiveobstacledialog.h"
 #include <QWheelEvent>
 #include "ui_mainwindow.h"
 #include <QDebug>
@@ -41,6 +42,7 @@ private slots:
     void addRectangle();
     void loadDefaultBackground();
     void addEnemyOne();
+    void addPositiveObstacle();
     void addPlayer();
     void on_actionSave_triggered();
 

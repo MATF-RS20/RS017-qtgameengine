@@ -51,6 +51,13 @@ void GameBuilder::addRectangle(qreal x, qreal y, qreal width, qreal height,
     lstRectangle.append(rectangle);
 }
 
+void GameBuilder::addPositiveObstacle(qreal x, qreal y, qreal width, qreal height, QToolBox *componentInfo, QList<QLineEdit *> positiveObstacleInfo, QPushButton *positiveObstacleUpdate, QString lookPath)
+{
+    positiveObstacle = new PositiveObstacle(x, y, width, height, componentInfo, positiveObstacleInfo, positiveObstacleUpdate, lookPath);
+    addItem(positiveObstacle);
+    lstPositiveObstacle.append(positiveObstacle);
+}
+
 void GameBuilder::addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range,
                            QString look,QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate)
 {
@@ -68,7 +75,6 @@ void GameBuilder::addPlayer(qreal x, qreal y, qreal width, qreal height, QString
     connect(&(*gameBuilderTimer), SIGNAL(timeout()), this, SLOT(update()));
 
     gameBuilderTimer->start(15);
-
 }
 
 void GameBuilder::keyPressEvent(QKeyEvent *event)
@@ -146,12 +152,13 @@ void GameBuilder::update()
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
-    if(!collisionEnabled){
+    if(collisionEnabled){
         foreach (QGraphicsItem* item, collidingObjects){
-
-        //        qDebug() << dynamic_cast<QObject*>(item)->metaObject()->className();
+            if(item->type() == 3){
+                qDebug() << "Coin";
+                removeItem(item);
+            }
             if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
-
             }
         }
     }

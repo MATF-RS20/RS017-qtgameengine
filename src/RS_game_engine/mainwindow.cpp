@@ -28,6 +28,7 @@ MainWindow::~MainWindow()
 void MainWindow::addSignalsAndSlots()
 {
     connect(ui->pbRectangle, SIGNAL(clicked()), this, SLOT(addRectangle()));
+    connect(ui->pbAddPO, SIGNAL(clicked()), this, SLOT(addPositiveObstacle()));
     connect(ui->pbChooseFromDefault, SIGNAL(clicked()), this, SLOT(loadDefaultBackground()));
     connect(ui->pbEnemyOne, SIGNAL(clicked()), this, SLOT(addEnemyOne()));
     connect(ui->pbAddPlayer, SIGNAL(clicked()), this, SLOT(addPlayer()));
@@ -48,6 +49,29 @@ void MainWindow::closeApp()
 
 }
 
+
+void MainWindow::addPositiveObstacle()
+{
+    PositiveObstacleDialog* dialog = new PositiveObstacleDialog(this);
+    dialog->exec();
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/positiveObstacles/", tr("Images (*.png *.jpg *.jpeg)"));
+    if(dialog->accepted()){
+        qreal x = dialog->x();
+        qreal y = dialog->y();
+        qreal width = dialog->width();
+        qreal height = dialog->height();
+        QList<QLineEdit*> positiveObstacleInfo;
+        positiveObstacleInfo.append(ui->lePOX);
+        positiveObstacleInfo.append(ui->lePOY);
+        positiveObstacleInfo.append(ui->lePOWidth);
+        positiveObstacleInfo.append(ui->lePOHeight);
+        gameBuilder->addPositiveObstacle(x, y, width, height, ui->tbComponentInfo, positiveObstacleInfo, ui->pbPOApply, lookPath);
+
+    }
+    else{
+        return;
+    }
+}
 
 void MainWindow::addRectangle()
 {
@@ -72,6 +96,7 @@ void MainWindow::addRectangle()
         return;
     }
 }
+
 void MainWindow::addEnemyOne()
 {
     EnemyDialog* enemyDialog = new EnemyDialog(this);
@@ -95,6 +120,7 @@ void MainWindow::addEnemyOne()
         return;
     }
 }
+
 
 void MainWindow::addPlayer()
 {

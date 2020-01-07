@@ -27,6 +27,8 @@ SOURCES += \
     mapbuilder.cpp \
     player.cpp \
     playerdialog.cpp \
+    positiveobstacle.cpp \
+    positiveobstacledialog.cpp \
     rectangle.cpp \
     sceneloader.cpp
 
@@ -41,6 +43,8 @@ HEADERS += \
     mapbuilder.h \
     player.h \
     playerdialog.h \
+    positiveobstacle.h \
+    positiveobstacledialog.h \
     rectangle.h \
     sceneloader.h
 
@@ -49,7 +53,8 @@ FORMS += \
     enemydialog.ui \
     gamestart.ui \
     mainwindow.ui \
-    playerdialog.ui
+    playerdialog.ui \
+    positiveobstacledialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

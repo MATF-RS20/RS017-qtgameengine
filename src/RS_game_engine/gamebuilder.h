@@ -1,6 +1,11 @@
 #ifndef GAMEBUILDER_H
 #define GAMEBUILDER_H
 
+
+#include "player.h"
+#include "enemy.h"
+#include "positiveobstacle.h"
+#include "rectangle.h"
 #include <QGraphicsView>
 #include <QObject>
 #include <QGraphicsScene>
@@ -8,9 +13,6 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QList>
-#include "player.h"
-#include "enemy.h"
-#include "rectangle.h"
 #include <QDebug>
 #include <QBitArray>
 
@@ -27,6 +29,7 @@ public:
     GameBuilder& operator=(const GameBuilder&) = delete;
 
     void addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate, QString lookPath);
+    void addPositiveObstacle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> positiveObstacleInfo, QPushButton* positiveObstacleUpdate, QString lookPath);
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
     bool playerCanMove(qreal delta_x, qreal delta_y);
@@ -57,8 +60,6 @@ private slots:
     void update();
 
 private:
-
-
     QTimer* gameBuilderTimer;
     Player* player;
     Rectangle* rectangle;
@@ -68,8 +69,9 @@ private:
     QWidget* main;
     QToolBox* componentInfo;
     bool collisionEnabled;
-
     bool jumpEnabled;
+    PositiveObstacle* positiveObstacle;
+    QList<PositiveObstacle*> lstPositiveObstacle;
 };
 
 #endif // GAMEBUILDER_H
