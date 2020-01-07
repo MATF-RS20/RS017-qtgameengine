@@ -27,9 +27,9 @@ void GameStart::start(){
   this->setFixedSize(1600,1000);
   QRectF exactRect(0, 0, 1600, 1000);
   qreal scaleX;
-  scaleX = 1600.0/554.0;
+  scaleX = this->size().width()*1.0/this->scene->size().width()*1.0;
   qreal scaleY;
-  scaleY = 1000.0/600.0;
+  scaleY = this->size().height()*1.0/this->scene->size().height()*1.0;
   ui->graphicsView->setSceneRect(exactRect);
   QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
   for(QGraphicsItem* item:scene->scene()->items())
@@ -37,19 +37,22 @@ void GameStart::start(){
       qreal oldX;
       qreal oldY;
 
-//      if(GameComponent* r = qgraphicsitem_cast<GameComponent*>(item)){
-//          oldX = r->getX();
-//          oldY = r->getY();
-//          r->setX(oldX*scaleX);
-//          r->setY(oldY*scaleY);
-//          r->setPos(oldX*scaleX,oldY*scaleY);
-//      }
-      if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
-
+      if(GameComponent* r = qgraphicsitem_cast<GameComponent*>(item)){
+          oldX = r->getX();
+          oldY = r->getY();
+          r->setX(oldX);
+          r->setY(oldY*scaleY);
+          r->setPos(oldX,oldY*scaleY);
+          new_scene->addItem(r);
       }
-
-      QGraphicsItem* i = item;
-      new_scene->addItem(i);
+      if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
+          oldX = r->getX();
+          oldY = r->getY();
+          r->setX(oldX);
+          r->setY(oldY*scaleY);
+          r->setPos(oldX,oldY*scaleY);
+          new_scene->addItem(r);
+     }
   }
   if(gameON->getPlayer() != nullptr){
     connect(&(*timer), SIGNAL(timeout()),this, SLOT(update()));
@@ -68,10 +71,32 @@ void GameStart::start(){
 }
 void GameStart::closeEvent(QCloseEvent *event)
 {
+    qreal scaleX;
+    scaleX = this->size().width()*1.0/this->scene->size().width()*1.0;
+    qreal scaleY;
+    scaleY = this->size().height()*1.0/this->scene->size().height()*1.0;
     for(QGraphicsItem* item:ui->graphicsView->scene()->items())
     {
-        scene->scene()->addItem(item);
+        qreal oldX;
+        qreal oldY;
+        if(GameComponent* r = qgraphicsitem_cast<GameComponent*>(item)){
+            oldX = r->getX();
+            oldY = r->getY();
+            r->setX(oldX);
+            r->setY(oldY/scaleY);
+            r->setPos(oldX,oldY/scaleY);
+            scene->scene()->addItem(r);
+        }
+        if(MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item)){
+            oldX = r->getX();
+            oldY = r->getY();
+            r->setX(oldX);
+            r->setY(oldY/scaleY);
+            r->setPos(oldX,oldY/scaleY);
+            scene->scene()->addItem(r);
+        }
     }
+    timer->stop();
     event->accept();
 }
 

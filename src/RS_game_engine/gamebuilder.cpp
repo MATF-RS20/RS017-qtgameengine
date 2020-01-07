@@ -82,7 +82,9 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
-
+    if(this->getPlayer() == nullptr){
+        return;
+    }
     if(event->key() == Qt::Key_W){
         player->setFocus();
         player->movementArray.setBit(0,true);

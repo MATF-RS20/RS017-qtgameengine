@@ -239,6 +239,10 @@ void MainWindow::on_cbCollision_clicked(bool checked)
 
 void MainWindow::on_cbGravity_clicked(bool checked)
 {
+    if(gameBuilder->getPlayer()==nullptr){
+        ui->cbGravity->setCheckState(Qt::CheckState::Checked);
+        return;
+    }
     gameBuilder->setGravityPlayer(checked);
 }
 

@@ -29,8 +29,7 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setPen(Qt::NoPen);
     painter->setBrush(QBrush(texture));
     painter->setBrush(Qt::red);
-//    painter->drawRect(0, 0, width, height);
-    painter->drawPixmap(0, 0, width, height, texture);
+    painter->drawPixmap(0,0, width, height, texture);
 }
 
 void Rectangle::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -91,7 +91,7 @@ void Player::setMoveUpDownEnabled(bool checked)
 
 void Player::setGravityEnabled(bool checked)
 {
-    this->gravityEnabled = checked;
+        this->gravityEnabled = checked;
 }
 
 void Player::gravityApply()
