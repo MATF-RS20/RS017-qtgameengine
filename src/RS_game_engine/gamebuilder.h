@@ -20,7 +20,7 @@ class GameBuilder : public QGraphicsScene
 
 public:
     GameBuilder(QGraphicsView* parent);
-
+    GameBuilder(GameBuilder* parent);
     ~GameBuilder() override;
 
     GameBuilder(const GameBuilder&) = delete;
@@ -44,13 +44,16 @@ public:
 
     QList<Enemy *> getLstEnemy() const;
     void setLstEnemy(const QList<Enemy *> &value);
+
+    QTimer *getGameBuilderTimer() const;
+
 private slots:
     void update();
 
 private:
 
     QGraphicsView* parent;
-    QScopedPointer<QTimer> gameBuilderTimer;
+    QTimer* gameBuilderTimer;
     Player* player;
     Rectangle* rectangle;
     QList<Rectangle*> lstRectangle;

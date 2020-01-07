@@ -219,22 +219,18 @@ void MainWindow::on_actionClear_triggered()
     for(auto item: ui->gvMainScene->items()){
         delete item;
     }
+    gameBuilder->getGameBuilderTimer()->stop();
 }
 
 void MainWindow::on_startBt_clicked()
 {
     GameStart* main_game = new GameStart();
-    GameBuilder* nov = gameBuilder;
-    main_game->setGameON(nov);
+    main_game->setGameON(gameBuilder);
     main_game->setScene(ui->gvMainScene);
     main_game->setFName(fileName);
     main_game->start();
     main_game->show();
-    //this->hide();
 }
-
-
-
 
 void MainWindow::on_cbCollision_clicked(bool checked)
 {

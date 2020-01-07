@@ -68,6 +68,10 @@ void GameStart::start(){
 }
 void GameStart::closeEvent(QCloseEvent *event)
 {
+    for(QGraphicsItem* item:ui->graphicsView->scene()->items())
+    {
+        scene->scene()->addItem(item);
+    }
     event->accept();
 }
 

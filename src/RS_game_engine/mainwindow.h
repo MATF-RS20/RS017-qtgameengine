@@ -35,7 +35,7 @@ public:
     void closeApp();
     void addSignalsAndSlots();
 
-    QScopedPointer<GameBuilder> getGameBuilder() const;
+    GameBuilder* getGameBuilder() const;
 
 private slots:
     void addRectangle();

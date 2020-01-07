@@ -9,6 +9,35 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
 {
 
 }
+/* QGraphicsView* parent;
+    QTimer* gameBuilderTimer;
+    Player* player;
+    Rectangle* rectangle;
+    QList<Rectangle*> lstRectangle;
+    Enemy* enemy;
+    QList<Enemy*> lstEnemy;
+    QWidget* main;
+    QToolBox* componentInfo;
+    bool collisionEnabled;
+    bool playerGravityApply;
+    bool jumpPlayer;
+    qreal jumpAmout;
+    bool jumpEnabled;*/
+GameBuilder::GameBuilder(GameBuilder* other):
+    parent(other->getParent())
+  ,gameBuilderTimer(other->gameBuilderTimer)
+  ,collisionEnabled(other->collisionEnabled)
+  ,playerGravityApply(other->playerGravityApply)
+  ,jumpEnabled(other->jumpEnabled)
+  ,player(other->player)
+  ,lstEnemy(other->lstEnemy)
+  ,main(other->main)
+  ,componentInfo(other->componentInfo)
+  ,jumpAmout(other->jumpAmout)
+  ,jumpPlayer(other->jumpPlayer)
+{
+
+}
 
 GameBuilder::~GameBuilder()
 {
@@ -112,6 +141,8 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
 
 void GameBuilder::update()
 {
+    if(player == nullptr)
+        return;
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
@@ -161,6 +192,12 @@ void GameBuilder::update()
         jumpAmout = 0;
     }
 }
+
+QTimer *GameBuilder::getGameBuilderTimer() const
+{
+    return gameBuilderTimer;
+}
+
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {

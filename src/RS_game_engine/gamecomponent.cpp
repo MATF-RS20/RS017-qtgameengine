@@ -17,9 +17,7 @@ GameComponent::GameComponent(GameComponent &a):
 {
     setPos(x,y);
 }
-GameComponent::~GameComponent(){
-    delete this;
-}
+GameComponent::~GameComponent(){}
 
 void GameComponent::gravity(bool wantGravity)
 {

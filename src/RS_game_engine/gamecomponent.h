@@ -12,10 +12,11 @@ class GameComponent : public QGraphicsObject
 public:
     GameComponent(qreal x, qreal y, qreal width, qreal height);
     GameComponent(GameComponent &a);
+     ~GameComponent() override;
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    ~GameComponent() override;
+
     //TEST
      void gravity(bool wantGravity);
     //
