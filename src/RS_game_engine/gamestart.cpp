@@ -229,7 +229,7 @@ void GameStart::update()
     if(gameON->playerCanMove(speed,0) && player->movementArray[3]){
         player->move(speed,0);
     }
-    if(player->getY() + player->getHeight() + 25 < gameON->parent->height() && gameON->playerGravityApply && gameON->playerCanMove(0,4))
+    if(player->getY() + player->getHeight() < scene->height() && gameON->playerGravityApply && gameON->playerCanMove(0,4))
         player->gravityApply();
 
     if(gameON->jumpPlayer && gameON->jumpAmout < 24){

@@ -15,6 +15,7 @@
 #include <QList>
 #include <QDebug>
 #include <QBitArray>
+#include <QScrollBar>
 
 class GameBuilder : public QGraphicsScene
 {
