@@ -4,6 +4,7 @@
 GameStart::GameStart(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameStart),
+    Points(0),
     timer(new QTimer())
 {
     ui->setupUi(this);
@@ -29,8 +30,9 @@ void GameStart::start(){
         ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setSceneRect(exactRect);
+//        ui->graphicsView->setInteractive(false);
         QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
-        for(auto item:scene->scene()->items())
+        for(QGraphicsItem* item:scene->scene()->items())
         {
             qreal oldX;
             qreal oldY;
@@ -160,6 +162,16 @@ void GameStart::resizeEvent(QResizeEvent* event){
          ui->graphicsView->setPalette(palette);
 
 }
+
+int GameStart::getPoints() const
+{
+    return Points;
+}
+
+void GameStart::setPoints(int value)
+{
+    Points = value;
+}
 QString GameStart::getFName() const
 {
     return fName;
@@ -173,11 +185,25 @@ void GameStart::setFName(const QString &value)
 
 void GameStart::update()
 {
+    //QRect points_rect(10,10,100,20);
+    QPainter painter;
+    painter.setPen(Qt::black);
+    painter.drawText(QPoint(50,50),"Points:");
     GameBuilder* gameON = this->getGameON();
     Player* player = this->getGameON()->getPlayer();
     QList<Enemy*> lstEnemy = this->getGameON()->getLstEnemy();
-    //player->collidingItems();
-    //player->pos();
+    player->collidingItems();
+    player->pos();
+    QList<QGraphicsItem *> collidingObjects = player->collidingItems();
+    if(gameON->getCollisionEnabled()){
+        foreach (QGraphicsItem* item, collidingObjects){
+            if(item->type() == 3){
+                qDebug() << "Coin";
+                makePoint();
+                ui->graphicsView->scene()->removeItem(item);
+            }
+        }
+    }
     foreach(Enemy* e, lstEnemy){
         //qDebug() << e->getRange();
         if(e->getRange() > 0)
@@ -271,4 +297,7 @@ GameBuilder *GameStart::getGameON() const
 void GameStart::setGameON(GameBuilder *value)
 {
     gameON = value;
+}
+void GameStart::makePoint(){
+    Points++;
 }

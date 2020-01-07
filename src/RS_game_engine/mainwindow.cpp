@@ -54,7 +54,7 @@ void MainWindow::addPositiveObstacle()
 {
     PositiveObstacleDialog* dialog = new PositiveObstacleDialog(this);
     dialog->exec();
-    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/positiveObstacles/", tr("Images (*.png *.jpg *.jpeg)"));
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
     if(dialog->accepted()){
         qreal x = dialog->x();
         qreal y = dialog->y();

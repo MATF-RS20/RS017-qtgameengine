@@ -28,6 +28,7 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
     painter->setPen(Qt::NoPen);
     painter->setBrush(QBrush(texture));
+    texture.scaled(100,100);
     painter->drawRect(0, 0, width, height);
 }
 

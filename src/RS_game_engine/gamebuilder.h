@@ -56,6 +56,8 @@ public:
     bool jumpPlayer;
     qreal jumpAmout;
 
+    bool getCollisionEnabled() const;
+
 private slots:
     void update();
 

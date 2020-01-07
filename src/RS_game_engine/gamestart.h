@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QDebug>
+#include <QFlags>
 #include "mainwindow.h"
 #include "player.h"
 
@@ -26,16 +27,21 @@ public:
     void closeEvent(QCloseEvent *event);
     QString getFName() const;
     void setFName(const QString &value);
+    void makePoint();
 
     QScopedPointer<QTimer> getTimer() const;
 
     GameBuilder *getGameON() const;
     void setGameON(GameBuilder *value);
 
+    int getPoints() const;
+    void setPoints(int value);
+
 private slots:
     void update();
 private:
     void resizeEvent(QResizeEvent* event);
+    int Points;
     Ui::GameStart *ui;
     QGraphicsView* scene;
     GameBuilder* gameON;

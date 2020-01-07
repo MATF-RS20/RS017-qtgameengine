@@ -9,20 +9,7 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
 {
 
 }
-/* QGraphicsView* parent;
-    QTimer* gameBuilderTimer;
-    Player* player;
-    Rectangle* rectangle;
-    QList<Rectangle*> lstRectangle;
-    Enemy* enemy;
-    QList<Enemy*> lstEnemy;
-    QWidget* main;
-    QToolBox* componentInfo;
-    bool collisionEnabled;
-    bool playerGravityApply;
-    bool jumpPlayer;
-    qreal jumpAmout;
-    bool jumpEnabled;*/
+
 GameBuilder::GameBuilder(GameBuilder* other):
     parent(other->getParent())
   ,gameBuilderTimer(other->gameBuilderTimer)
@@ -205,6 +192,11 @@ void GameBuilder::update()
         jumpPlayer = false;
         jumpAmout = 0;
     }
+}
+
+bool GameBuilder::getCollisionEnabled() const
+{
+    return collisionEnabled;
 }
 
 QTimer *GameBuilder::getGameBuilderTimer() const
