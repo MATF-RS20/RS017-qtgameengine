@@ -250,7 +250,11 @@ void MainWindow::on_actionClear_triggered()
 
 void MainWindow::on_startBt_clicked()
 {
-    GameStart* main_game = new GameStart();
+    GameStart* main_game = new GameStart(gameBuilder->getCollisionEnabled(),
+                                         gameBuilder->getPlayerGravityApply(),
+                                         gameBuilder->getJumpAmout(),
+                                         gameBuilder->getJumpPlayer(),
+                                         gameBuilder->getJumpEnabled());
     main_game->setGameON(gameBuilder);
     main_game->setScene(ui->gvMainScene);
     main_game->setFName(fileName);

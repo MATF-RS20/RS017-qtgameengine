@@ -34,6 +34,8 @@ public:
     void setPositionBeforeJump(qreal position);
 
 
+    qreal getGravityIntensity() const;
+
 private slots:
     void pbApply() override;
 

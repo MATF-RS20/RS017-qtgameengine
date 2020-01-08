@@ -55,9 +55,19 @@ public:
     QGraphicsView* parent;
     bool playerGravityApply;
     bool jumpPlayer;
+    bool collisionEnabled;
+    bool jumpEnabled;
     qreal jumpAmout;
 
     bool getCollisionEnabled() const;
+
+    bool getPlayerGravityApply() const;
+
+    qreal getJumpAmout() const;
+
+    bool getJumpPlayer() const;
+
+    bool getJumpEnabled() const;
 
 private slots:
     void update();
@@ -71,8 +81,7 @@ private:
     QList<Enemy*> lstEnemy;
     QWidget* main;
     QToolBox* componentInfo;
-    bool collisionEnabled;
-    bool jumpEnabled;
+
     PositiveObstacle* positiveObstacle;
     QList<PositiveObstacle*> lstPositiveObstacle;
 };

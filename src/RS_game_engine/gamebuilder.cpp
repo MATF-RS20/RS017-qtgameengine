@@ -195,6 +195,26 @@ QTimer *GameBuilder::getGameBuilderTimer() const
     return gameBuilderTimer;
 }
 
+bool GameBuilder::getJumpEnabled() const
+{
+    return jumpEnabled;
+}
+
+bool GameBuilder::getJumpPlayer() const
+{
+    return jumpPlayer;
+}
+
+qreal GameBuilder::getJumpAmout() const
+{
+    return jumpAmout;
+}
+
+bool GameBuilder::getPlayerGravityApply() const
+{
+    return playerGravityApply;
+}
+
 
 bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
 {

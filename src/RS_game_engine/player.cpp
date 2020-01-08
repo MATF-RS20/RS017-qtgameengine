@@ -144,6 +144,11 @@ void Player::pbApply()
     this->gravityIntensity = (qreal)playerInfo.at(7)->text().toFloat();
     update();
 }
+
+qreal Player::getGravityIntensity() const
+{
+    return gravityIntensity;
+}
 int Player::type() const{
     return 4;
 }

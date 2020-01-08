@@ -1,11 +1,16 @@
 #include "gamestart.h"
 #include "ui_gamestart.h"
 
-GameStart::GameStart(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GameStart),
+GameStart::GameStart(/*QWidget *parent,*/ bool collision, bool gravity, qreal jump, bool jumpPlayer, bool jumpEnabled) :
+    /*QWidget(parent),*/
     Points(0),
-    timer(new QTimer())
+    ui(new Ui::GameStart),
+    timer(new QTimer()),
+    collisionEnabled(collision),
+    playerGravityApply(gravity),
+    jumpAmout(jump),
+    jumpPlayer(jumpPlayer),
+    jumpEnabled(jumpEnabled)
 {
     ui->setupUi(this);
     Points = 0;
@@ -51,6 +56,7 @@ void GameStart::start(){
                 MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item);
                 oldX = r->getX();
                 oldY = r->getY();
+                qDebug() << oldX << oldY;
                 qreal refX = oldX - ref.rx();
                 qreal refY =ref.ry() - oldY;
                 qreal newX  = refX+new_ref.rx();
@@ -60,6 +66,9 @@ void GameStart::start(){
                 r->setY(newY);
                 r->setPos(newX,newY);
                 new_scene->addItem(r);
+                if(item->type() == 1){
+                    lstRectangle.push_back(qgraphicsitem_cast<Rectangle*>(item));
+                }
            }else if(item->type() == 2 || item->type() == 4){
                 GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
                 oldX = r->getX();
@@ -72,9 +81,14 @@ void GameStart::start(){
                 r->setY(newY);
                 r->setPos(newX,newY);
                 new_scene->addItem(r);
+                if(item->type() == 4){
+                    player = qgraphicsitem_cast<Player*>(item);
+                } else {
+                   lstEnemy.push_back(qgraphicsitem_cast<Enemy*>(item));
+                }
             }
       }
-      if(gameON->getPlayer() != nullptr){
+      if(player != nullptr){
         connect(&(*timer), SIGNAL(timeout()),this, SLOT(update()));
       }
       timer->start(15);
@@ -214,13 +228,11 @@ void GameStart::update()
     text->setPos(20,20);
     this->ui->graphicsView->scene()->addItem(text);
     this->ui->graphicsView->scene()->addItem(textPoints);
-    GameBuilder* gameON = this->getGameON();
-    Player* player = this->getGameON()->getPlayer();
-    QList<Enemy*> lstEnemy = this->getGameON()->getLstEnemy();
+
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
-    if(gameON->getCollisionEnabled()){
+    if(this->collisionEnabled){
         foreach (QGraphicsItem* item, collidingObjects){
             if(item->type() == 3){
                 makePoint();
@@ -240,37 +252,37 @@ void GameStart::update()
     if(player->movementArray[4])
         speed *= 2;
 
-    if(gameON->playerCanMove(0,-speed) && player->movementArray[0]){
+    if(playerCanMove(0,-speed) && player->movementArray[0]){
         player->move(0,-speed);
     }
 
-    if(gameON->playerCanMove(-speed,0) && player->movementArray[1]){
+    if(playerCanMove(-speed,0) && player->movementArray[1]){
         player->move(-speed,0);
     }
 
-    if(gameON->playerCanMove(0,speed) && player->movementArray[2]){
+    if(playerCanMove(0,speed) && player->movementArray[2]){
         player->move(0,speed);
     }
 
-    if(gameON->playerCanMove(speed,0) && player->movementArray[3]){
+    if(playerCanMove(speed,0) && player->movementArray[3]){
         player->move(speed,0);
     }
-    if(player->getY() + player->getHeight() < scene->height() && gameON->playerGravityApply && gameON->playerCanMove(0,4))
+    if(player->getY() + player->getHeight() < scene->height() && playerGravityApply && playerCanMove(0,player->getGravityIntensity()))
         player->gravityApply();
 
-    if(gameON->jumpPlayer && gameON->jumpAmout < 24){
+    if(jumpPlayer && jumpAmout < 24){
 
         player->jumpAnimation();
-        gameON->jumpAmout += 1;
+        jumpAmout += 1;
     }
     else{
-        gameON->jumpPlayer = false;
-        gameON->jumpAmout = 0;
+        jumpPlayer = false;
+        jumpAmout = 0;
     }
 }
 void GameStart::keyReleaseEvent(QKeyEvent *event)
 {
-    Player* player = this->getGameON()->getPlayer();
+
     if(event->key() == Qt::Key_D){
         player->movementArray.setBit(3,false);
     }
@@ -291,8 +303,6 @@ void GameStart::keyReleaseEvent(QKeyEvent *event)
 void GameStart::keyPressEvent(QKeyEvent *event)
 {
 
-   Player* player = this->getGameON()->getPlayer();
-
     if(event->key() == Qt::Key_D){
         player->setFocus();
         player->movementArray.setBit(3,true);
@@ -311,6 +321,13 @@ void GameStart::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_S){
         player->setFocus();
         player->movementArray.setBit(2,true);
+    }
+    if(event->key() == Qt::Key_Space && jumpEnabled){
+        if(jumpPlayer){
+            return;
+        }
+        jumpPlayer = true;
+        player->setPositionBeforeJump(player->pos().ry());
     }
 
 }
@@ -335,4 +352,28 @@ void GameStart::losePoint(){
     Points = Points -1;
     textPoints->setPlainText(QString::number(getPoints()));
     ui->graphicsView->scene()->addItem(textPoints);
+}
+
+bool GameStart::playerCanMove(qreal delta_x, qreal delta_y)
+{
+    if(!collisionEnabled){
+        return true;
+    }
+
+    QPointF playerPos = player->pos();
+    qreal playerWidth = player->getWidth(), playerHeight = player->getHeight();
+    foreach(Rectangle *r, lstRectangle) {
+        QPointF rPos = r->pos();
+        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
+
+        bool left = playerPos.rx() + delta_x + playerWidth > rPos.rx();
+        bool up = playerPos.ry() + delta_y + playerHeight > rPos.ry();
+        bool right = playerPos.rx() + delta_x < rPos.rx() + rWidth;
+        bool down = playerPos.ry() + delta_y < rPos.ry() + rHeight;
+        if(left && up && right && down){
+
+            return false;
+        }
+    }
+    return true;
 }
