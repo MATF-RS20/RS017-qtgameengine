@@ -61,6 +61,14 @@ private slots:
 
     void on_cbSpeedBoost_clicked(bool checked);
 
+    void on_cbEnemyGravity_clicked(bool checked);
+
+    void on_cbEnemyMoveUpDown_clicked(bool checked);
+
+    void on_cbEnemyLeftRight_clicked(bool checked);
+
+    void on_cbEnemyFireOn_clicked(bool checked);
+
 private:
     Ui::MainWindow *ui;
     GameBuilder* gameBuilder;

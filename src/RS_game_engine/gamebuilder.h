@@ -42,6 +42,10 @@ public:
     void setCollisionEnabled(bool checked);
     void setBoostEnabled(bool checked);
     void setJumpEnabled(bool checked);
+    bool enemyCanMove(Enemy* enemy, qreal delta_x, qreal delta_y);
+    void setUpDownMovementEnabled(bool checked);
+    void setLeftRightMovementEnabled(bool checked);
+    void setEnemyGravityEnabled(bool checked);
 
     Player *getPlayer() const;
     void setPlayer(Player *value);

@@ -133,7 +133,6 @@ void GameBuilder::update()
     if(collisionEnabled){
         foreach (QGraphicsItem* item, collidingObjects){
             if(item->type() == 3){
-                qDebug() << "Coin";
                 removeItem(item);
             }
             if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
@@ -142,8 +141,19 @@ void GameBuilder::update()
     }
     foreach(Enemy* e, lstEnemy){
 //        qDebug() << e->getRange();
-        if(e->getRange() > 0)
-            e->move();
+        if(e->getRange() > 0){
+            if(enemyCanMove(e, e->getSpeed(), 0)){
+                e->move();
+            }
+            else{
+                e->setSpeed(e->getSpeed() * -1);
+                e->move();
+            }
+
+        }
+        if(e->pos().ry() + e->getHeight() +25 < parent->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
+            e->gravityApply();
+
     }
     //W-0 A-1 S-2 D-3
 //    qDebug() << player->movementArray;
@@ -174,9 +184,7 @@ void GameBuilder::update()
         player->move(playerSpeed,0);
     }
 
-
-    //Hardcoded constant 25
-    if(player->getY() + player->getHeight() + 25 < parent->height() && playerGravityApply && playerCanMove(0,4))
+    if(player->getY() + player->getHeight() +25 < parent->height() && playerGravityApply && playerCanMove(0,4))
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
@@ -304,4 +312,44 @@ void GameBuilder::setBoostEnabled(bool checked)
 void GameBuilder::setJumpEnabled(bool checked)
 {
     this->jumpEnabled = checked;
+}
+
+bool GameBuilder::enemyCanMove(Enemy *enemy, qreal delta_x, qreal delta_y)
+{
+    QPointF enemyPos = enemy->pos();
+    qreal enemyWidth = enemy->getWidth(), enemyHeight = enemy->getHeight();
+    foreach(Rectangle *r, lstRectangle) {
+        QPointF rPos = r->pos();
+        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
+
+        bool left = enemyPos.rx() + delta_x + enemyWidth > rPos.rx();
+        bool up = enemyPos.ry() + delta_y + enemyHeight > rPos.ry();
+        bool right = enemyPos.rx() + delta_x < rPos.rx() + rWidth;
+        bool down = enemyPos.ry() + delta_y < rPos.ry() + rHeight;
+        if(left && up && right && down){
+            return false;
+        }
+    }
+    return true;
+}
+
+void GameBuilder::setUpDownMovementEnabled(bool checked)
+{
+    for(Enemy* e : lstEnemy){
+        e->upDownMovementEnabled(checked);
+    }
+}
+
+void GameBuilder::setLeftRightMovementEnabled(bool checked)
+{
+    for(Enemy* e : lstEnemy){
+        e->leftRightMovementEnabled(checked);
+    }
+}
+
+void GameBuilder::setEnemyGravityEnabled(bool checked)
+{
+    for(Enemy* e : lstEnemy){
+        e->setGravityEnabled(checked);
+    }
 }

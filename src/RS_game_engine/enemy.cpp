@@ -10,9 +10,14 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,range(range)
     ,maxLeft(x-range)
     ,maxRight(x+range)
+    ,maxUp(y - range)
+    ,maxDown(y + range)
     ,lookRight(look)
     ,id(random())
     ,focused(false)
+    ,upDownMovement(false)
+    ,leftRightMovement(true)
+    ,gravityIntensity(2)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -45,7 +50,6 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 void Enemy::pbApply()
 {
-
     QString id = QString::number(this->id);
     if(componentInfo->itemText(1) == ("Enemy one " + id) ){
         qDebug() << "USAO";
@@ -55,11 +59,42 @@ void Enemy::pbApply()
         this->width = (qreal)enemyInfo.at(2)->text().toFloat();
         this->height = (qreal)enemyInfo.at(3)->text().toFloat();
         this->range = (qreal)enemyInfo.at(4)->text().toFloat();
+        if(this->speed > 0)
+            this->speed = static_cast<qreal>(enemyInfo.at(5)->text().toFloat());
+        else
+            this->speed = static_cast<qreal>(enemyInfo.at(5)->text().toFloat()) * (-1);
 
+        this->gravityIntensity = static_cast<qreal>(enemyInfo.at(6)->text().toFloat());
         this->maxLeft = this->x - this->range;
         this->maxRight = this->x + this->range;
         update();
     }
+}
+
+void Enemy::setSpeed(const qreal &value)
+{
+    speed = value;
+}
+
+void Enemy::upDownMovementEnabled(bool checked)
+{
+    QString id = QString::number(this->id);
+    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+        upDownMovement = checked;
+    }
+}
+
+void Enemy::leftRightMovementEnabled(bool checked)
+{
+    QString id = QString::number(this->id);
+    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+        leftRightMovement = checked;
+    }
+}
+
+qreal Enemy::getSpeed() const
+{
+    return speed;
 }
 
 QPixmap Enemy::getLook() const
@@ -107,9 +142,34 @@ int Enemy::type() const{
 
 void Enemy::move()
 {
-    x += speed;
-    this->setPos(x, y);
-    if(x <= maxLeft || x >= maxRight)
-        speed *= (-1);
+    if(leftRightMovement){
+        x += speed;
+    }
+    else if(upDownMovement){
+        y += speed;
+    }
 
+    this->setPos(x, y);
+    if(x <= maxLeft || x >= maxRight || y <= maxUp || y >= maxDown)
+        speed *= (-1);
+}
+
+void Enemy::gravityApply()
+{
+    y += gravityIntensity;
+    this->setPos(x, y);
+    update();
+}
+
+void Enemy::setGravityEnabled(bool checked)
+{
+    QString id = QString::number(this->id);
+    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+        gravityEnabled = checked;
+    }
+}
+
+bool Enemy::EnemyGravityEnabled()
+{
+    return this->gravityEnabled;
 }

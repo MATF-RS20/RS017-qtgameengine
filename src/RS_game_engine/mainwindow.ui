@@ -136,6 +136,14 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_9">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>405</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Add Positive Obstacle</string>
        </attribute>
@@ -158,18 +166,22 @@
     <item>
      <widget class="QWidget" name="gridWidget" native="true">
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="0" colspan="2">
-        <widget class="QGraphicsView" name="gvMainScene">
-         <property name="enabled">
-          <bool>true</bool>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="startBt">
+         <property name="font">
+          <font>
+           <family>Ubuntu</family>
+          </font>
          </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+         <property name="text">
+          <string/>
          </property>
-         <property name="autoFillBackground">
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/play-button-arrow.png</normaloff>
+           <normalon>icons/play-button-arrow.png</normalon>icons/play-button-arrow.png</iconset>
+         </property>
+         <property name="default">
           <bool>false</bool>
          </property>
         </widget>
@@ -187,22 +199,18 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="startBt">
-         <property name="font">
-          <font>
-           <family>Ubuntu</family>
-          </font>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGraphicsView" name="gvMainScene">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
-         <property name="text">
-          <string/>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>icons/play-button-arrow.png</normaloff>
-           <normalon>icons/play-button-arrow.png</normalon>icons/play-button-arrow.png</iconset>
-         </property>
-         <property name="default">
+         <property name="autoFillBackground">
           <bool>false</bool>
          </property>
         </widget>
@@ -231,7 +239,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_4">
        <property name="geometry">
@@ -400,9 +408,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>10</y>
+          <y>11</y>
           <width>202</width>
-          <height>194</height>
+          <height>374</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -493,6 +501,58 @@
             <widget class="QLineEdit" name="leEnemyRange"/>
            </item>
           </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_27">
+           <item>
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>Speed:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="leEnemySpeed"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_28">
+           <item>
+            <widget class="QCheckBox" name="cbEnemyGravity">
+             <property name="text">
+              <string>gravity value:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="leEnemyGravity"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbEnemyMoveUpDown">
+           <property name="text">
+            <string>move up/down</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbEnemyLeftRight">
+           <property name="text">
+            <string>move left/right</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbEnemyFireOn">
+           <property name="text">
+            <string>fire on</string>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -787,10 +847,18 @@
        </widget>
       </widget>
       <widget class="QWidget" name="page_8">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>436</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Positive Obstacle</string>
        </attribute>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>0</x>

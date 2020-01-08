@@ -117,6 +117,8 @@ void MainWindow::addEnemyOne()
         enemyInfo.append(ui->leEnemyWidth);
         enemyInfo.append(ui->leEnemyHeight);
         enemyInfo.append(ui->leEnemyRange);
+        enemyInfo.append(ui->leEnemySpeed);
+        enemyInfo.append(ui->leEnemyGravity);
         gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
     }
     else{
@@ -330,4 +332,24 @@ void MainWindow::on_cbJump_clicked(bool checked)
 void MainWindow::on_cbSpeedBoost_clicked(bool checked)
 {
     gameBuilder->setBoostEnabled(checked);
+}
+
+void MainWindow::on_cbEnemyGravity_clicked(bool checked)
+{
+    gameBuilder->setEnemyGravityEnabled(checked);
+}
+
+void MainWindow::on_cbEnemyMoveUpDown_clicked(bool checked)
+{
+    gameBuilder->setUpDownMovementEnabled(checked);
+}
+
+void MainWindow::on_cbEnemyLeftRight_clicked(bool checked)
+{
+    gameBuilder->setLeftRightMovementEnabled(checked);
+}
+
+void MainWindow::on_cbEnemyFireOn_clicked(bool checked)
+{
+
 }

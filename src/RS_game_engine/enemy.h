@@ -31,6 +31,15 @@ public:
 
     void move();
 
+    qreal getSpeed() const;
+
+    void setSpeed(const qreal &value);
+    void upDownMovementEnabled(bool checked);
+    void leftRightMovementEnabled(bool checked);
+    void gravityApply();
+    void setGravityEnabled(bool checked);
+    bool EnemyGravityEnabled();
+
 private slots:
     void pbApply() override;
 
@@ -47,6 +56,11 @@ private:
     QToolBox* componentInfo;
     QList<QLineEdit*> enemyInfo;
     QPushButton* enemyUpdate;
+    bool upDownMovement;
+    bool leftRightMovement;
+    qreal maxUp, maxDown;
+    qreal gravityIntensity;
+    bool gravityEnabled;
 };
 
 #endif // ENEMY_H
