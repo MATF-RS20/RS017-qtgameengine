@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->startBt->setFixedSize(QSize(20,20));
     ui->gvMainScene->verticalScrollBar()->setValue(ui->gvMainScene->verticalScrollBar()->maximum());
     ui->gvMainScene->horizontalScrollBar()->setValue(ui->gvMainScene->horizontalScrollBar()->minimum());
+    ui->tbComponentInfo->setCurrentIndex(2);
     addSignalsAndSlots();
 }
 
@@ -52,6 +53,7 @@ void MainWindow::closeApp()
 
 void MainWindow::addPositiveObstacle()
 {
+    ui->tbComponentInfo->setCurrentIndex(3);
     PositiveObstacleDialog* dialog = new PositiveObstacleDialog(this);
     dialog->exec();
     QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
@@ -75,7 +77,7 @@ void MainWindow::addPositiveObstacle()
 
 void MainWindow::addRectangle()
 {
-
+    ui->tbComponentInfo->setCurrentIndex(0);
     ComponentInfoDialog* dialog = new ComponentInfoDialog(this);
     dialog->exec();
     QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
@@ -99,6 +101,7 @@ void MainWindow::addRectangle()
 
 void MainWindow::addEnemyOne()
 {
+    ui->tbComponentInfo->setCurrentIndex(1);
     EnemyDialog* enemyDialog = new EnemyDialog(this);
     enemyDialog->exec();
     QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/enemies/", tr("Images (*.png *.jpg *.jpeg)"));
@@ -124,6 +127,7 @@ void MainWindow::addEnemyOne()
 
 void MainWindow::addPlayer()
 {
+    ui->tbComponentInfo->setCurrentIndex(2);
     PlayerDialog* playerDialog = new PlayerDialog(this);
     playerDialog->exec();
     QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/players/", tr("Images (*.png *.jpg *.jpeg)"));

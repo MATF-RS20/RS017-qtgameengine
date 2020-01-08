@@ -34,6 +34,7 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 void Rectangle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    componentInfo->setCurrentIndex(0);
     QString id = QString::number(this->id);
     componentInfo->setItemText(0,"Rectangle " + id);
 }

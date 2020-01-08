@@ -33,6 +33,7 @@ void PositiveObstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 void PositiveObstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    componentInfo->setCurrentIndex(3);
     QString id = QString::number(this->id);
     componentInfo->setItemText(3,"Positive Obstacle " + id);
 }

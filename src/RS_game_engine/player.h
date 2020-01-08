@@ -32,8 +32,7 @@ public:
     void jumpAnimation();
     qreal getJump();
     void setPositionBeforeJump(qreal position);
-
-
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     qreal getGravityIntensity() const;
 
 private slots:

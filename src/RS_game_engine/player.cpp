@@ -84,6 +84,11 @@ void Player::setPositionBeforeJump(qreal position)
     positionBeforeJump = position;
 }
 
+void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    componentInfo->setCurrentIndex(2);
+}
+
 void Player::setMoveUpDownEnabled(bool checked)
 {
     this->moveUpDownEnabled = checked;

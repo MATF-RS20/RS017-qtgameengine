@@ -21,6 +21,7 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
 
 void Enemy::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    componentInfo->setCurrentIndex(1);
     QString id = QString::number(this->id);
     componentInfo->setItemText(1,"Enemy one " + id);
 }
