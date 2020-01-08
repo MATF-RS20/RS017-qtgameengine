@@ -45,7 +45,6 @@ void GameStart::start(){
         //        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         //        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setSceneRect(exactRect);
-//        ui->graphicsView->setInteractive(false);
         QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
         ui->graphicsView->verticalScrollBar()->setValue(ui->graphicsView->verticalScrollBar()->maximum());
         ui->graphicsView->horizontalScrollBar()->setValue(ui->graphicsView->horizontalScrollBar()->minimum());
@@ -218,20 +217,22 @@ void GameStart::setFName(const QString &value)
     fName = value;
 }
 
-
+bool pom = true;
 void GameStart::update()
 {
-    QGraphicsTextItem* text = new QGraphicsTextItem("Points:");
-    QFont font;
-    font.setPixelSize(30);
-    font.setFamily("Calibri");
-    font.setBold(false);
-    text->setDefaultTextColor(Qt::red);
-    text->setFont(font);
-    text->setPos(20,20);
-    this->ui->graphicsView->scene()->addItem(text);
-    this->ui->graphicsView->scene()->addItem(textPoints);
-
+    if(pom){
+        QGraphicsTextItem* text = new QGraphicsTextItem("Points:");
+        QFont font;
+        font.setPixelSize(30);
+        font.setFamily("Calibri");
+        font.setBold(false);
+        text->setDefaultTextColor(Qt::red);
+        text->setFont(font);
+        text->setPos(20,20);
+        this->ui->graphicsView->scene()->addItem(text);
+        this->ui->graphicsView->scene()->addItem(textPoints);
+        pom = false;
+    }
     if(player == nullptr)
         return;
     player->collidingItems();
@@ -277,7 +278,7 @@ void GameStart::update()
         }
         player->move(speed,0);
     }
-    if(player->getY() + player->getHeight() < scene->height() && playerGravityApply && playerCanMove(0,player->getGravityIntensity()))
+    if(player->getY() + player->getHeight() < ui->graphicsView->scene()->height() && playerGravityApply && playerCanMove(0,player->getGravityIntensity()))
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
