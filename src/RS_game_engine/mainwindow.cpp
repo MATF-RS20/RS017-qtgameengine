@@ -173,6 +173,42 @@ void MainWindow::loadDefaultBackground()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
 
+    QPoint new_ref(0,event->size().height());
+    QPoint ref(0,event->oldSize().height());
+
+    QRectF exactRect(0, 0, ui->gvMainScene->size().width(), ui->gvMainScene->size().height());
+    ui->gvMainScene->setSceneRect(exactRect);
+    //QGraphicsScene* new_scene= new QGraphicsScene(ui->gvMainScene);
+    for(auto item:ui->gvMainScene->scene()->items())
+    {
+        qreal oldX;
+        qreal oldY;
+        if( item->type() == 1 || item->type()==3){
+            MapBuilder* r = qgraphicsitem_cast<MapBuilder*>(item);
+            oldX = r->getX();
+            oldY = r->getY();
+            qreal refX = oldX - ref.rx();
+            qreal refY =ref.ry() - oldY;
+            qreal newX  = refX+new_ref.rx();
+            qreal newY = new_ref.ry() -refY;
+            r->setX(newX);
+            r->setY(newY);
+            r->setPos(newX,newY);
+            update();
+       }else if(item->type() == 2 || item->type() ==4){
+            GameComponent* r = qgraphicsitem_cast<GameComponent*>(item);
+            oldX = r->getX();
+            oldY = r->getY();
+            qreal refX = oldX - ref.rx();
+            qreal refY =ref.ry() - oldY;
+            qreal newX  = refX+new_ref.rx();
+            qreal newY = new_ref.ry() - refY;
+            r->setX(newX);
+            r->setY(newY);
+            r->setPos(newX,newY);
+            update();
+        }
+  }
     QPixmap bkgnd(fileName);
     bkgnd = bkgnd.scaled(ui->gvMainScene->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
