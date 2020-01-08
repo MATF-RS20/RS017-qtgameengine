@@ -281,9 +281,14 @@ void GameStart::update()
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
-
-        player->jumpAnimation(jumpAmout);
-        jumpAmout += 1;
+        if(playerCanMove(0,-speed)){
+            player->jumpAnimation(jumpAmout);
+            jumpAmout += 1;
+        }
+        else{
+            jumpPlayer = false;
+            jumpAmout = 0;
+        }
     }
     else{
         jumpPlayer = false;
