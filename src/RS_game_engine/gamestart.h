@@ -28,6 +28,7 @@ public:
     QString getFName() const;
     void setFName(const QString &value);
     void makePoint();
+    void losePoint();
 
     QScopedPointer<QTimer> getTimer() const;
 
@@ -37,11 +38,15 @@ public:
     int getPoints() const;
     void setPoints(int value);
 
+    QGraphicsTextItem *getTextPoints() const;
+    void setTextPoints(QGraphicsTextItem *value);
+
 private slots:
     void update();
 private:
     void resizeEvent(QResizeEvent* event);
     int Points;
+    QGraphicsTextItem* textPoints;
     Ui::GameStart *ui;
     QGraphicsView* scene;
     GameBuilder* gameON;

@@ -8,6 +8,15 @@ GameStart::GameStart(QWidget *parent) :
     timer(new QTimer())
 {
     ui->setupUi(this);
+    Points = 0;
+    textPoints= new QGraphicsTextItem(QString::number(getPoints()));
+    QFont font;
+    font.setPixelSize(30);
+    font.setFamily("Calibri");
+    font.setBold(false);
+    textPoints->setDefaultTextColor(Qt::red);
+    textPoints->setFont(font);
+    textPoints->setPos(130,20);
 
 }
 GameStart::~GameStart()
@@ -163,6 +172,16 @@ void GameStart::resizeEvent(QResizeEvent* event){
 
 }
 
+QGraphicsTextItem *GameStart::getTextPoints() const
+{
+    return textPoints;
+}
+
+void GameStart::setTextPoints(QGraphicsTextItem *value)
+{
+    textPoints = value;
+}
+
 int GameStart::getPoints() const
 {
     return Points;
@@ -185,10 +204,16 @@ void GameStart::setFName(const QString &value)
 
 void GameStart::update()
 {
-    //QRect points_rect(10,10,100,20);
-    QPainter painter;
-    painter.setPen(Qt::black);
-    painter.drawText(QPoint(50,50),"Points:");
+    QGraphicsTextItem* text = new QGraphicsTextItem("Points:");
+    QFont font;
+    font.setPixelSize(30);
+    font.setFamily("Calibri");
+    font.setBold(false);
+    text->setDefaultTextColor(Qt::red);
+    text->setFont(font);
+    text->setPos(20,20);
+    this->ui->graphicsView->scene()->addItem(text);
+    this->ui->graphicsView->scene()->addItem(textPoints);
     GameBuilder* gameON = this->getGameON();
     Player* player = this->getGameON()->getPlayer();
     QList<Enemy*> lstEnemy = this->getGameON()->getLstEnemy();
@@ -198,9 +223,10 @@ void GameStart::update()
     if(gameON->getCollisionEnabled()){
         foreach (QGraphicsItem* item, collidingObjects){
             if(item->type() == 3){
-                qDebug() << "Coin";
                 makePoint();
                 ui->graphicsView->scene()->removeItem(item);
+            }if(item->type() == 2){
+                losePoint();
             }
         }
     }
@@ -299,5 +325,14 @@ void GameStart::setGameON(GameBuilder *value)
     gameON = value;
 }
 void GameStart::makePoint(){
-    Points++;
+    this->ui->graphicsView->scene()->removeItem(textPoints);
+    Points = Points +1;
+    textPoints->setPlainText(QString::number(getPoints()));
+    ui->graphicsView->scene()->addItem(textPoints);
+}
+void GameStart::losePoint(){
+    this->ui->graphicsView->scene()->removeItem(textPoints);
+    Points = Points -1;
+    textPoints->setPlainText(QString::number(getPoints()));
+    ui->graphicsView->scene()->addItem(textPoints);
 }
