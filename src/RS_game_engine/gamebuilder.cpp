@@ -152,8 +152,9 @@ void GameBuilder::update()
     }
 
     if(playerCanMove(-speed,0) && player->movementArray[1]){
-        if(player->getX()  < parent->horizontalScrollBar()->value())
-            parent->horizontalScrollBar()->setValue(player->getX());
+
+        if(player->getX()  < parent->horizontalScrollBar()->value() + (parent->width()/2.0))
+            parent->horizontalScrollBar()->setValue(player->getX() - (parent->width()/2.0));
 
         player->move(-speed,0);
     }
@@ -163,8 +164,8 @@ void GameBuilder::update()
     }
 
     if(playerCanMove(speed,0) && player->movementArray[3]){
-        if(player->getX() + player->getWidth() > parent->horizontalScrollBar()->value() + parent->width())
-            parent->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-parent->width());
+        if(player->getX() + player->getWidth() > parent->horizontalScrollBar()->value() + (parent->width()/2.0))
+            parent->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-(parent->width()/2.0));
         player->move(speed,0);
     }
 
