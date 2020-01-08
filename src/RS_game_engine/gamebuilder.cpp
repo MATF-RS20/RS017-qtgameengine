@@ -7,6 +7,8 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,collisionEnabled(true)
     ,playerGravityApply(true)
     ,jumpEnabled(true)
+    ,playerExists(false)
+    ,playerSpeed(4)
 {
 
 }
@@ -41,9 +43,10 @@ void GameBuilder::addEnemy(qreal x, qreal y, qreal width, qreal height, qreal ra
 
 void GameBuilder::addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox *componentInfo, QList<QLineEdit *> playerInfo, QPushButton *playerUpdate)
 {
+    connect(playerUpdate, SIGNAL(clicked()), this, SLOT(playerUpdateClicked()));
     player = new Player(x,y,width, height,look,componentInfo,playerInfo,playerUpdate);
     addItem(player);
-
+    playerExists = true;
     connect(&(*gameBuilderTimer), SIGNAL(timeout()), this, SLOT(update()));
 
     gameBuilderTimer->start(15);
@@ -51,7 +54,8 @@ void GameBuilder::addPlayer(qreal x, qreal y, qreal width, qreal height, QString
 
 void GameBuilder::keyPressEvent(QKeyEvent *event)
 {
-
+    if(!playerExists)
+        return;
     foreach(QGraphicsItem* item, items()){
         if(item->hasFocus() && event->key() == Qt::Key_Delete){
             lstRectangle.removeOne(dynamic_cast<Rectangle*>(item));
@@ -97,6 +101,8 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
 
 void GameBuilder::keyReleaseEvent(QKeyEvent *event)
 {
+    if(!playerExists)
+            return;
     if(event->key() == Qt::Key_W){
         player->movementArray.setBit(0,false);
     }
@@ -119,7 +125,7 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
 
 void GameBuilder::update()
 {
-    if(player == nullptr)
+    if(!playerExists)
         return;
     player->collidingItems();
     player->pos();
@@ -143,30 +149,29 @@ void GameBuilder::update()
 //    qDebug() << player->movementArray;
 //    qDebug() << playerCanMove(0,-4);
     //W-0 A-1 S-2 D-3
-    qreal speed = 4;
     if(player->movementArray[4])
-        speed *= 2;
+        playerSpeed = player->getBoost();
 
-    if(playerCanMove(0,-speed) && player->movementArray[0]){
-        player->move(0,-speed);
+    if(playerCanMove(0,-playerSpeed) && player->movementArray[0]){
+        player->move(0,-playerSpeed);
     }
 
-    if(playerCanMove(-speed,0) && player->movementArray[1]){
+    if(playerCanMove(-playerSpeed,0) && player->movementArray[1]){
 
         if(player->getX()  < parent->horizontalScrollBar()->value() + (parent->width()/2.0))
             parent->horizontalScrollBar()->setValue(player->getX() - (parent->width()/2.0));
 
-        player->move(-speed,0);
+        player->move(-playerSpeed,0);
     }
 
-    if(playerCanMove(0,speed) && player->movementArray[2]){
-        player->move(0,speed);
+    if(playerCanMove(0,playerSpeed) && player->movementArray[2]){
+        player->move(0,playerSpeed);
     }
 
-    if(playerCanMove(speed,0) && player->movementArray[3]){
+    if(playerCanMove(playerSpeed,0) && player->movementArray[3]){
         if(player->getX() + player->getWidth() > parent->horizontalScrollBar()->value() + (parent->width()/2.0))
             parent->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-(parent->width()/2.0));
-        player->move(speed,0);
+        player->move(playerSpeed,0);
     }
 
 
@@ -175,14 +180,24 @@ void GameBuilder::update()
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
-
-        player->jumpAnimation();
-        jumpAmout += 1;
+        if(playerCanMove(0,-playerSpeed)){
+            player->jumpAnimation(jumpAmout);
+            jumpAmout += 1;
+        }
+        else{
+            jumpPlayer = false;
+            jumpAmout = 0;
+        }
     }
     else{
         jumpPlayer = false;
         jumpAmout = 0;
     }
+}
+
+void GameBuilder::playerUpdateClicked()
+{
+    playerSpeed = player->getSpeed();
 }
 
 bool GameBuilder::getCollisionEnabled() const

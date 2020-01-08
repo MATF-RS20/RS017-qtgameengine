@@ -146,6 +146,7 @@ void MainWindow::addPlayer()
         playerInfo.append(ui->leSpeedValue);
         playerInfo.append(ui->leGravityValue);
         gameBuilder->addPlayer(x, y, width, height, lookPath,ui->tbComponentInfo, playerInfo, ui->pbPlayerApply);
+
     }
     else{
         return;

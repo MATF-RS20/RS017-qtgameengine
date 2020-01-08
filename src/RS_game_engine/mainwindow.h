@@ -65,5 +65,6 @@ private:
     Ui::MainWindow *ui;
     GameBuilder* gameBuilder;
     void resizeEvent(QResizeEvent* event);
+
 };
 #endif // MAINWINDOW_H

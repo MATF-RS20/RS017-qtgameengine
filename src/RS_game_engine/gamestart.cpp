@@ -41,11 +41,14 @@ void GameStart::setScene(QGraphicsView *value)
 void GameStart::start(){
 
         QRectF exactRect(0, 0, this->size().width(), this->size().height());
-        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        //        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        //        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setSceneRect(exactRect);
 //        ui->graphicsView->setInteractive(false);
         QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
+        ui->graphicsView->verticalScrollBar()->setValue(ui->graphicsView->verticalScrollBar()->maximum());
+        ui->graphicsView->horizontalScrollBar()->setValue(ui->graphicsView->horizontalScrollBar()->minimum());
         for(QGraphicsItem* item:scene->scene()->items())
         {
             qreal oldX;
@@ -142,8 +145,8 @@ void GameStart::resizeEvent(QResizeEvent* event){
         QPoint ref(0,800);
         QPoint new_ref(0,event->size().height());
         QRectF exactRect(0, 0, this->size().width(), this->size().height());
-        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setSceneRect(exactRect);
         QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
         for(auto item:ui->graphicsView->scene()->items())
@@ -229,6 +232,8 @@ void GameStart::update()
     this->ui->graphicsView->scene()->addItem(text);
     this->ui->graphicsView->scene()->addItem(textPoints);
 
+    if(player == nullptr)
+        return;
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
@@ -257,6 +262,8 @@ void GameStart::update()
     }
 
     if(playerCanMove(-speed,0) && player->movementArray[1]){
+        if(player->getX()  < ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0))
+            ui->graphicsView->horizontalScrollBar()->setValue(player->getX() - (ui->graphicsView->width()/2.0));
         player->move(-speed,0);
     }
 
@@ -265,6 +272,9 @@ void GameStart::update()
     }
 
     if(playerCanMove(speed,0) && player->movementArray[3]){
+        if(player->getX() + player->getWidth() > ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0)){
+            ui->graphicsView->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-(ui->graphicsView->width()/2.0));
+        }
         player->move(speed,0);
     }
     if(player->getY() + player->getHeight() < scene->height() && playerGravityApply && playerCanMove(0,player->getGravityIntensity()))
@@ -272,7 +282,7 @@ void GameStart::update()
 
     if(jumpPlayer && jumpAmout < 24){
 
-        player->jumpAnimation();
+        player->jumpAnimation(jumpAmout);
         jumpAmout += 1;
     }
     else{

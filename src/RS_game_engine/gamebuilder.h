@@ -71,6 +71,7 @@ public:
 
 private slots:
     void update();
+    void playerUpdateClicked();
 
 private:
     QTimer* gameBuilderTimer;
@@ -81,9 +82,10 @@ private:
     QList<Enemy*> lstEnemy;
     QWidget* main;
     QToolBox* componentInfo;
-
+    bool playerExists;
     PositiveObstacle* positiveObstacle;
     QList<PositiveObstacle*> lstPositiveObstacle;
+    qreal playerSpeed;
 };
 
 #endif // GAMEBUILDER_H

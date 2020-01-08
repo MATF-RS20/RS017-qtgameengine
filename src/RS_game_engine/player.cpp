@@ -17,7 +17,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,speed(4)
     ,gravityIntensity(1)
     ,jump(100)
-    ,currentJumpPosition(0)
+//    ,currentJumpPosition(0)
 {
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
         jumpArray.append(sin(i)*jump);
@@ -60,7 +60,7 @@ void Player::move(qreal delta_x, qreal delta_y)
     update();
 }
 
-void Player::jumpAnimation()
+void Player::jumpAnimation(qreal currentJumpPosition)
 {
     if(currentJumpPosition < 23){
         y = positionBeforeJump - jumpArray.at(currentJumpPosition);
@@ -153,6 +153,16 @@ void Player::pbApply()
 qreal Player::getGravityIntensity() const
 {
     return gravityIntensity;
+}
+
+qreal Player::getSpeed()
+{
+    return this->speed;
+}
+
+qreal Player::getBoost()
+{
+    return this->boost;
 }
 int Player::type() const{
     return 4;

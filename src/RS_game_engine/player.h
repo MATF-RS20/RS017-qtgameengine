@@ -29,11 +29,13 @@ public:
     void gravityApply();
     void setBoostEnabled(bool checked);
     void setCurrentSpeed(qreal speed);
-    void jumpAnimation();
+    void jumpAnimation(qreal currentJumpPosition);
     qreal getJump();
     void setPositionBeforeJump(qreal position);
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     qreal getGravityIntensity() const;
+    qreal getSpeed();
+    qreal getBoost();
 
 private slots:
     void pbApply() override;
