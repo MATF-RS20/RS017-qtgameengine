@@ -97,7 +97,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_E){
         foreach(Enemy* e ,lstEnemy){
             if(componentInfo->itemText(1) == ("Enemy " + QString::number(e->getId()))){
-                qDebug() << "been here";
                 enemy = new Enemy(e->getX() -20, e->getY() + 20, e->getWidth(), e->getHeight(), e->getRange(), e->getLookString(),
                                   componentInfo, e->getEnemyInfo(), e->getEnemyUpdate());
                 addItem(enemy);
@@ -105,6 +104,29 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             }
         }
     }
+    if(event->key() == Qt::Key_R){
+        foreach(Rectangle* r ,lstRectangle){
+              if(componentInfo->itemText(0) == ("Rectangle " + QString::number(r->getId()))){
+                qDebug() << "been here";
+                rectangle = new Rectangle(r->getX() -20, r->getY() + 20, r->getWidth(), r->getHeight(),
+                                  componentInfo, r->getRectangleInfo(), r->getRectangleUpdate(),r->getLookString());
+                addItem(rectangle);
+                lstRectangle.append(rectangle);
+            }
+        }
+    }
+    if(event->key() == Qt::Key_P){
+        foreach(PositiveObstacle* p ,lstPositiveObstacle){
+              if(componentInfo->itemText(3) == ("Positive Obstacle " + QString::number(p->getId()))){
+                qDebug() << "been here";
+                positiveObstacle = new PositiveObstacle(p->getX() -20, p->getY() + 20, p->getWidth(), p->getHeight(),
+                                  componentInfo, p->getPositiveObstacleInfo(), p->getPositiveObstacleUpdate(),p->getLookString());
+                addItem(positiveObstacle);
+                lstPositiveObstacle.append(positiveObstacle);
+            }
+        }
+    }
+
 
 //    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 

@@ -19,6 +19,10 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     int type() const override;
 
+    QString getLookString() const;
+    QPushButton *getPositiveObstacleUpdate() const;
+    QList<QLineEdit *> getPositiveObstacleInfo() const;
+
 private slots:
     void pbApply() override;
 
@@ -28,6 +32,7 @@ private:
     QLineEdit* line;
     bool focused;
     QPushButton* positiveObstacleUpdate;
+    QString lookString;
 };
 
 #endif // POSITIVEOBSTACLE_H

@@ -17,6 +17,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     int type() const override;
+    QList<QLineEdit *> getRectangleInfo() const;
+    QPushButton *getRectangleUpdate() const;
+    QString getLookString() const;
+
 private slots:
     void pbApply() override;
 private:
@@ -25,6 +29,7 @@ private:
     QList<QLineEdit*> rectangleInfo;
     QLineEdit* line;
     QPushButton* rectangleUpdate;
+    QString lookString;
 };
 
 #endif // RECTANGLE_H

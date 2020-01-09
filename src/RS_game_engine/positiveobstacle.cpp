@@ -7,6 +7,7 @@ PositiveObstacle::PositiveObstacle(qreal x, qreal y, qreal width, qreal height,
     ,focused(false)
     ,positiveObstacleUpdate(positiveObstacleUpdate)
     ,positiveObstacleInfo(positiveObstacleInfo)
+    ,lookString(lookPath)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     connect(positiveObstacleUpdate, SIGNAL(clicked()), this, SLOT(pbApply()));
@@ -54,4 +55,19 @@ void PositiveObstacle::pbApply()
         this->height = (qreal)positiveObstacleInfo.at(3)->text().toFloat();
         update();
     }
+}
+
+QList<QLineEdit *> PositiveObstacle::getPositiveObstacleInfo() const
+{
+    return positiveObstacleInfo;
+}
+
+QPushButton *PositiveObstacle::getPositiveObstacleUpdate() const
+{
+    return positiveObstacleUpdate;
+}
+
+QString PositiveObstacle::getLookString() const
+{
+    return lookString;
 }

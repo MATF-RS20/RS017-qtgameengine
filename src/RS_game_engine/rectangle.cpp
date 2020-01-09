@@ -9,6 +9,7 @@ Rectangle::Rectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* comp
     , focused(false)
     ,rectangleInfo(rectangleInfo)
     ,rectangleUpdate(rectangleUpdate)
+    ,lookString(lookPath)
 {
     setFlags(ItemIsMovable | ItemIsFocusable);
     connect(rectangleUpdate, SIGNAL(clicked()), this, SLOT(pbApply()));
@@ -48,6 +49,21 @@ void Rectangle::pbApply()
         this->height = (qreal)rectangleInfo.at(3)->text().toFloat();
         update();
     }
+}
+
+QString Rectangle::getLookString() const
+{
+    return lookString;
+}
+
+QPushButton *Rectangle::getRectangleUpdate() const
+{
+    return rectangleUpdate;
+}
+
+QList<QLineEdit *> Rectangle::getRectangleInfo() const
+{
+    return rectangleInfo;
 }
 
 int Rectangle::type() const{

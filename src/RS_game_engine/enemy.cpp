@@ -33,6 +33,14 @@ void Enemy::mousePressEvent(QGraphicsSceneMouseEvent *event)
     componentInfo->setItemText(1,"Enemy " + id);
 }
 
+void Enemy::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->maxLeft = this->pos().rx() - range;
+    this->maxRight = this->pos().rx() + range;
+    this->maxUp = this->pos().ry() - range;
+    this->maxDown = this->pos().ry() + range;
+}
+
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if(this->hasFocus()) {
