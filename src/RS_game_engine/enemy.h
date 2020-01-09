@@ -40,6 +40,12 @@ public:
     void setGravityEnabled(bool checked);
     bool EnemyGravityEnabled();
 
+    QString getLookString() const;
+
+    QPushButton *getEnemyUpdate() const;
+
+    QList<QLineEdit *> getEnemyInfo() const;
+
 private slots:
     void pbApply() override;
 
@@ -61,6 +67,7 @@ private:
     qreal maxUp, maxDown;
     qreal gravityIntensity;
     bool gravityEnabled;
+    QString lookString;
 };
 
 #endif // ENEMY_H

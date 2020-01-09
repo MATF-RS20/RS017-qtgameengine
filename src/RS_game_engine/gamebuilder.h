@@ -73,6 +73,8 @@ public:
 
     bool getJumpEnabled() const;
 
+    void setComponentInfo(QToolBox *value);
+
 private slots:
     void update();
     void playerUpdateClicked();

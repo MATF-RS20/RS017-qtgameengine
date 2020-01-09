@@ -13,11 +13,13 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,maxUp(y - range)
     ,maxDown(y + range)
     ,lookRight(look)
+    ,lookString(look)
     ,id(random())
     ,focused(false)
     ,upDownMovement(false)
-    ,leftRightMovement(true)
+    ,leftRightMovement(false)
     ,gravityIntensity(2)
+    ,gravityEnabled(false)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -28,7 +30,7 @@ void Enemy::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     componentInfo->setCurrentIndex(1);
     QString id = QString::number(this->id);
-    componentInfo->setItemText(1,"Enemy one " + id);
+    componentInfo->setItemText(1,"Enemy " + id);
 }
 
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -39,6 +41,7 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         enemyInfo.at(1)->setPlaceholderText(QString::number(this->pos().ry()));
         enemyInfo.at(2)->setPlaceholderText(QString::number(this->width));
         enemyInfo.at(3)->setPlaceholderText(QString::number(this->height));
+        enemyInfo.at(4)->setPlaceholderText(QString::number(this->range));
     }
     else{
         this->focused = false;
@@ -71,6 +74,21 @@ void Enemy::pbApply()
     }
 }
 
+QList<QLineEdit *> Enemy::getEnemyInfo() const
+{
+    return enemyInfo;
+}
+
+QPushButton *Enemy::getEnemyUpdate() const
+{
+    return enemyUpdate;
+}
+
+QString Enemy::getLookString() const
+{
+    return lookString;
+}
+
 void Enemy::setSpeed(const qreal &value)
 {
     speed = value;
@@ -79,7 +97,7 @@ void Enemy::setSpeed(const qreal &value)
 void Enemy::upDownMovementEnabled(bool checked)
 {
     QString id = QString::number(this->id);
-    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+    if(componentInfo->itemText(1) == ("Enemy " + id) ){
         upDownMovement = checked;
     }
 }
@@ -87,7 +105,7 @@ void Enemy::upDownMovementEnabled(bool checked)
 void Enemy::leftRightMovementEnabled(bool checked)
 {
     QString id = QString::number(this->id);
-    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+    if(componentInfo->itemText(1) == ("Enemy " + id) ){
         leftRightMovement = checked;
     }
 }
@@ -164,7 +182,7 @@ void Enemy::gravityApply()
 void Enemy::setGravityEnabled(bool checked)
 {
     QString id = QString::number(this->id);
-    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
+    if(componentInfo->itemText(1) == ("Enemy " + id) ){
         gravityEnabled = checked;
     }
 }

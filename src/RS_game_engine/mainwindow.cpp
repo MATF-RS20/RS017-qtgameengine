@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gvMainScene->setSceneRect(0,0,4000,height);
     ui->gvMainScene->fitInView(0, 0, 4000, height, Qt::KeepAspectRatioByExpanding);
     gameBuilder =new GameBuilder(ui->gvMainScene);
+    gameBuilder->setComponentInfo(ui->tbComponentInfo);
     ui->gvMainScene->setScene(&(*gameBuilder));
     ui->startBt->setIcon(QIcon("../RS_game_engine/icons/start.png"));
     ui->startBt->setFixedSize(QSize(20,20));

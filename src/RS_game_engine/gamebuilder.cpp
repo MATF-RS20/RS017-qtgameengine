@@ -94,6 +94,17 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         jumpPlayer = true;
         player->setPositionBeforeJump(player->pos().ry());
     }
+    if(event->key() == Qt::Key_E){
+        foreach(Enemy* e ,lstEnemy){
+            if(componentInfo->itemText(1) == ("Enemy " + QString::number(e->getId()))){
+                qDebug() << "been here";
+                enemy = new Enemy(e->getX() -20, e->getY() + 20, e->getWidth(), e->getHeight(), e->getRange(), e->getLookString(),
+                                  componentInfo, e->getEnemyInfo(), e->getEnemyUpdate());
+                addItem(enemy);
+                lstEnemy.append(enemy);
+            }
+        }
+    }
 
 //    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
@@ -206,6 +217,11 @@ void GameBuilder::update()
 void GameBuilder::playerUpdateClicked()
 {
     playerSpeed = player->getSpeed();
+}
+
+void GameBuilder::setComponentInfo(QToolBox *value)
+{
+    componentInfo = value;
 }
 
 bool GameBuilder::getCollisionEnabled() const
