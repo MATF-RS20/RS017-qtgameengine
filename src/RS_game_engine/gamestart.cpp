@@ -256,11 +256,7 @@ void GameStart::update()
             }
         }
     }
-//    foreach(Enemy* e, lstEnemy){
-//        //qDebug() << e->getRange();
-//        if(e->getRange() > 0)
-//            e->move();
-//    }
+
     foreach(Enemy* e, lstEnemy){
         if(e->getRange() > 0){
             if(enemyCanMove(e, e->getSpeed(), 0)){

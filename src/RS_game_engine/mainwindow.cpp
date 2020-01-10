@@ -34,6 +34,13 @@ void MainWindow::addSignalsAndSlots()
     connect(ui->pbChooseFromDefault, SIGNAL(clicked()), this, SLOT(loadDefaultBackground()));
     connect(ui->pbEnemyOne, SIGNAL(clicked()), this, SLOT(addEnemyOne()));
     connect(ui->pbAddPlayer, SIGNAL(clicked()), this, SLOT(addPlayer()));
+    connect(ui->pbPlayerBulletLook, SIGNAL(clicked()), this, SLOT(addTextureToPlayersBullet()));
+}
+
+void MainWindow::addTextureToPlayersBullet()
+{
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
+    gameBuilder->setTextureToPlayersBullet(lookPath);
 }
 
 void MainWindow::loadGame()
@@ -353,4 +360,9 @@ void MainWindow::on_cbEnemyLeftRight_clicked(bool checked)
 void MainWindow::on_cbEnemyFireOn_clicked(bool checked)
 {
 
+}
+
+void MainWindow::on_cbPlayerBullet_clicked(bool checked)
+{
+    gameBuilder->setPlayerBulletEnabled(checked);
 }

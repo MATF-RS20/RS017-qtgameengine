@@ -127,6 +127,20 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             }
         }
     }
+    if(event->key() == Qt::Key_B){
+        if(player->getIsRight()){
+            Bullet* bullet = new Bullet(player->getX() + player->getWidth(), player->getY() + 20, 30, 20, true);
+            if(playersBulletLook != nullptr)
+                bullet->setTexture(playersBulletLook);
+            addItem(bullet);
+        }
+        else{
+            Bullet* bullet = new Bullet(player->getX(), player->getY() + 20, 30, 20, false);
+            if(playersBulletLook != nullptr)
+                bullet->setTexture(playersBulletLook);
+            addItem(bullet);
+        }
+    }
 
 }
 
@@ -149,9 +163,6 @@ void GameBuilder::keyReleaseEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_F){
         player->movementArray.setBit(4,false);
     }
-
-//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
-
 }
 
 void GameBuilder::update()
@@ -189,9 +200,7 @@ void GameBuilder::update()
         if(e->pos().ry() + e->getHeight() +25 < parent->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
             e->gravityApply();
     }
-    //W-0 A-1 S-2 D-3
-//    qDebug() << player->movementArray;
-//    qDebug() << playerCanMove(0,-4);
+
     //W-0 A-1 S-2 D-3
     if(player->movementArray[4])
         playerSpeed = player->getBoost();
@@ -391,4 +400,14 @@ void GameBuilder::setEnemyGravityEnabled(bool checked)
     for(Enemy* e : lstEnemy){
         e->setGravityEnabled(checked);
     }
+}
+
+void GameBuilder::setPlayerBulletEnabled(bool checked)
+{
+    player->setBulletEnabled(checked);
+}
+
+void GameBuilder::setTextureToPlayersBullet(QString lookPath)
+{
+    this->playersBulletLook = lookPath;
 }

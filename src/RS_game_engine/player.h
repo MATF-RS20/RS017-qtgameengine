@@ -28,6 +28,7 @@ public:
     void setGravityEnabled(bool checked);
     void gravityApply();
     void setBoostEnabled(bool checked);
+    void setBulletEnabled(bool checked);
     void setCurrentSpeed(qreal speed);
     void jumpAnimation(qreal currentJumpPosition);
     qreal getJump();
@@ -36,6 +37,7 @@ public:
     qreal getGravityIntensity() const;
     qreal getSpeed();
     qreal getBoost();
+    bool getIsRight() const;
 
 private slots:
     void pbApply() override;
@@ -47,11 +49,12 @@ private:
     QList<QLineEdit*> playerInfo;
     QPushButton* playerUpdate;
     bool isRight;
-    bool gravityEnabled, moveUpDownEnabled, jumpEnabled,boostEnabled;
+    bool gravityEnabled, moveUpDownEnabled, jumpEnabled,boostEnabled, bulletEnabled;
     qreal boost;
     qreal gravityIntensity;
     qreal speed;
     qreal jump, currentJumpPosition;
+
     QList<qreal> jumpArray;
     qreal positionBeforeJump;
 

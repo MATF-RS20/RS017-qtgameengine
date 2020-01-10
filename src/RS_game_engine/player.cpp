@@ -17,6 +17,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,speed(4)
     ,gravityIntensity(1)
     ,jump(100)
+    ,bulletEnabled(true)
 //    ,currentJumpPosition(0)
 {
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
@@ -37,20 +38,6 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 void Player::move(qreal delta_x, qreal delta_y)
 {
-
-    //deo gde gledamo koje je dugme stisnuto radimo vec u gambilderu
-    //pa ovde samo proveravamo da li ima boost i moveupanddown
-    //bitno je koristiti prosledjeno delta_x i delta_y da bi kolizija radila u suprotnom ima bagova
-//    if(movementArray[4] && boostEnabled){
-//        x += 2*delta_x;
-//        if(moveUpDownEnabled)
-//            y += 2*delta_y;
-//    } else {
-//        x += delta_x;
-//        if(moveUpDownEnabled)
-//            y += delta_y;
-//    }
-
     x += delta_x;
     if(moveUpDownEnabled)
         y+=delta_y;
@@ -111,6 +98,11 @@ void Player::setBoostEnabled(bool checked)
     this->boostEnabled = checked;
 }
 
+void Player::setBulletEnabled(bool checked)
+{
+    this->bulletEnabled = checked;
+}
+
 void Player::setCurrentSpeed(qreal speed)
 {
     this->speed = speed;
@@ -148,6 +140,11 @@ void Player::pbApply()
     this->speed = (qreal)playerInfo.at(6)->text().toFloat();
     this->gravityIntensity = (qreal)playerInfo.at(7)->text().toFloat();
     update();
+}
+
+bool Player::getIsRight() const
+{
+    return isRight;
 }
 
 qreal Player::getGravityIntensity() const

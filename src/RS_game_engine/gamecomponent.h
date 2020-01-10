@@ -17,9 +17,8 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
-    //TEST
      void gravity(bool wantGravity);
-    //
+
     qreal getX() const;
     void setX(const qreal &value);
 

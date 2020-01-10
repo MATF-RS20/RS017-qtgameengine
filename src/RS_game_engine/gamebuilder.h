@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "positiveobstacle.h"
 #include "rectangle.h"
+#include "bullet.h"
 #include <QGraphicsView>
 #include <QObject>
 #include <QGraphicsScene>
@@ -47,6 +48,8 @@ public:
     void setUpDownMovementEnabled(bool checked);
     void setLeftRightMovementEnabled(bool checked);
     void setEnemyGravityEnabled(bool checked);
+    void setPlayerBulletEnabled(bool checked);
+    void setTextureToPlayersBullet(QString lookPath);
 
     Player *getPlayer() const;
     void setPlayer(Player *value);
@@ -66,15 +69,10 @@ public:
     qreal jumpAmout;
 
     bool getCollisionEnabled() const;
-
     bool getPlayerGravityApply() const;
-
     qreal getJumpAmout() const;
-
     bool getJumpPlayer() const;
-
     bool getJumpEnabled() const;
-
     void setComponentInfo(QToolBox *value);
 
 private slots:
@@ -94,6 +92,7 @@ private:
     PositiveObstacle* positiveObstacle;
     QList<PositiveObstacle*> lstPositiveObstacle;
     qreal playerSpeed;
+    QString playersBulletLook;
 };
 
 #endif // GAMEBUILDER_H
