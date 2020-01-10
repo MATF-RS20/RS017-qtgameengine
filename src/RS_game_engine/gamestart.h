@@ -33,6 +33,7 @@ public:
     void makePoint();
     void losePoint();
     bool playerCanMove(qreal delta_x, qreal delta_y);
+    bool enemyCanMove(Enemy *enemy, qreal delta_x, qreal delta_y);
 
     QScopedPointer<QTimer> getTimer() const;
 
@@ -61,9 +62,11 @@ private:
     QList<Enemy*> lstEnemy;
     bool collisionEnabled;
     bool playerGravityApply;
+    qreal playerSpeed;
     qreal jumpAmout;
     bool jumpPlayer;
     bool jumpEnabled;
+    bool jumpAllowed;
 };
 
 #endif // GAMESTART_H

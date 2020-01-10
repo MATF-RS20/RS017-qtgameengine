@@ -2,14 +2,14 @@
 
 GameBuilder::GameBuilder(QGraphicsView* parent)
     :parent(parent)
-    ,gameBuilderTimer(new QTimer())
-    ,player(nullptr)
     ,collisionEnabled(true)
+    ,gameBuilderTimer(new QTimer())
     ,playerGravityApply(true)
+    ,player(nullptr)
     ,jumpEnabled(true)
+    ,jumpAllowed(false)
     ,playerExists(false)
     ,playerSpeed(4)
-    ,jumpAllowed(false)
 {
 
 }
@@ -188,7 +188,6 @@ void GameBuilder::update()
         }
         if(e->pos().ry() + e->getHeight() +25 < parent->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
             e->gravityApply();
-
     }
     //W-0 A-1 S-2 D-3
 //    qDebug() << player->movementArray;

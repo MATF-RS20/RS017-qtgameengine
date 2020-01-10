@@ -10,7 +10,8 @@ GameStart::GameStart(/*QWidget *parent,*/ bool collision, bool gravity, qreal ju
     playerGravityApply(gravity),
     jumpAmout(jump),
     jumpPlayer(jumpPlayer),
-    jumpEnabled(jumpEnabled)
+    jumpEnabled(jumpEnabled),
+    jumpAllowed(false)
 {
     ui->setupUi(this);
     Points = 0;
@@ -85,6 +86,7 @@ void GameStart::start(){
                 new_scene->addItem(r);
                 if(item->type() == 4){
                     player = qgraphicsitem_cast<Player*>(item);
+                    playerSpeed = player->getSpeed();
                 } else {
                    lstEnemy.push_back(qgraphicsitem_cast<Enemy*>(item));
                 }
@@ -220,6 +222,12 @@ void GameStart::setFName(const QString &value)
 bool pom = true;
 void GameStart::update()
 {
+    if(!playerCanMove(0,playerSpeed)){
+        jumpAllowed = true;
+    }
+    else{
+        jumpAllowed = false;
+    }
     if(pom){
         QGraphicsTextItem* text = new QGraphicsTextItem("Points:");
         QFont font;
@@ -248,41 +256,54 @@ void GameStart::update()
             }
         }
     }
+//    foreach(Enemy* e, lstEnemy){
+//        //qDebug() << e->getRange();
+//        if(e->getRange() > 0)
+//            e->move();
+//    }
     foreach(Enemy* e, lstEnemy){
-        //qDebug() << e->getRange();
-        if(e->getRange() > 0)
-            e->move();
+        if(e->getRange() > 0){
+            if(enemyCanMove(e, e->getSpeed(), 0)){
+                e->move();
+            }
+            else{
+                e->setSpeed(e->getSpeed() * -1);
+                e->move();
+            }
+
+        }
+        if(e->pos().ry() + e->getHeight() +25 < ui->graphicsView->scene()->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
+            e->gravityApply();
     }
     //W-0 A-1 S-2 D-3
-    qreal speed = 4;
     if(player->movementArray[4])
-        speed *= 2;
+        playerSpeed *= 2;
 
-    if(playerCanMove(0,-speed) && player->movementArray[0]){
-        player->move(0,-speed);
+    if(playerCanMove(0,-playerSpeed) && player->movementArray[0]){
+        player->move(0,-playerSpeed);
     }
 
-    if(playerCanMove(-speed,0) && player->movementArray[1]){
+    if(playerCanMove(-playerSpeed,0) && player->movementArray[1]){
         if(player->getX()  < ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0))
             ui->graphicsView->horizontalScrollBar()->setValue(player->getX() - (ui->graphicsView->width()/2.0));
-        player->move(-speed,0);
+        player->move(-playerSpeed,0);
     }
 
-    if(playerCanMove(0,speed) && player->movementArray[2]){
-        player->move(0,speed);
+    if(playerCanMove(0,playerSpeed) && player->movementArray[2]){
+        player->move(0,playerSpeed);
     }
 
-    if(playerCanMove(speed,0) && player->movementArray[3]){
+    if(playerCanMove(playerSpeed,0) && player->movementArray[3]){
         if(player->getX() + player->getWidth() > ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0)){
             ui->graphicsView->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-(ui->graphicsView->width()/2.0));
         }
-        player->move(speed,0);
+        player->move(playerSpeed,0);
     }
     if(player->getY() + player->getHeight() < ui->graphicsView->scene()->height() && playerGravityApply && playerCanMove(0,player->getGravityIntensity()))
         player->gravityApply();
 
     if(jumpPlayer && jumpAmout < 24){
-        if(playerCanMove(0,-speed)){
+        if(playerCanMove(0,-playerSpeed)){
             player->jumpAnimation(jumpAmout);
             jumpAmout += 1;
         }
@@ -342,7 +363,9 @@ void GameStart::keyPressEvent(QKeyEvent *event)
         if(jumpPlayer){
             return;
         }
-        jumpPlayer = true;
+        if(jumpAllowed){
+            jumpPlayer = true;
+        }
         player->setPositionBeforeJump(player->pos().ry());
     }
 
@@ -388,6 +411,25 @@ bool GameStart::playerCanMove(qreal delta_x, qreal delta_y)
         bool down = playerPos.ry() + delta_y < rPos.ry() + rHeight;
         if(left && up && right && down){
 
+            return false;
+        }
+    }
+    return true;
+}
+
+bool GameStart::enemyCanMove(Enemy *enemy, qreal delta_x, qreal delta_y)
+{
+    QPointF enemyPos = enemy->pos();
+    qreal enemyWidth = enemy->getWidth(), enemyHeight = enemy->getHeight();
+    foreach(Rectangle *r, lstRectangle) {
+        QPointF rPos = r->pos();
+        qreal rWidth = r->getWidth(), rHeight = r->getHeight();
+
+        bool left = enemyPos.rx() + delta_x + enemyWidth > rPos.rx();
+        bool up = enemyPos.ry() + delta_y + enemyHeight > rPos.ry();
+        bool right = enemyPos.rx() + delta_x < rPos.rx() + rWidth;
+        bool down = enemyPos.ry() + delta_y < rPos.ry() + rHeight;
+        if(left && up && right && down){
             return false;
         }
     }

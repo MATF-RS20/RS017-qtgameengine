@@ -62,8 +62,7 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 void Enemy::pbApply()
 {
     QString id = QString::number(this->id);
-    if(componentInfo->itemText(1) == ("Enemy one " + id) ){
-        qDebug() << "USAO";
+    if(componentInfo->itemText(1) == ("Enemy " + id) ){
         this->x = (qreal)enemyInfo.at(0)->text().toFloat();
         this->y = (qreal)enemyInfo.at(1)->text().toFloat();
         this->setPos((qreal)enemyInfo.at(0)->text().toFloat(), (qreal)enemyInfo.at(1)->text().toFloat());
