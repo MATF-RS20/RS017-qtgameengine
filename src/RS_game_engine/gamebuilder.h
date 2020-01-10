@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QBitArray>
 #include <QScrollBar>
+#include <QToolBox>
 
 class GameBuilder : public QGraphicsScene
 {
@@ -61,6 +62,7 @@ public:
     bool jumpPlayer;
     bool collisionEnabled;
     bool jumpEnabled;
+    bool jumpAllowed;
     qreal jumpAmout;
 
     bool getCollisionEnabled() const;

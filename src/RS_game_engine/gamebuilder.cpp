@@ -9,6 +9,7 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,jumpEnabled(true)
     ,playerExists(false)
     ,playerSpeed(4)
+    ,jumpAllowed(false)
 {
 
 }
@@ -91,7 +92,9 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         if(jumpPlayer){
             return;
         }
-        jumpPlayer = true;
+        if(jumpAllowed){
+            jumpPlayer = true;
+        }
         player->setPositionBeforeJump(player->pos().ry());
     }
     if(event->key() == Qt::Key_E){
@@ -107,7 +110,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_R){
         foreach(Rectangle* r ,lstRectangle){
               if(componentInfo->itemText(0) == ("Rectangle " + QString::number(r->getId()))){
-                qDebug() << "been here";
                 rectangle = new Rectangle(r->getX() -20, r->getY() + 20, r->getWidth(), r->getHeight(),
                                   componentInfo, r->getRectangleInfo(), r->getRectangleUpdate(),r->getLookString());
                 addItem(rectangle);
@@ -118,7 +120,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_P){
         foreach(PositiveObstacle* p ,lstPositiveObstacle){
               if(componentInfo->itemText(3) == ("Positive Obstacle " + QString::number(p->getId()))){
-                qDebug() << "been here";
                 positiveObstacle = new PositiveObstacle(p->getX() -20, p->getY() + 20, p->getWidth(), p->getHeight(),
                                   componentInfo, p->getPositiveObstacleInfo(), p->getPositiveObstacleUpdate(),p->getLookString());
                 addItem(positiveObstacle);
@@ -126,9 +127,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             }
         }
     }
-
-
-//    qDebug() << player->movementArray[0] << " " << player->movementArray[1] << " " << player->movementArray[2] << " " << player->movementArray[3];
 
 }
 
@@ -160,6 +158,13 @@ void GameBuilder::update()
 {
     if(!playerExists)
         return;
+    if(!playerCanMove(0,playerSpeed)){
+        jumpAllowed = true;
+    }
+    else{
+        jumpAllowed = false;
+    }
+
     player->collidingItems();
     player->pos();
     QList<QGraphicsItem *> collidingObjects = player->collidingItems();
@@ -168,12 +173,9 @@ void GameBuilder::update()
             if(item->type() == 3){
                 removeItem(item);
             }
-            if (dynamic_cast<QObject*>(item)->metaObject()->className() == "MapBuilder"){
-            }
         }
     }
     foreach(Enemy* e, lstEnemy){
-//        qDebug() << e->getRange();
         if(e->getRange() > 0){
             if(enemyCanMove(e, e->getSpeed(), 0)){
                 e->move();
