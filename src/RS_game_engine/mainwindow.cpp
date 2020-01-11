@@ -39,7 +39,7 @@ void MainWindow::addSignalsAndSlots()
 
 void MainWindow::addTextureToPlayersBullet()
 {
-    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/obstacles/", tr("Images (*.png *.jpg *.jpeg)"));
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/bullets/", tr("Images (*.png *.jpg *.jpeg)"));
     gameBuilder->setTextureToPlayersBullet(lookPath);
 }
 
@@ -155,6 +155,7 @@ void MainWindow::addPlayer()
         playerInfo.append(ui->leBoostValue);
         playerInfo.append(ui->leSpeedValue);
         playerInfo.append(ui->leGravityValue);
+        playerInfo.append(ui->lePlayerBullet);
         gameBuilder->addPlayer(x, y, width, height, lookPath,ui->tbComponentInfo, playerInfo, ui->pbPlayerApply);
 
     }

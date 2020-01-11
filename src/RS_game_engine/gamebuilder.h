@@ -93,6 +93,7 @@ private:
     QList<PositiveObstacle*> lstPositiveObstacle;
     qreal playerSpeed;
     QString playersBulletLook;
+    QList<Bullet*> lstPlayerBullets;
 };
 
 #endif // GAMEBUILDER_H

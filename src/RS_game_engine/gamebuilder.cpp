@@ -129,13 +129,16 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_B){
         if(player->getIsRight()){
-            Bullet* bullet = new Bullet(player->getX() + player->getWidth(), player->getY() + 20, 30, 20, true);
+            Bullet* bullet = new Bullet(player->getX() + player->getWidth(), player->getY() + 20, 30, 20, true, player->getBulletSpeed());
+            lstPlayerBullets.append(bullet);
             if(playersBulletLook != nullptr)
                 bullet->setTexture(playersBulletLook);
             addItem(bullet);
         }
         else{
-            Bullet* bullet = new Bullet(player->getX(), player->getY() + 20, 30, 20, false);
+            qDebug() << player->getBulletSpeed();
+            Bullet* bullet = new Bullet(player->getX(), player->getY() + 20, 30, 20, false, player->getBulletSpeed());
+            lstPlayerBullets.append(bullet);
             if(playersBulletLook != nullptr)
                 bullet->setTexture(playersBulletLook);
             addItem(bullet);
@@ -199,6 +202,13 @@ void GameBuilder::update()
         }
         if(e->pos().ry() + e->getHeight() +25 < parent->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
             e->gravityApply();
+    }
+
+    foreach(QGraphicsItem* item, lstPlayerBullets){
+        if(dynamic_cast<Bullet*>(item)->getDistancePassed() > parent->width()){
+            lstPlayerBullets.removeOne(dynamic_cast<Bullet*>(item));
+            removeItem(item);delete item;
+        }
     }
 
     //W-0 A-1 S-2 D-3

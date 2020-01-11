@@ -10,16 +10,20 @@ class Bullet : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    Bullet(qreal x, qreal y, qreal width, qreal height, bool direction);
+    Bullet(qreal x, qreal y, qreal width, qreal height, bool direction, qreal speed);
+    ~Bullet();
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void setTexture(QString lookPath);
     //true --> | <-- false
+    qreal getDistancePassed() const;
+
 public slots:
     void move();
 
 private:
+    qreal distancePassed;
     qreal speed;
     qreal direction;
     QPixmap texture;

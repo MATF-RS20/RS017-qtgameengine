@@ -18,6 +18,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,gravityIntensity(1)
     ,jump(100)
     ,bulletEnabled(true)
+    ,bulletSpeed(2)
 //    ,currentJumpPosition(0)
 {
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
@@ -136,10 +137,19 @@ void Player::pbApply()
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
         jumpArray.append(sin(i)*jump);
     }
+    if(bulletEnabled){
+
+    }
     this->boost = (qreal)playerInfo.at(5)->text().toFloat();
     this->speed = (qreal)playerInfo.at(6)->text().toFloat();
     this->gravityIntensity = (qreal)playerInfo.at(7)->text().toFloat();
+    this->bulletSpeed = (qreal)playerInfo.at(8)->text().toFloat();
     update();
+}
+
+qreal Player::getBulletSpeed() const
+{
+    return bulletSpeed;
 }
 
 bool Player::getIsRight() const

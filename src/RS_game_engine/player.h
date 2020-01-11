@@ -39,6 +39,8 @@ public:
     qreal getBoost();
     bool getIsRight() const;
 
+    qreal getBulletSpeed() const;
+
 private slots:
     void pbApply() override;
 
@@ -50,6 +52,7 @@ private:
     QPushButton* playerUpdate;
     bool isRight;
     bool gravityEnabled, moveUpDownEnabled, jumpEnabled,boostEnabled, bulletEnabled;
+    qreal bulletSpeed;
     qreal boost;
     qreal gravityIntensity;
     qreal speed;

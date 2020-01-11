@@ -1,18 +1,23 @@
 #include "bullet.h"
 
-Bullet::Bullet(qreal x, qreal y, qreal width, qreal height, bool direction)
+Bullet::Bullet(qreal x, qreal y, qreal width, qreal height, bool direction, qreal speed)
     :x(x)
     ,y(y)
     ,width(width)
     ,height(height)
     ,textureApplied(false)
-    ,speed(5)
     ,direction(direction)
+    ,distancePassed(0)
+    ,speed(speed)
 {
     QTimer* timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 
     timer->start(15);
+}
+
+Bullet::~Bullet()
+{
 }
 
 QRectF Bullet::boundingRect() const
@@ -41,6 +46,7 @@ void Bullet::setTexture(QString lookPath)
 
 void Bullet::move()
 {
+    distancePassed += speed;
     if(direction){
         x += speed;
         this->setPos(x, y);
@@ -51,4 +57,9 @@ void Bullet::move()
         this->setPos(x, y);
         update();
     }
+}
+
+qreal Bullet::getDistancePassed() const
+{
+    return distancePassed;
 }
