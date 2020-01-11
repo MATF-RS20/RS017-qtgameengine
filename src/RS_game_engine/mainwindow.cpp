@@ -127,6 +127,8 @@ void MainWindow::addEnemyOne()
         enemyInfo.append(ui->leEnemyRange);
         enemyInfo.append(ui->leEnemySpeed);
         enemyInfo.append(ui->leEnemyGravity);
+        enemyInfo.append(ui->leEnemyBullet);
+        enemyInfo.append(ui->leEnemyBulletSpeed);
         gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
     }
     else{
@@ -358,12 +360,12 @@ void MainWindow::on_cbEnemyLeftRight_clicked(bool checked)
     gameBuilder->setLeftRightMovementEnabled(checked);
 }
 
-void MainWindow::on_cbEnemyFireOn_clicked(bool checked)
-{
-
-}
-
 void MainWindow::on_cbPlayerBullet_clicked(bool checked)
 {
     gameBuilder->setPlayerBulletEnabled(checked);
+}
+
+void MainWindow::on_cbEnemyBullet_clicked(bool checked)
+{
+    gameBuilder->setEnemyBulletEnabled(checked);
 }

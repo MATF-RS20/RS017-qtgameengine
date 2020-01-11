@@ -38,8 +38,8 @@ public:
     qreal getSpeed();
     qreal getBoost();
     bool getIsRight() const;
-
     qreal getBulletSpeed() const;
+    bool getBulletEnabled() const;
 
 private slots:
     void pbApply() override;

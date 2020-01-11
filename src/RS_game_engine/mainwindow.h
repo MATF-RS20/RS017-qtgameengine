@@ -68,9 +68,9 @@ private slots:
 
     void on_cbEnemyLeftRight_clicked(bool checked);
 
-    void on_cbEnemyFireOn_clicked(bool checked);
-
     void on_cbPlayerBullet_clicked(bool checked);
+
+    void on_cbEnemyBullet_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;

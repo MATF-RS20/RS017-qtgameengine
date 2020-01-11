@@ -128,6 +128,9 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
         }
     }
     if(event->key() == Qt::Key_B){
+        if(!player->getBulletEnabled()){
+            return;
+        }
         if(player->getIsRight()){
             Bullet* bullet = new Bullet(player->getX() + player->getWidth(), player->getY() + 20, 30, 20, true, player->getBulletSpeed());
             lstPlayerBullets.append(bullet);
@@ -136,7 +139,6 @@ void GameBuilder::keyPressEvent(QKeyEvent *event)
             addItem(bullet);
         }
         else{
-            qDebug() << player->getBulletSpeed();
             Bullet* bullet = new Bullet(player->getX(), player->getY() + 20, 30, 20, false, player->getBulletSpeed());
             lstPlayerBullets.append(bullet);
             if(playersBulletLook != nullptr)
@@ -190,6 +192,33 @@ void GameBuilder::update()
         }
     }
     foreach(Enemy* e, lstEnemy){
+
+        //bullet fire
+        if(e->getBulletEnabled()){
+            if(e->getSpeed() > 0){
+                if(e->bullets.isEmpty() || e->bullets.back()->getDistancePassed() >= e->getBulletDistanceTillNext() ){
+                    Bullet* bullet = new Bullet(e->getX() + e->getWidth(), e->getY() + 20, 30, 20, true, e->getBulletSpeed());
+                    e->bullets.append(bullet);
+                    addItem(bullet);
+                }
+            }
+            else{
+                if(e->bullets.isEmpty() || e->bullets.back()->getDistancePassed() >= e->getBulletDistanceTillNext()){
+                    Bullet* bullet = new Bullet(e->getX(), e->getY() + 20, 30, 20, false, e->getBulletSpeed());
+                    e->bullets.append(bullet);
+                    addItem(bullet);
+                }
+            }
+        }
+        if(!e->bullets.isEmpty()){
+            if(e->bullets.front()->getDistancePassed() > parent->width()){
+                removeItem(e->bullets.front());
+                delete e->bullets.front();
+                e->bullets.removeFirst();
+                qDebug() << "removed one";
+            }
+        }
+
         if(e->getRange() > 0){
             if(enemyCanMove(e, e->getSpeed(), 0)){
                 e->move();
@@ -420,4 +449,14 @@ void GameBuilder::setPlayerBulletEnabled(bool checked)
 void GameBuilder::setTextureToPlayersBullet(QString lookPath)
 {
     this->playersBulletLook = lookPath;
+}
+
+void GameBuilder::setEnemyBulletEnabled(bool checked) const
+{
+    foreach(Enemy* e, lstEnemy){
+        if(componentInfo->itemText(1) == "Enemy " + QString::number(e->getId())){
+            e->setBulletEnabled(checked);
+            break;
+        }
+    }
 }

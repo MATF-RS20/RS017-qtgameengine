@@ -2,10 +2,12 @@
 #define ENEMY_H
 
 #include "gamecomponent.h"
+#include "bullet.h"
 #include <QPixmap>
 #include <QToolBox>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QList>
 
 class Enemy : public GameComponent
 {
@@ -40,12 +42,14 @@ public:
     void gravityApply();
     void setGravityEnabled(bool checked);
     bool EnemyGravityEnabled();
-
     QString getLookString() const;
-
     QPushButton *getEnemyUpdate() const;
-
     QList<QLineEdit *> getEnemyInfo() const;
+    bool getBulletEnabled() const;
+    void setBulletEnabled(bool value);
+    qreal getBulletDistanceTillNext() const;
+    QList<Bullet*> bullets;
+    qreal getBulletSpeed() const;
 
 private slots:
     void pbApply() override;
@@ -69,6 +73,10 @@ private:
     qreal gravityIntensity;
     bool gravityEnabled;
     QString lookString;
+    bool bulletEnabled;
+    qreal bulletDistanceTillNext;
+    qreal bulletSpeed;
+
 };
 
 #endif // ENEMY_H

@@ -20,6 +20,9 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,leftRightMovement(false)
     ,gravityIntensity(2)
     ,gravityEnabled(false)
+    ,bulletEnabled(false)
+    ,bulletDistanceTillNext(100)
+    ,bulletSpeed(10)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -75,10 +78,33 @@ void Enemy::pbApply()
             this->speed = static_cast<qreal>(enemyInfo.at(5)->text().toFloat()) * (-1);
 
         this->gravityIntensity = static_cast<qreal>(enemyInfo.at(6)->text().toFloat());
+        this->bulletDistanceTillNext = static_cast<qreal>(enemyInfo.at(7)->text().toFloat());
+        this->bulletSpeed= static_cast<qreal>(enemyInfo.at(8)->text().toFloat());
+
         this->maxLeft = this->x - this->range;
         this->maxRight = this->x + this->range;
         update();
     }
+}
+
+qreal Enemy::getBulletSpeed() const
+{
+    return bulletSpeed;
+}
+
+qreal Enemy::getBulletDistanceTillNext() const
+{
+    return bulletDistanceTillNext;
+}
+
+bool Enemy::getBulletEnabled() const
+{
+    return bulletEnabled;
+}
+
+void Enemy::setBulletEnabled(bool value)
+{
+    bulletEnabled = value;
 }
 
 QList<QLineEdit *> Enemy::getEnemyInfo() const

@@ -50,6 +50,7 @@ public:
     void setEnemyGravityEnabled(bool checked);
     void setPlayerBulletEnabled(bool checked);
     void setTextureToPlayersBullet(QString lookPath);
+    void setEnemyBulletEnabled(bool checked) const;
 
     Player *getPlayer() const;
     void setPlayer(Player *value);

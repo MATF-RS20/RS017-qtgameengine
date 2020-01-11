@@ -147,6 +147,11 @@ void Player::pbApply()
     update();
 }
 
+bool Player::getBulletEnabled() const
+{
+    return bulletEnabled;
+}
+
 qreal Player::getBulletSpeed() const
 {
     return bulletSpeed;
