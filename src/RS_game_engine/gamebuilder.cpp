@@ -10,6 +10,7 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,jumpAllowed(false)
     ,playerExists(false)
     ,playerSpeed(4)
+    ,levelPassedAdded(false)
 {
 
 }
@@ -31,6 +32,15 @@ void GameBuilder::addPositiveObstacle(qreal x, qreal y, qreal width, qreal heigh
     positiveObstacle = new PositiveObstacle(x, y, width, height, componentInfo, positiveObstacleInfo, positiveObstacleUpdate, lookPath);
     addItem(positiveObstacle);
     lstPositiveObstacle.append(positiveObstacle);
+}
+
+void GameBuilder::addLevelPassed(qreal x, qreal y, qreal width, qreal height, QToolBox *componentInfo, QList<QLineEdit *> levelPassedInfo, QPushButton *levelPassedUpdate, QString lookPath)
+{
+    if(!levelPassedAdded){
+        levelPassed = new LevelPassed(x, y, width, height, componentInfo, levelPassedInfo, levelPassedUpdate, lookPath);
+        addItem(levelPassed);
+        levelPassedAdded = true;
+    }
 }
 
 void GameBuilder::addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range,
@@ -189,6 +199,9 @@ void GameBuilder::update()
             if(item->type() == 3){
                 removeItem(item);
             }
+            if(item->type() == 5) {
+                //Collisio with bullet what to do ?
+            }
         }
     }
     foreach(Enemy* e, lstEnemy){
@@ -215,7 +228,6 @@ void GameBuilder::update()
                 removeItem(e->bullets.front());
                 delete e->bullets.front();
                 e->bullets.removeFirst();
-                qDebug() << "removed one";
             }
         }
 

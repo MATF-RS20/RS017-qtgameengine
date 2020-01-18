@@ -16,6 +16,7 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void setTexture(QString lookPath);
+    int type() const override;
     //true --> | <-- false
     qreal getDistancePassed() const;
 

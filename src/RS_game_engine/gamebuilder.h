@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "positiveobstacle.h"
 #include "rectangle.h"
+#include "levelpassed.h"
 #include "bullet.h"
 #include <QGraphicsView>
 #include <QObject>
@@ -33,6 +34,7 @@ public:
 
     void addRectangle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> rectangleInfo, QPushButton* rectangleUpdate, QString lookPath);
     void addPositiveObstacle(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> positiveObstacleInfo, QPushButton* positiveObstacleUpdate, QString lookPath);
+    void addLevelPassed(qreal x, qreal y, qreal width, qreal height, QToolBox* componentInfo, QList<QLineEdit*> levelPassedInfo, QPushButton* levelPassedUpdate, QString lookPath);
     void addEnemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString look, QToolBox* componentInfo,QList<QLineEdit*> enemyInfo, QPushButton* enemyUpdate);
     void addPlayer(qreal x, qreal y, qreal width, qreal height, QString look, QToolBox* componentInfo,QList<QLineEdit*> playerInfo, QPushButton* playerUpdate);
     bool playerCanMove(qreal delta_x, qreal delta_y);
@@ -91,6 +93,8 @@ private:
     QToolBox* componentInfo;
     bool playerExists;
     PositiveObstacle* positiveObstacle;
+    LevelPassed* levelPassed;
+    bool levelPassedAdded;
     QList<PositiveObstacle*> lstPositiveObstacle;
     qreal playerSpeed;
     QString playersBulletLook;

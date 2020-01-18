@@ -9,6 +9,7 @@
 #include "gameobjectinfo.h"
 #include "enemydialog.h"
 #include "playerdialog.h"
+#include "levelpasseddialog.h"
 #include "positiveobstacledialog.h"
 #include <QWheelEvent>
 #include "ui_mainwindow.h"
@@ -46,6 +47,7 @@ private slots:
     void addPositiveObstacle();
     void addPlayer();
     void on_actionSave_triggered();
+    void addLevelPassed();
 
     void on_actionLoad_triggered();
 

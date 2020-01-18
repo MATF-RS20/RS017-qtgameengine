@@ -34,6 +34,7 @@ void MainWindow::addSignalsAndSlots()
     connect(ui->pbChooseFromDefault, SIGNAL(clicked()), this, SLOT(loadDefaultBackground()));
     connect(ui->pbEnemyOne, SIGNAL(clicked()), this, SLOT(addEnemyOne()));
     connect(ui->pbAddPlayer, SIGNAL(clicked()), this, SLOT(addPlayer()));
+    connect(ui->pbAddLP, SIGNAL(clicked()), this, SLOT(addLevelPassed()));
     connect(ui->pbPlayerBulletLook, SIGNAL(clicked()), this, SLOT(addTextureToPlayersBullet()));
 }
 
@@ -235,6 +236,30 @@ void MainWindow::on_actionSave_triggered()
     SceneLoader* s = new SceneLoader();
     s->setBackgroundName(fileName);
     s->sceneSave(&(*gameBuilder));
+}
+
+void MainWindow::addLevelPassed()
+{
+    ui->tbComponentInfo->setCurrentIndex(4);
+    LevelPassedDialog* dialog = new LevelPassedDialog(this);
+    dialog->exec();
+    QString lookPath = QFileDialog::getOpenFileName(this, tr("Choose File"),"../RS_game_engine/levelPassed/", tr("Images (*.png *.jpg *.jpeg)"));
+    if(dialog->accepted()){
+        qreal x = dialog->x();
+        qreal y = dialog->y();
+        qreal width = dialog->width();
+        qreal height = dialog->height();
+        QList<QLineEdit*> levelPassedInfo;
+        levelPassedInfo.append(ui->leLPX);
+        levelPassedInfo.append(ui->leLPY);
+        levelPassedInfo.append(ui->leLPWidth);
+        levelPassedInfo.append(ui->leLPHeight);
+        gameBuilder->addLevelPassed(x, y, width, height, ui->tbComponentInfo, levelPassedInfo, ui->pbLPApply, lookPath);
+
+    }
+    else{
+        return;
+    }
 }
 
 void MainWindow::on_actionLoad_triggered()

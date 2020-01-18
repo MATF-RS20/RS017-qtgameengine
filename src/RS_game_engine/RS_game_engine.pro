@@ -23,6 +23,8 @@ SOURCES += \
     gamebuilder.cpp \
     gamecomponent.cpp \
     gamestart.cpp \
+    levelpassed.cpp \
+    levelpasseddialog.cpp \
     main.cpp \
     mainwindow.cpp \
     mapbuilder.cpp \
@@ -41,6 +43,8 @@ HEADERS += \
     gamebuilder.h \
     gamecomponent.h \
     gamestart.h \
+    levelpassed.h \
+    levelpasseddialog.h \
     mainwindow.h \
     mapbuilder.h \
     player.h \
@@ -54,6 +58,7 @@ FORMS += \
     componentinfodialog.ui \
     enemydialog.ui \
     gamestart.ui \
+    levelpasseddialog.ui \
     mainwindow.ui \
     playerdialog.ui \
     positiveobstacledialog.ui

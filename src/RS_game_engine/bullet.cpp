@@ -44,6 +44,11 @@ void Bullet::setTexture(QString lookPath)
     textureApplied = true;
 }
 
+int Bullet::type() const
+{
+    return 5;
+}
+
 void Bullet::move()
 {
     distancePassed += speed;
