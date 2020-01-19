@@ -18,7 +18,9 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,gravityIntensity(1)
     ,jump(100)
     ,bulletEnabled(true)
-    ,bulletSpeed(2)
+    ,bulletSpeed(10)
+    ,healthPoints(1000)
+    ,bulletPower(10)
 //    ,currentJumpPosition(0)
 {
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
@@ -144,7 +146,24 @@ void Player::pbApply()
     this->speed = (qreal)playerInfo.at(6)->text().toFloat();
     this->gravityIntensity = (qreal)playerInfo.at(7)->text().toFloat();
     this->bulletSpeed = (qreal)playerInfo.at(8)->text().toFloat();
+    this->healthPoints = (qreal)playerInfo.at(9)->text().toFloat();
+    this->bulletPower = (qreal)playerInfo.at(10)->text().toFloat();
     update();
+}
+
+qreal Player::getBulletPower() const
+{
+    return bulletPower;
+}
+
+qreal Player::getHealthPoints() const
+{
+    return healthPoints;
+}
+
+void Player::setHealthPoints(const qreal &value)
+{
+    healthPoints = value;
 }
 
 bool Player::getBulletEnabled() const

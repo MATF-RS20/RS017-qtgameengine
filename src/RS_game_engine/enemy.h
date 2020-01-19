@@ -51,6 +51,11 @@ public:
     QList<Bullet*> bullets;
     qreal getBulletSpeed() const;
 
+    qreal getBulletPower() const;
+
+    qreal getHealthPoints() const;
+    void setHealthPoints(const qreal &value);
+
 private slots:
     void pbApply() override;
 
@@ -76,6 +81,8 @@ private:
     bool bulletEnabled;
     qreal bulletDistanceTillNext;
     qreal bulletSpeed;
+    qreal bulletPower;
+    qreal healthPoints;
 
 };
 

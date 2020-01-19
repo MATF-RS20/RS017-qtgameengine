@@ -41,6 +41,11 @@ public:
     qreal getBulletSpeed() const;
     bool getBulletEnabled() const;
 
+    qreal getHealthPoints() const;
+    void setHealthPoints(const qreal &value);
+
+    qreal getBulletPower() const;
+
 private slots:
     void pbApply() override;
 
@@ -60,6 +65,8 @@ private:
 
     QList<qreal> jumpArray;
     qreal positionBeforeJump;
+    qreal healthPoints;
+    qreal bulletPower;
 
 };
 

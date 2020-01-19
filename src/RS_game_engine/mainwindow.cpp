@@ -130,6 +130,8 @@ void MainWindow::addEnemyOne()
         enemyInfo.append(ui->leEnemyGravity);
         enemyInfo.append(ui->leEnemyBullet);
         enemyInfo.append(ui->leEnemyBulletSpeed);
+        enemyInfo.append(ui->leEnemyBulletPower);
+        enemyInfo.append(ui->leEnemyHealthPoints);
         gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
     }
     else{
@@ -159,6 +161,8 @@ void MainWindow::addPlayer()
         playerInfo.append(ui->leSpeedValue);
         playerInfo.append(ui->leGravityValue);
         playerInfo.append(ui->lePlayerBullet);
+        playerInfo.append(ui->lePlayerHealth);
+        playerInfo.append(ui->lePlayerBulletPower);
         gameBuilder->addPlayer(x, y, width, height, lookPath,ui->tbComponentInfo, playerInfo, ui->pbPlayerApply);
 
     }

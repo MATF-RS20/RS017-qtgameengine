@@ -243,10 +243,72 @@ void GameBuilder::update()
         }
         if(e->pos().ry() + e->getHeight() +25 < parent->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
             e->gravityApply();
+
+        if(!e->bullets.isEmpty()){
+            foreach(QGraphicsItem* item, e->bullets){
+                bool bulletDeleted = false;
+                QList<QGraphicsItem*> itemsColided = item->collidingItems();
+                foreach(QGraphicsItem* ic, itemsColided){
+                    if(ic->type() == 1){
+                        e->bullets.removeOne(dynamic_cast<Bullet*>(item));
+                        removeItem(item);
+                        delete item;
+                        bulletDeleted = true;
+                        break;
+                    }
+
+                    if(ic->type() == 4){
+                        player->setHealthPoints(player->getHealthPoints() - e->getBulletPower());
+                        qDebug() << player->getHealthPoints();
+
+                        e->bullets.removeOne(dynamic_cast<Bullet*>(item));
+                        removeItem(item);
+                        delete item;
+                        bulletDeleted = true;
+//                        if(player->getHealthPoints())
+//                            return;
+                        break;
+                    }
+
+                }
+            }
+        }
     }
 
     foreach(QGraphicsItem* item, lstPlayerBullets){
-        if(dynamic_cast<Bullet*>(item)->getDistancePassed() > parent->width()){
+        bool bulletDeleted = false;
+        QList<QGraphicsItem*> itemsColided = item->collidingItems();
+        foreach(QGraphicsItem* ic, itemsColided){
+            if(ic->type() == 1){
+                lstPlayerBullets.removeOne(dynamic_cast<Bullet*>(item));
+                removeItem(item);
+                delete item;
+                bulletDeleted = true;
+                break;
+            }
+
+            if(ic->type() == 2){
+                Enemy *eHit = dynamic_cast<Enemy*>(ic);
+                eHit->setHealthPoints(eHit->getHealthPoints() - player->getBulletPower());
+                qDebug() << eHit->getHealthPoints();
+                lstPlayerBullets.removeOne(dynamic_cast<Bullet*>(item));
+                removeItem(item);
+                delete item;
+                bulletDeleted = true;
+
+                if(eHit->getHealthPoints() <= 0){
+                    lstEnemy.removeOne(eHit);
+                    removeItem(eHit);
+                    delete  eHit;
+                }
+
+                break;
+
+
+            }
+
+        }
+        if(!bulletDeleted && dynamic_cast<Bullet*>(item)->getDistancePassed() > parent->width()){
             lstPlayerBullets.removeOne(dynamic_cast<Bullet*>(item));
             removeItem(item);delete item;
         }
@@ -359,6 +421,20 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
             return false;
         }
     }
+
+    foreach(Enemy *e, lstEnemy) {
+        QPointF ePos = e->pos();
+        qreal eWidth = e->getWidth(), eHeight = e->getHeight();
+
+        bool left = playerPos.rx() + delta_x + playerWidth > ePos.rx();
+        bool up = playerPos.ry() + delta_y + playerHeight > ePos.ry();
+        bool right = playerPos.rx() + delta_x < ePos.rx() + eWidth;
+        bool down = playerPos.ry() + delta_y < ePos.ry() + eHeight;
+        if(left && up && right && down){
+
+            return false;
+        }
+    }
     return true;
 }
 
@@ -429,6 +505,14 @@ bool GameBuilder::enemyCanMove(Enemy *enemy, qreal delta_x, qreal delta_y)
             return false;
         }
     }
+
+    bool leftPlayer = enemyPos.rx() + delta_x + enemyWidth > player->pos().rx();
+    bool upPlayer = enemyPos.ry() + delta_y + enemyHeight > player->pos().ry();
+    bool rightPlayer = enemyPos.rx() + delta_x < player->pos().rx() + player->getWidth();
+    bool downPlayer = enemyPos.ry() + delta_y < player->pos().ry() + player->getHeight();
+    if(leftPlayer && upPlayer && rightPlayer && downPlayer)
+        return false;
+
     return true;
 }
 

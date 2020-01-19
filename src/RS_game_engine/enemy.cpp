@@ -23,6 +23,8 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,bulletEnabled(false)
     ,bulletDistanceTillNext(100)
     ,bulletSpeed(10)
+    ,bulletPower(10)
+    ,healthPoints(100)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -80,11 +82,27 @@ void Enemy::pbApply()
         this->gravityIntensity = static_cast<qreal>(enemyInfo.at(6)->text().toFloat());
         this->bulletDistanceTillNext = static_cast<qreal>(enemyInfo.at(7)->text().toFloat());
         this->bulletSpeed= static_cast<qreal>(enemyInfo.at(8)->text().toFloat());
-
+        this->bulletPower= static_cast<qreal>(enemyInfo.at(9)->text().toFloat());
+        this->healthPoints = static_cast<qreal>(enemyInfo.at(10)->text().toFloat());
         this->maxLeft = this->x - this->range;
         this->maxRight = this->x + this->range;
         update();
     }
+}
+
+qreal Enemy::getHealthPoints() const
+{
+    return healthPoints;
+}
+
+void Enemy::setHealthPoints(const qreal &value)
+{
+    healthPoints = value;
+}
+
+qreal Enemy::getBulletPower() const
+{
+    return bulletPower;
 }
 
 qreal Enemy::getBulletSpeed() const
@@ -209,6 +227,11 @@ void Enemy::gravityApply()
 {
     y += gravityIntensity;
     this->setPos(x, y);
+
+    maxLeft = x-range;
+    maxRight = x+range;
+    maxUp = y - range;
+    maxDown = y + range;
     update();
 }
 
