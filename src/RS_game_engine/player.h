@@ -46,6 +46,9 @@ public:
 
     qreal getBulletPower() const;
 
+    QString getPlayersBulletLook() const;
+    void setPlayersBulletLook(const QString &value);
+
 private slots:
     void pbApply() override;
 
@@ -62,7 +65,7 @@ private:
     qreal gravityIntensity;
     qreal speed;
     qreal jump, currentJumpPosition;
-
+    QString playersBulletLook;
     QList<qreal> jumpArray;
     qreal positionBeforeJump;
     qreal healthPoints;

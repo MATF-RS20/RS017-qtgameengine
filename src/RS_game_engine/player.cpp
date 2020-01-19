@@ -151,6 +151,16 @@ void Player::pbApply()
     update();
 }
 
+QString Player::getPlayersBulletLook() const
+{
+    return playersBulletLook;
+}
+
+void Player::setPlayersBulletLook(const QString &value)
+{
+    playersBulletLook = value;
+}
+
 qreal Player::getBulletPower() const
 {
     return bulletPower;

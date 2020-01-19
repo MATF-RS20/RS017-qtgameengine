@@ -56,6 +56,9 @@ public:
     qreal getHealthPoints() const;
     void setHealthPoints(const qreal &value);
 
+    qreal getCollisionDamage() const;
+    void setCollisionDamage(const qreal &value);
+
 private slots:
     void pbApply() override;
 
@@ -83,6 +86,7 @@ private:
     qreal bulletSpeed;
     qreal bulletPower;
     qreal healthPoints;
+    qreal collisionDamage;
 
 };
 

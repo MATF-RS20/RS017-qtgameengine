@@ -25,6 +25,7 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,bulletSpeed(10)
     ,bulletPower(10)
     ,healthPoints(100)
+    ,collisionDamage(1)
 {
     setFlags(ItemIsMovable|ItemIsFocusable);
     lookLeft = lookRight.transformed(QTransform().scale(-1,1));
@@ -84,10 +85,21 @@ void Enemy::pbApply()
         this->bulletSpeed= static_cast<qreal>(enemyInfo.at(8)->text().toFloat());
         this->bulletPower= static_cast<qreal>(enemyInfo.at(9)->text().toFloat());
         this->healthPoints = static_cast<qreal>(enemyInfo.at(10)->text().toFloat());
+        this->collisionDamage =static_cast<qreal>(enemyInfo.at(11)->text().toFloat());
         this->maxLeft = this->x - this->range;
         this->maxRight = this->x + this->range;
         update();
     }
+}
+
+qreal Enemy::getCollisionDamage() const
+{
+    return collisionDamage;
+}
+
+void Enemy::setCollisionDamage(const qreal &value)
+{
+    collisionDamage = value;
 }
 
 qreal Enemy::getHealthPoints() const

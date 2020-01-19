@@ -56,6 +56,7 @@ void GameBuilder::addPlayer(qreal x, qreal y, qreal width, qreal height, QString
 {
     connect(playerUpdate, SIGNAL(clicked()), this, SLOT(playerUpdateClicked()));
     player = new Player(x,y,width, height,look,componentInfo,playerInfo,playerUpdate);
+    player->setPlayersBulletLook(this->playersBulletLook);
     addItem(player);
     playerExists = true;
     connect(&(*gameBuilderTimer), SIGNAL(timeout()), this, SLOT(update()));
@@ -431,7 +432,9 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         bool right = playerPos.rx() + delta_x < ePos.rx() + eWidth;
         bool down = playerPos.ry() + delta_y < ePos.ry() + eHeight;
         if(left && up && right && down){
-
+            player->setHealthPoints(player->getHealthPoints() - e->getCollisionDamage());
+            qDebug() << player->getHealthPoints() << " Hello from gambuilder";
+            player->move(-delta_x, -delta_y);
             return false;
         }
     }

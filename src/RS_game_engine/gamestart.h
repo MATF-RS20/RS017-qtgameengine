@@ -9,6 +9,7 @@
 #include "player.h"
 #include "rectangle.h"
 #include "enemy.h"
+#include "bullet.h"
 
 namespace Ui {
 class GameStart;
@@ -32,7 +33,7 @@ public:
     void setFName(const QString &value);
     void makePoint();
     void losePoint();
-    bool playerCanMove(qreal delta_x, qreal delta_y);
+    bool playerCanMoveStart(qreal delta_x, qreal delta_y);
     bool enemyCanMove(Enemy *enemy, qreal delta_x, qreal delta_y);
 
     QScopedPointer<QTimer> getTimer() const;
@@ -60,6 +61,7 @@ private:
     Player *player;
     QList<Rectangle*> lstRectangle;
     QList<Enemy*> lstEnemy;
+    QList<Enemy*> lstEnemyKilled;
     bool collisionEnabled;
     bool playerGravityApply;
     qreal playerSpeed;
@@ -67,6 +69,8 @@ private:
     bool jumpPlayer;
     bool jumpEnabled;
     bool jumpAllowed;
+
+    QList<Bullet*> lstPlayerBullets;
 };
 
 #endif // GAMESTART_H

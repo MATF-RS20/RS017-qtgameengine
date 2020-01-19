@@ -132,6 +132,7 @@ void MainWindow::addEnemyOne()
         enemyInfo.append(ui->leEnemyBulletSpeed);
         enemyInfo.append(ui->leEnemyBulletPower);
         enemyInfo.append(ui->leEnemyHealthPoints);
+        enemyInfo.append(ui->leEnemyCollisionDamage);
         gameBuilder->addEnemy(x, y, width, height, range, lookPath,ui->tbComponentInfo, enemyInfo, ui->pbEnemyApply);
     }
     else{
@@ -339,6 +340,7 @@ void MainWindow::on_startBt_clicked()
                                          gameBuilder->getJumpPlayer(),
                                          gameBuilder->getJumpEnabled());
     main_game->setGameON(gameBuilder);
+    gameBuilder->getGameBuilderTimer()->stop();
     main_game->setScene(ui->gvMainScene);
     main_game->setFName(fileName);
     main_game->start();
