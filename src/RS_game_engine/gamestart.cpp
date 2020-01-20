@@ -257,8 +257,11 @@ void GameStart::update()
         jumpAllowed = false;
     }
     if(pom){
+        playerHealt->setZValue(1);
         this->ui->graphicsView->scene()->addItem(playerHealt);
+        textPoints->setZValue(1);
         this->ui->graphicsView->scene()->addItem(textPoints);
+
         pom = false;
     }
 
@@ -554,13 +557,14 @@ void GameStart::setGameON(GameBuilder *value)
 void GameStart::makePoint(){
     this->ui->graphicsView->scene()->removeItem(textPoints);
     Points = Points +1;
-    textPoints->setPlainText(QString::number(getPoints()));
+    textPoints->setPlainText("Points: " + QString::number(getPoints()));
     ui->graphicsView->scene()->addItem(textPoints);
 }
 void GameStart::losePoint(){
     this->ui->graphicsView->scene()->removeItem(textPoints);
     Points = Points -1;
-    textPoints->setPlainText(QString::number(getPoints()));
+    textPoints->setPlainText("Points: " + QString::number(getPoints()));
+    textPoints->setZValue(1);
     ui->graphicsView->scene()->addItem(textPoints);
 }
 
@@ -598,8 +602,9 @@ bool GameStart::playerCanMoveStart(qreal delta_x, qreal delta_y)
             player->setHealthPoints(player->getHealthPoints() - e->getCollisionDamage());
             this->ui->graphicsView->scene()->removeItem(playerHealt);
             playerHealt->setPlainText("HP: " + QString::number(player->getHealthPoints()));
+            playerHealt->setZValue(1);
             ui->graphicsView->scene()->addItem(playerHealt);
-            qDebug() << player->getHealthPoints();
+
             if(std::find(this->lstEnemyKilled.begin(), this->lstEnemyKilled.end(), e) == this->lstEnemyKilled.end()){
                 player->move(-delta_x, -delta_y);
                 qDebug() << "IMA GA";

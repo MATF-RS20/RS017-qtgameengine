@@ -14,14 +14,13 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,moveUpDownEnabled(true)
     ,boost(10)
     ,boostEnabled(true)
-    ,speed(4)
-    ,gravityIntensity(1)
-    ,jump(100)
+    ,speed(5)
+    ,gravityIntensity(3)
+    ,jump(200)
     ,bulletEnabled(true)
     ,bulletSpeed(10)
     ,healthPoints(100)
     ,bulletPower(10)
-//    ,currentJumpPosition(0)
 {
     for(qreal i = 0; i < M_PI_2 ;i+=0.07){
         jumpArray.append(sin(i)*jump);

@@ -315,6 +315,9 @@ void GameBuilder::update()
     //W-0 A-1 S-2 D-3
     if(player->movementArray[4])
         playerSpeed = player->getBoost();
+    else{
+        playerSpeed = player->getSpeed();
+    }
 
     if(playerCanMove(0,-playerSpeed) && player->movementArray[0]){
         player->move(0,-playerSpeed);
