@@ -12,7 +12,8 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,playerSpeed(4)
     ,levelPassedAdded(false)
 {
-
+//    parent->scale(2, 1);
+//    parent->setSceneRect(0,0, 4000, 700);
 }
 
 GameBuilder::~GameBuilder()

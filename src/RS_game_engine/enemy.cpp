@@ -195,6 +195,10 @@ qreal Enemy::getRange() const
 
 void Enemy::setRange(const qreal &value)
 {
+    this->maxLeft = x - value;
+    this->maxRight = x + value;
+    this->maxDown = y - value;
+    this->maxUp = y + value;
     range = value;
 }
 

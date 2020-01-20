@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gvMainScene->setRenderHint(QPainter::Antialiasing);
     ui->gvMainScene->setAlignment(Qt::AlignTop|Qt::AlignLeft);
     ui->gvMainScene->setSceneRect(0,0,4000,height);
-    ui->gvMainScene->fitInView(0, 0, 4000, height, Qt::KeepAspectRatioByExpanding);
+//    ui->gvMainScene->fitInView(0, 0, 4000, height, Qt::KeepAspectRatioByExpanding);
     gameBuilder =new GameBuilder(ui->gvMainScene);
     gameBuilder->setComponentInfo(ui->tbComponentInfo);
     ui->gvMainScene->setScene(&(*gameBuilder));
@@ -194,8 +194,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
     QPoint new_ref(0,event->size().height());
     QPoint ref(0,event->oldSize().height());
-
-    QRectF exactRect(0, 0, ui->gvMainScene->size().width(), ui->gvMainScene->size().height());
+    qDebug() << ui->gvMainScene->size().width();
+    QRectF exactRect(0, 0,/* ui->gvMainScene->size().width()*/ 4000, ui->gvMainScene->size().height());
     ui->gvMainScene->setSceneRect(exactRect);
     //QGraphicsScene* new_scene= new QGraphicsScene(ui->gvMainScene);
     for(auto item:ui->gvMainScene->scene()->items())

@@ -42,13 +42,12 @@ void GameStart::setScene(QGraphicsView *value)
 void GameStart::start(){
 
         QRectF exactRect(0, 0, this->size().width(), this->size().height());
-
-        //        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        //        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        ui->graphicsView->setSceneRect(exactRect);
-        QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
         ui->graphicsView->verticalScrollBar()->setValue(ui->graphicsView->verticalScrollBar()->maximum());
         ui->graphicsView->horizontalScrollBar()->setValue(ui->graphicsView->horizontalScrollBar()->minimum());
+        ui->graphicsView->horizontalScrollBar()->hide();
+        ui->graphicsView->verticalScrollBar()->hide();
+        ui->graphicsView->setSceneRect(exactRect);
+        QGraphicsScene* new_scene= new QGraphicsScene(ui->graphicsView);
         for(QGraphicsItem* item:scene->scene()->items())
         {
             qreal oldX;
@@ -153,12 +152,14 @@ void GameStart::closeEvent(QCloseEvent *event)
     }
     timer->stop();
     gameON->getGameBuilderTimer()->start(15);
+
+
     event->accept();
 }
 void GameStart::resizeEvent(QResizeEvent* event){
         QPoint ref(0,800);
         QPoint new_ref(0,event->size().height());
-        QRectF exactRect(0, 0, this->size().width(), this->size().height());
+        QRectF exactRect(0, 0, /*this->size().width()*/ 4000, this->size().height());
 //        ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //        ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->graphicsView->setSceneRect(exactRect);
