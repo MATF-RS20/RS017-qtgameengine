@@ -19,7 +19,7 @@ Player::Player(qreal x, qreal y, qreal width, qreal height, QString look,
     ,jump(100)
     ,bulletEnabled(true)
     ,bulletSpeed(10)
-    ,healthPoints(1000)
+    ,healthPoints(100)
     ,bulletPower(10)
 //    ,currentJumpPosition(0)
 {

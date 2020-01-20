@@ -5,10 +5,11 @@ Bullet::Bullet(qreal x, qreal y, qreal width, qreal height, bool direction, qrea
     ,y(y)
     ,width(width)
     ,height(height)
-    ,textureApplied(false)
+    ,textureApplied(true)
     ,direction(direction)
     ,distancePassed(0)
     ,speed(speed)
+    ,texture("/home/stefan/Desktop/finalRS/RS017-qtgameengine/src/RS_game_engine/icons/fireBall.png")
 {
     QTimer* timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
@@ -31,7 +32,8 @@ void Bullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
         painter->setPen(Qt::NoPen);
         painter->setBrush(QBrush(texture));
         texture.scaled(100,100);
-        painter->drawRect(0, 0, width, height);
+//        painter->drawRect(0, 0, width, height);
+        painter->drawPixmap(0, 0, width, height, texture);
     }
     else{
         painter->drawRect(0, 0, width, height);

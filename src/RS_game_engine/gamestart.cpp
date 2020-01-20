@@ -15,7 +15,7 @@ GameStart::GameStart(/*QWidget *parent,*/ bool collision, bool gravity, qreal ju
 {
     ui->setupUi(this);
     Points = 0;
-    textPoints= new QGraphicsTextItem(QString::number(getPoints()));
+    textPoints = new QGraphicsTextItem("Points: "+QString::number(getPoints()));
     QFont font;
     font.setPixelSize(30);
     font.setFamily("Calibri");
@@ -85,9 +85,20 @@ void GameStart::start(){
                 new_scene->addItem(r);
                 if(item->type() == 4){
                     player = qgraphicsitem_cast<Player*>(item);
+                    player->setHealthPoints(400);
+                    playerHealt = new QGraphicsTextItem("HP: " + QString::number(player->getHealthPoints()));
+                    QFont font;
+                    font.setPixelSize(30);
+                    font.setFamily("Calibri");
+                    font.setBold(false);
+                    playerHealt->setDefaultTextColor(Qt::red);
+                    playerHealt->setFont(font);
+                    playerHealt->setPos(400,20);
+//                    new_scene->addItem(playerHealt);
                     playerSpeed = player->getSpeed();
                 } else {
-                   lstEnemy.push_back(qgraphicsitem_cast<Enemy*>(item));
+                   Enemy* e = qgraphicsitem_cast<Enemy*>(item);
+                   lstEnemy.push_back(e);
                 }
             }
       }
@@ -101,6 +112,9 @@ void GameStart::start(){
       QPalette palette;
       palette.setBrush(QPalette::Base, bkgnd);
        ui->graphicsView->setScene(&(*new_scene));
+       ui->graphicsView->setAutoFillBackground(true);
+       ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+       ui->graphicsView->setRenderHints( QPainter::HighQualityAntialiasing);
        ui->graphicsView->setPalette(palette);
 
 }
@@ -243,18 +257,11 @@ void GameStart::update()
         jumpAllowed = false;
     }
     if(pom){
-        QGraphicsTextItem* text = new QGraphicsTextItem("Points:");
-        QFont font;
-        font.setPixelSize(30);
-        font.setFamily("Calibri");
-        font.setBold(false);
-        text->setDefaultTextColor(Qt::red);
-        text->setFont(font);
-        text->setPos(20,20);
-        this->ui->graphicsView->scene()->addItem(text);
+        this->ui->graphicsView->scene()->addItem(playerHealt);
         this->ui->graphicsView->scene()->addItem(textPoints);
         pom = false;
     }
+
     if(player == nullptr)
         return;
     player->collidingItems();
@@ -292,7 +299,7 @@ void GameStart::update()
         }
         if(!e->bullets.isEmpty()){
             if(e->bullets.front()->getDistancePassed() > ui->graphicsView->scene()->width()){
-                ui->graphicsView->scene()->removeItem(e->bullets.front());
+//                ui->graphicsView->scene()->removeItem(e->bullets.front());
                 delete e->bullets.front();
                 e->bullets.removeFirst();
             }
@@ -308,6 +315,7 @@ void GameStart::update()
             }
 
         }
+        qDebug() << ui->graphicsView->scene()->height();
         if(e->pos().ry() + e->getHeight() +25 < ui->graphicsView->scene()->height() && e->EnemyGravityEnabled() && enemyCanMove(e,0,4))
             e->gravityApply();
 
@@ -327,13 +335,15 @@ void GameStart::update()
                     if(ic->type() == 4){
                         player->setHealthPoints(player->getHealthPoints() - e->getBulletPower());
                         qDebug() << player->getHealthPoints();
+                        this->ui->graphicsView->scene()->removeItem(playerHealt);
+                        playerHealt->setPlainText("HP: " + QString::number(player->getHealthPoints()));
+                        ui->graphicsView->scene()->addItem(playerHealt);
+                        qDebug() << player->getHealthPoints();
 
                         e->bullets.removeOne(dynamic_cast<Bullet*>(item));
                         ui->graphicsView->scene()->removeItem(item);
                         delete item;
                         bulletDeleted = true;
-//                        if(player->getHealthPoints())
-//                            return;
                         break;
                     }
 
@@ -394,10 +404,13 @@ void GameStart::update()
     if(playerCanMoveStart(0,-playerSpeed) && player->movementArray[0]){
         player->move(0,-playerSpeed);
     }
-
     if(playerCanMoveStart(-playerSpeed,0) && player->movementArray[1]){
         if(player->getX()  < ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0))
+        {
+            textPoints->setPos(ui->graphicsView->horizontalScrollBar()->value()+20,20);
+            playerHealt->setPos(ui->graphicsView->horizontalScrollBar()->value()+400,20);
             ui->graphicsView->horizontalScrollBar()->setValue(player->getX() - (ui->graphicsView->width()/2.0));
+        }
         player->move(-playerSpeed,0);
     }
 
@@ -407,6 +420,8 @@ void GameStart::update()
 
     if(playerCanMoveStart(playerSpeed,0) && player->movementArray[3]){
         if(player->getX() + player->getWidth() > ui->graphicsView->horizontalScrollBar()->value() + (ui->graphicsView->width()/2.0)){
+            textPoints->setPos(ui->graphicsView->horizontalScrollBar()->value()+20,20);
+            playerHealt->setPos(ui->graphicsView->horizontalScrollBar()->value()+400,20);
             ui->graphicsView->horizontalScrollBar()->setValue(player->getX() + player->getWidth()-(ui->graphicsView->width()/2.0));
         }
         player->move(playerSpeed,0);
@@ -427,6 +442,30 @@ void GameStart::update()
     else{
         jumpPlayer = false;
         jumpAmout = 0;
+    }
+    if(player->getHealthPoints() <= 0) {
+        gameOver = new QGraphicsTextItem("Game Over");
+        QFont font;
+        font.setPixelSize(100);
+        font.setFamily("Calibri");
+        font.setBold(true);
+        gameOver->setDefaultTextColor(Qt::red);
+        gameOver->setFont(font);
+        gameOver->setPos( ui->graphicsView->horizontalScrollBar()->value() + 200, 200);
+        ui->graphicsView->scene()->addItem(gameOver);
+        this->timer->stop();
+    }
+    if(player->pos().rx() >= 3900) {
+        gameWin = new QGraphicsTextItem("Congratulations\n   Level Passed");
+        QFont font;
+        font.setPixelSize(100);
+        font.setFamily("Calibri");
+        font.setBold(true);
+        gameWin->setDefaultTextColor(Qt::green);
+        gameWin->setFont(font);
+        gameWin->setPos( ui->graphicsView->horizontalScrollBar()->value() + 200, 200);
+        ui->graphicsView->scene()->addItem(gameWin);
+        timer->stop();
     }
 }
 void GameStart::keyReleaseEvent(QKeyEvent *event)
@@ -557,6 +596,9 @@ bool GameStart::playerCanMoveStart(qreal delta_x, qreal delta_y)
         bool down = playerPos.ry() + delta_y < ePos.ry() + eHeight;
         if(left && up && right && down){
             player->setHealthPoints(player->getHealthPoints() - e->getCollisionDamage());
+            this->ui->graphicsView->scene()->removeItem(playerHealt);
+            playerHealt->setPlainText("HP: " + QString::number(player->getHealthPoints()));
+            ui->graphicsView->scene()->addItem(playerHealt);
             qDebug() << player->getHealthPoints();
             if(std::find(this->lstEnemyKilled.begin(), this->lstEnemyKilled.end(), e) == this->lstEnemyKilled.end()){
                 player->move(-delta_x, -delta_y);

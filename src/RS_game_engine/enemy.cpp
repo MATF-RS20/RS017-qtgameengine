@@ -21,8 +21,8 @@ Enemy::Enemy(qreal x, qreal y, qreal width, qreal height, qreal range, QString l
     ,gravityIntensity(2)
     ,gravityEnabled(false)
     ,bulletEnabled(false)
-    ,bulletDistanceTillNext(100)
-    ,bulletSpeed(10)
+    ,bulletDistanceTillNext(700)
+    ,bulletSpeed(7)
     ,bulletPower(10)
     ,healthPoints(100)
     ,collisionDamage(1)
@@ -193,12 +193,12 @@ qreal Enemy::getRange() const
     return range;
 }
 
-void Enemy::setRange(const qreal &value)
+void Enemy::setRange(const qreal &value, qreal rx, qreal ry)
 {
-    this->maxLeft = x - value;
-    this->maxRight = x + value;
-    this->maxDown = y - value;
-    this->maxUp = y + value;
+    this->maxLeft = rx - value;
+    this->maxRight = rx + value;
+    this->maxDown = ry - value;
+    this->maxUp = ry + value;
     range = value;
 }
 

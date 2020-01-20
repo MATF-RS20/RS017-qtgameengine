@@ -53,6 +53,9 @@ private:
     void resizeEvent(QResizeEvent* event);
     int Points;
     QGraphicsTextItem* textPoints;
+    QGraphicsTextItem* gameOver;
+    QGraphicsTextItem* gameWin;
+    QGraphicsTextItem* playerHealt;
     Ui::GameStart *ui;
     QGraphicsView* scene;
     GameBuilder* gameON;

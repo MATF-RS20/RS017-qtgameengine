@@ -27,7 +27,7 @@ public:
     void setId(long value);
     int type() const override;
     qreal getRange() const;
-    void setRange(const qreal &value);
+    void setRange(const qreal &value, qreal rx, qreal ry);
 
     QPixmap getLook() const;
     void setLook(const QPixmap &value);

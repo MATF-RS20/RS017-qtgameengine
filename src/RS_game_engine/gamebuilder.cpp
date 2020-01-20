@@ -12,8 +12,6 @@ GameBuilder::GameBuilder(QGraphicsView* parent)
     ,playerSpeed(4)
     ,levelPassedAdded(false)
 {
-//    parent->scale(2, 1);
-//    parent->setSceneRect(0,0, 4000, 700);
 }
 
 GameBuilder::~GameBuilder()
@@ -261,7 +259,6 @@ void GameBuilder::update()
 
                     if(ic->type() == 4){
                         player->setHealthPoints(player->getHealthPoints() - e->getBulletPower());
-                        qDebug() << player->getHealthPoints();
 
                         e->bullets.removeOne(dynamic_cast<Bullet*>(item));
                         removeItem(item);
@@ -292,7 +289,6 @@ void GameBuilder::update()
             if(ic->type() == 2){
                 Enemy *eHit = dynamic_cast<Enemy*>(ic);
                 eHit->setHealthPoints(eHit->getHealthPoints() - player->getBulletPower());
-                qDebug() << eHit->getHealthPoints();
                 lstPlayerBullets.removeOne(dynamic_cast<Bullet*>(item));
                 removeItem(item);
                 delete item;
@@ -434,7 +430,6 @@ bool GameBuilder::playerCanMove(qreal delta_x, qreal delta_y)
         bool down = playerPos.ry() + delta_y < ePos.ry() + eHeight;
         if(left && up && right && down){
             player->setHealthPoints(player->getHealthPoints() - e->getCollisionDamage());
-            qDebug() << player->getHealthPoints() << " Hello from gambuilder";
             player->move(-delta_x, -delta_y);
             return false;
         }
